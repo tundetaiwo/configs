@@ -7,7 +7,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/Users/tundetaiwo/Library/Python/3.8/bin:/Users/tundetaiwo/Library/Python/3.11/bin:/opt/homebrew/bin:$PATH"
 alias vim=nvim
 
 # Remap 'jj' to Escape in Zsh with Vim bindings
@@ -24,4 +24,20 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 alias ls='ls -la'
 alias cls='clear'
+alias cwd="pwd | pbcopy"
 plugins=(web-search)
+
+
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
+bindkey "^K" history-search-backward
+bindkey "^J" history-search-forward
