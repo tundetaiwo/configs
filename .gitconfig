@@ -1,3 +1,8 @@
 [user]
 	name = tundetaiwo
 	email = "dantaiwo96@gmail.com"
+
+[alias]
+  gs = status
+  ga = add
+  gc = commit
