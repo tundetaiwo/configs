@@ -87,8 +87,15 @@ def move_configs(app: str, machine: str, update: bool = False):
 
     if app.lower() in ["nvim", "neovim", "all"]:
         if machine in ["mac", "unix"]:
-            being_replaced = "~/.config/nvim/lua/custom"
-            replacing_with = f"{PROJECT_PATH}/custom"
+            if not update:
+                nvchad_installed = input(
+                    "Have you install nvchad via: `git clone https://github.com/NvChad/starter ~/.config/nvim && nvim`"
+                )
+                if nvchad_installed.lower() not in ["yes", "y"]:
+                    raise ValueError("NvChad must be installed.")
+
+            being_replaced = "~/.config/nvim/lua/"
+            replacing_with = f"{PROJECT_PATH}/nvim"
 
             _replace(
                 being_replaced=being_replaced,
@@ -151,10 +158,17 @@ def move_configs(app: str, machine: str, update: bool = False):
             update=update,
         )
 
+    if app.lower() in ["all", "iterm", "iterm2"]:
+        if machine.lower() in ["mac", "darwin"]:
+            being_replaced = "~/Library/Preferences/com.googlecode.iterm2.plist"
+            replacing_with = f"{PROJECT_PATH}/iterm2.plist"
+        else:
+            raise ValueError(f"{machine} is not supported for {app}.")
+
 
 if __name__ == "__main__":
     move_configs(
-        app="vscode",
+        app="iterm",
         machine="mac",
         update=True,
     )
