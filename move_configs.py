@@ -9,8 +9,8 @@ PROJECT_PATH = Path(__file__).parent
 
 
 def _replace(
-    being_replaced: PathLike,
-    replacing_with: PathLike,
+    being_replaced: PathLike | str,
+    replacing_with: PathLike | str,
     folder: bool,
     update: bool,
 ) -> None:
@@ -29,11 +29,11 @@ def _replace(
     `None`
 
     """
-    being_replaced: Path = Path(being_replaced).expanduser()
-    replacing_with: Path = Path(replacing_with).expanduser()
+    _being_replaced: Path = Path(being_replaced).expanduser()
+    _replacing_with: Path = Path(replacing_with).expanduser()
 
     if update:
-        being_replaced, replacing_with = replacing_with, being_replaced
+        _being_replaced, _replacing_with = _replacing_with, _being_replaced
 
     if folder:
         replace_fn = shutil.copytree
@@ -42,16 +42,15 @@ def _replace(
         replace_fn = shutil.copyfile
         del_fn = os.remove
 
-    if being_replaced.exists():
-        del_flag = input(f"{being_replaced} exists, do you want to delete? (Y/N)")
+    if _being_replaced.exists():
+        del_flag = input(f"{_being_replaced} exists, do you want to delete? (Y/N)")
 
         if del_flag.lower() in ["y", "yes"]:
-            del_fn(being_replaced)
+            del_fn(_being_replaced)
         else:
             print("Exiting Function...")
-            return 0
 
-    replace_fn(replacing_with, being_replaced)
+    replace_fn(_replacing_with, _being_replaced)
 
 
 def move_configs(app: str, machine: str, update: bool = False):
@@ -133,12 +132,15 @@ def move_configs(app: str, machine: str, update: bool = False):
             being_replaced = "~/Library/Application Support/Code/User/keybindings.json"
             replacing_with = f"{PROJECT_PATH}/code/keybindings.json"
 
-        _replace(
-            being_replaced=being_replaced,
-            replacing_with=replacing_with,
-            folder=False,
-            update=update,
-        )
+
+            _replace(
+                being_replaced=being_replaced,
+                replacing_with=replacing_with,
+                folder=False,
+                update=update,
+            )
+        else:
+            raise NotImplementedError("VS Code configs only implemented for mac os.")
 
     if app.lower() in ["all", "git"]:
         if machine.lower() in ["unix", "mac", "darwin"]:
