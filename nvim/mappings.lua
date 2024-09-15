@@ -15,6 +15,7 @@ map("v", "<C-_>", "gc", { desc = "Toggle comment", remap = true })
 -- map({"i", "n"},"<C-p>",  "<cmd> Telescope find_files follow=true hidden=false <CR>", {desc="Find all" })
 
 -- Less Useful Keybindings (Telescope)
+map("n", "<C-p>", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
@@ -41,7 +42,10 @@ map({"i", "n"}, "<C-S-e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus win
 -- File Management
 map({"n","i"}, "<C-n>", "<cmd>enew<CR>", { desc = "buffer new" })
 nomap("n", "<C-w>")
-map("n", "<C-w>", "<leader>x", { desc = "buffer close", remap=true})
+-- map("n", "<C-w>", "<leader>x", { desc = "buffer close", remap=true})
+map("n", "<C-w>", function()
+  require("nvchad.tabufline").close_buffer()
+end, { desc = "buffer close" })
 
 map("n", "<A-k>", function()
     require("nvchad.tabufline").next()
