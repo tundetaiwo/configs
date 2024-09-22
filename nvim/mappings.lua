@@ -1,14 +1,12 @@
 require "nvchad.mappings"
 
-
 local map = vim.keymap.set
 local nomap = vim.keymap.del
-
 
 map("i", "jj", "<ESC>")
 
 -- Comment
-map({"i", "n"}, "<C-_>", "gcc", { desc = "Toggle Comment", remap = true })
+map({ "i", "n" }, "<C-_>", "gcc", { desc = "Toggle Comment", remap = true })
 map("v", "<C-_>", "gc", { desc = "Toggle comment", remap = true })
 
 -- Telescope
@@ -37,24 +35,56 @@ map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git 
 
 -- Nvim Tree
 map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
-map({"i", "n"}, "<C-S-e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+map({ "i", "n" }, "<C-S-e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
 -- File Management
-map({"n","i"}, "<C-n>", "<cmd>enew<CR>", { desc = "buffer new" })
-nomap("n", "<C-w>")
--- map("n", "<C-w>", "<leader>x", { desc = "buffer close", remap=true})
-map("n", "<C-w>", function()
-  require("nvchad.tabufline").close_buffer()
-end, { desc = "buffer close" })
+map({ "n", "i" }, "<C-n>", "<cmd>enew<CR>", { desc = "buffer new" })
 
 map("n", "<A-k>", function()
-    require("nvchad.tabufline").next()
+  require("nvchad.tabufline").next()
+end, { desc = "buffer goto next" })
+map("n", "<C-w>w", function()
+  require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer goto next" })
 
 map("n", "<A-j>", function()
-    require("nvchad.tabufline").prev()
+  require("nvchad.tabufline").prev()
 end, { desc = "buffer goto prev" })
 
 -- Tabs
-map("i", "<S-tab>", "<BS>", {desc = "unindent", remap=true})
+map("i", "<S-tab>", "<BS>", { desc = "unindent", remap = true })
 
+-- DebugPy --
+map("n", "<F5>", function()
+  require("dap").continue()
+end)
+map("n", "<S-F5>", function()
+  require("dap").disconnect()
+end)
+map("n", "<F10>", function()
+  require("dap").step_over()
+end)
+map("n", "<F11>", function()
+  require("dap").step_into()
+end)
+map("n", "<F12>", function()
+  require("dap").step_out()
+end)
+map("n", "<Leader>b", function()
+  require("dap").toggle_breakpoint()
+end)
+map("n", "<F9>", function()
+  require("dap").set_breakpoint()
+end)
+-- map('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+map("n", "<Leader>df", function()
+  require("dap").continue()
+end)
+map("n", "<Leader>dr", function()
+  require("dap").repl.open()
+end)
+
+map("n", "<F9>", "<cmd> DapToggleBreakpoint <CR>")
+map("n", "<leader>dlb", function()
+  require("dap").list_breakpoints()
+end)
