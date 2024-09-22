@@ -67,7 +67,7 @@ def move_configs(app: str, machine: str, update: bool = False):
     Notes
     -----
     Configs Supported:
-    * neovim/custom
+    * neovim
     * zshrc/power10k
     * tmux
     * vs code
