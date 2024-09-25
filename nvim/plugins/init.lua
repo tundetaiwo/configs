@@ -21,7 +21,6 @@ local plugins = {
         "ruff",
         "pyright",
         "clangd",
-        "texlab",
         "black",
       },
     },
@@ -39,7 +38,6 @@ local plugins = {
         "css",
         "python",
         "cpp",
-        "latex",
       },
     },
   },
@@ -54,6 +52,12 @@ local plugins = {
         }
       end,
     },
+  },
+  {
+    'nvim-lua/plenary.nvim'
+  },
+  {
+    "ThePrimeagen/harpoon"
   },
 
   -- Telescope
