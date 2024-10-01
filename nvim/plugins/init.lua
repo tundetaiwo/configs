@@ -99,6 +99,9 @@ local plugins = {
       end,
     },
   },
+  {
+  "https://github.com/ThePrimeagen/harpoon"
+  }
 
   -- Telescope --
   -- Make sure to brew install fd & ripgrep otherwise won't find files will include everything

@@ -88,3 +88,14 @@ map("n", "<F9>", "<cmd> DapToggleBreakpoint <CR>")
 map("n", "<leader>dlb", function()
   require("dap").list_breakpoints()
 end)
+
+-- Harpoon --
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+map("n", "<leader>a", mark.add_file)
+map("n", "gb", ui.nav_prev)
+map("n", "gf", ui.nav_next)
+map("n", "<C-e>", ui.toggle_quick_menu)
+
+
