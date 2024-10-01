@@ -170,7 +170,7 @@ def move_configs(app: str, machine: str, update: bool = False):
 
 if __name__ == "__main__":
     move_configs(
-        app="iterm",
+        app="neovim",
         machine="mac",
         update=True,
     )

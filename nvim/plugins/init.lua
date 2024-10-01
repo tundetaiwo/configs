@@ -26,7 +26,6 @@ local plugins = {
         "ruff",
         "pyright",
         "clangd",
-        "texlab",
         "black",
       },
     },
@@ -82,8 +81,6 @@ local plugins = {
         "css",
         "python",
         "cpp",
-        "latex",
-        "markdown",
       },
     },
   },
@@ -100,8 +97,11 @@ local plugins = {
     },
   },
   {
-  "https://github.com/ThePrimeagen/harpoon"
-  }
+    'nvim-lua/plenary.nvim'
+  },
+  {
+    "ThePrimeagen/harpoon"
+  },
 
   -- Telescope --
   -- Make sure to brew install fd & ripgrep otherwise won't find files will include everything
