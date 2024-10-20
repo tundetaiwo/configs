@@ -73,20 +73,7 @@ local plugins = {
   -- Syntax Highlighting --
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "vimdoc",
-        "lua",
-        "rust",
-        "html",
-        "css",
-        "python",
-        "cpp",
-        "latex",
-        "markdown",
-      },
-    },
+    opts = require "configs.treesitter",
   },
   {
     {
