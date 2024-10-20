@@ -13,7 +13,9 @@ local plugins = {
         "mypy",
         "pyright",
         "debugpy",
+        "lua-language-server",
       },
+      automatic_installation = true,
     },
   },
   {
