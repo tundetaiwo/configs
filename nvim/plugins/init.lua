@@ -26,6 +26,7 @@ local plugins = {
         "ruff",
         "pyright",
         "clangd",
+        "texlab",
         "black",
       },
     },
@@ -52,8 +53,7 @@ local plugins = {
   },
   {
     "mfussenegger/nvim-dap",
-    config = function(_, opts)
-    end,
+    config = function(_, opts) end,
   },
   {
     "mfussenegger/nvim-dap-python",
@@ -65,7 +65,7 @@ local plugins = {
     config = function(_, opts)
       local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
       require("dap-python").setup(path)
-      require('dap-python').test_runner ='pytest'
+      require("dap-python").test_runner = "pytest"
     end,
   },
   -- Syntax Highlighting --
@@ -81,6 +81,8 @@ local plugins = {
         "css",
         "python",
         "cpp",
+        "latex",
+        "markdown",
       },
     },
   },
@@ -97,14 +99,80 @@ local plugins = {
     },
   },
   {
-    'nvim-lua/plenary.nvim'
+    "https://github.com/ThePrimeagen/harpoon",
+  },
+  -- Interactive Window --
+  {
+    "GCBallesteros/NotebookNavigator.nvim",
+    keys = {
+      {
+        "<C-A-j>",
+        function()
+          require("notebook-navigator").move_cell "d"
+        end,
+      },
+      {
+        "<C-A-k>",
+        function()
+          require("notebook-navigator").move_cell "u"
+        end,
+      },
+    },
+    dependencies = {
+      "echasnovski/mini.comment",
+      "hkupty/iron.nvim", -- repl provider
+      -- "akinsho/toggleterm.nvim", -- alternative repl provider
+      -- "benlubas/molten-nvim", -- alternative repl provider
+      "anuvyklack/hydra.nvim",
+    },
+    event = "VeryLazy",
+    config = function()
+      local nn = require "notebook-navigator"
+      nn.setup { 
+        activate_hydra_keys = "<leader>h",
+        hydra_keys = {
+          run = "X",
+          run_and_move = "x",
+          move_up = "<C-A-k>",
+          move_down = "<C-A-j>",
+        },
+        show_hydra_hint = false, -- Need to set to false due to remapping - is current issue with plugin
+        syntax_highlight = true,
+      }
+    end,
   },
   {
-    "ThePrimeagen/harpoon"
-  },
+    "echasnovski/mini.hipatterns",
+    event = "VeryLazy",
+    dependencies = { "GCBallesteros/NotebookNavigator.nvim" },
+    opts = function()
+      local nn = require "notebook-navigator"
 
-  -- Telescope --
-  -- Make sure to brew install fd & ripgrep otherwise won't find files will include everything
+      local opts = { highlighters = { cells = nn.minihipatterns_spec } }
+      return opts
+    end,
+  },
+  {
+    "echasnovski/mini.ai",
+    event = "VeryLazy",
+    dependencies = { "GCBallesteros/NotebookNavigator.nvim" },
+    opts = function()
+      local nn = require "notebook-navigator"
+      local opts = { custom_textobjects = { h = nn.miniai_spec } }
+      return opts
+    end,
+    config = function()
+      require("mini.ai").setup()
+    end,
+  },
+  {
+    "GCBallesteros/jupytext.nvim",
+    config = true,
+    lazy = false,
+  },
+--
+--   -- Telescope --
+--   -- Make sure to brew install fd & ripgrep otherwise won't find files will include everything
 }
 
 return plugins
