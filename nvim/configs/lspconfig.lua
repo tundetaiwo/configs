@@ -9,6 +9,9 @@ local nvlsp = require "nvchad.configs.lspconfig"
 -- lsps with default config
 local custom_on_attach = function(client, buffer)
   nvlsp.on_attach(client, buffer)
+  vim.api.nvim_buf_set_option(buffer, "tabstop", 4)
+  vim.api.nvim_buf_set_option(buffer, "shiftwidth", 4)
+  vim.api.nvim_buf_set_option(buffer, "expandtab", true)
 
   -- vim.keymap.set("n", "gd", function()
   --   require("harpoon.mark").add_file()
@@ -36,6 +39,7 @@ lspconfig.clangd.setup {
   on_attach = custom_on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
+  cmd = { "clangd", "--fallback-style=webkit" },
   init_options = {
     fallbackFlags = { "--std=c++23" },
   },
