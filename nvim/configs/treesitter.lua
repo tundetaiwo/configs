@@ -13,7 +13,6 @@ return {
     "css",
     "python",
     "cpp",
-    "latex",
     "markdown",
     "comment"
   },
