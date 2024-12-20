@@ -132,7 +132,7 @@
                 "x",
             ],
             "commands": [
-                "workbench.action.closeWindow"
+                "workbench.action.closeActiveEditor"
             ]
         },
         {
