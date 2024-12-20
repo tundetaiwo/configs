@@ -3,8 +3,9 @@ require("nvchad.configs.lspconfig").defaults()
 
 local lspconfig = require "lspconfig"
 
-local servers = { "html", "cssls", "texlab" }
+local servers = { "html", "cssls", "texlab"}
 local nvlsp = require "nvchad.configs.lspconfig"
+local util = require "lspconfig/util"
 
 -- lsps with default config
 local custom_on_attach = function(client, buffer)
@@ -33,6 +34,21 @@ for _, lsp in ipairs(servers) do
     capabilities = nvlsp.capabilities,
   }
 end
+-- Set up rust ls
+lspconfig.rust_analyzer.setup {
+  on_attach = custom_on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  filetypes = {"rust"},
+  root_dir = util.root_pattern("Cargo.toml"),
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+      },
+    },
+  },
+}
 -- Set right version of C++
 lspconfig.clangd.setup {
   -- on_attach = function(client, buffnr)
