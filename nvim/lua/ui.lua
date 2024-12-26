@@ -5,3 +5,6 @@ vim.cmd([[
     hi EndOfBuffer guibg=NONE ctermbg=NONE
     hi SignColumn guibg=NONE ctermbg=NONE
 ]])
+
+-- Make empty lines after end of file have " " instead of "~"
+vim.o.fillchars = "eob: "

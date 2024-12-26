@@ -1,8 +1,22 @@
--- Map jj to escape
+-- Keymaps
 vim.keymap.set("i", "jj", "<ESC>")
+
+-- Buffer Commands
+vim.keymap.set({"n", "i"}, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer"})
+vim.keymap.set({"n", "i"}, "<A-j>", "<cmd>bprevious<CR>", { desc = "go to previous buffer"})
+vim.keymap.set({"n", "i"}, "<A-1>", "<cmd>bfirst<CR>", { desc = "go to first buffer"})
+vim.keymap.set({"n", "i"}, "<A-2>", "<cmd>bsecond<CR>", { desc = "go to second buffer"})
+vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", { desc = "buffer close" })
+-- vim.keymap.set("n", "<leader>X", "<cmd>LastBuf<CR>", { desc = "re-open last closed buffer" }) -- TODO
+-- vim.keymap.set("n", "<leader>x", "<cmd>w|bd<CR>", { desc = "buffer close" }) -- Need to get this to prompt for modified buffer
+    
+vim.keymap.set("n", "<leader>b", "<cmd>ls<CR>",{ desc = "buffer close" })
 
 -- Comment
 vim.keymap.set({"i", "n", "v" }, "<C-_>", "gcc", { desc = "Toggle Comment", remap = true })
+
+-- Search
+vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search highlighting"})
 
 --  Window Movement
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
@@ -14,7 +28,7 @@ vim.keymap.set("i", "<C-h>", "<Left>", { desc = "move left" })
 vim.keymap.set("i", "<C-l>", "<Right>", { desc = "move right" })
 vim.keymap.set("i", "<C-j>", "<Down>", { desc = "move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
---
+
 -- Terminal Movement
 vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
 vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
@@ -47,3 +61,11 @@ vim.keymap.set({"n", "t"}, "<A-h>", "<cmd>ToggleTerm size=25 direction=horizonta
 vim.keymap.set({"n", "t"}, "<A-v>", "<cmd>ToggleTerm size=50 direction=vertical<CR>")
 vim.keymap.set({"n", "t"}, "<A-i>", "<cmd>ToggleTerm size=40 direction=float<CR>")
 
+-- lspconfig
+local function opts(desc)
+  return { buffer = bufnr, desc = "LSP " .. desc }
+end
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")

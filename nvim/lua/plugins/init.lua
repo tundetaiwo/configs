@@ -1,5 +1,5 @@
 local plugin_folder = "/Users/tundetaiwo/.local/share/nvim/lazy/"
-plugins = {
+local plugins = {
   --  Autopairs
   {
     dir = plugin_folder .. "nvim-autopairs",
@@ -20,7 +20,7 @@ plugins = {
   },
   --  Telescope
   {
-    dir = "/Users/tundetaiwo/.local/share/nvim/lazy/plenary.nvim"
+    dir = plugin_folder .. "plenary.nvim"
   },
   {
     dir = plugin_folder .. "telescope.nvim",
@@ -36,10 +36,16 @@ plugins = {
     dir = plugin_folder .. "nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     opts = require("configs.nvimtree"),
+    dependencies = {
+      dir = plugin_folder .. "nvim-web-devicons",
+    },
   },
   -- lspconfig
   {
     dir = plugin_folder .. "nvim-lspconfig",
+    config = function()
+      require("configs.lspconfig")
+    end,
   },
   -- treesitter
   {
@@ -49,8 +55,22 @@ plugins = {
   -- toggleterm
   {
     dir = plugin_folder .. "toggleterm.nvim",
-    opts = require("configs.toggleterm"),
+    -- opts = require("configs.toggleterm"),
+    opts = function()
+      return require("configs.toggleterm")
+    end,
   },
+  -- Bufferline
+  {
+    dir = plugin_folder .. "bufferline.nvim",
+    dependencies = {
+      dir = plugin_folder .. "nvim-web-devicons",
+    },
+    config = function()
+      require "configs.bufferline"
+    end,
+
+  }
 }
--- ToggleTerm size=40 dir=~/ direction=float name=desktop
+
 return plugins
