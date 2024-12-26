@@ -50,7 +50,15 @@ local plugins = {
   -- treesitter
   {
     dir = plugin_folder .. "nvim-treesitter",
-    -- opts = require("configs.treesitter"),
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+    build = ":TSUpdate",
+    opt = function()
+      return require "configs.treesitter"
+    end,
+    config = function()
+      require("configs.treesitter_parsers")
+    end,
   },
   -- toggleterm
   {
@@ -69,8 +77,31 @@ local plugins = {
     config = function()
       require "configs.bufferline"
     end,
-
+  },
+  -- Auto Completion
+ {
+    dir = plugin_folder .."nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      {
+        -- snippet plugin
+        dir = plugin_folder .. "LuaSnip",
+        dependencies = {dir = plugin_folder .. "friendly-snippets"},
+        opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+        config = function(_, opts)
+          require("luasnip").config.set_config(opts)
+          require("configs.luasnip")
+        end,
+      },
+      { dir = plugin_folder .. "cmp_luasnip" },
+      { dir = plugin_folder .. "cmp-nvim-lua" },
+      { dir = plugin_folder .. "cmp-nvim-lsp" },
+      { dir = plugin_folder .. "cmp-buffer" },
+      { dir = plugin_folder .. "cmp-path" },
+    },
+    opts = function()
+      return require "configs.cmp"
+    end,
   }
 }
-
 return plugins
