@@ -85,6 +85,17 @@ def move_configs(app: str, machine: str, update: bool = False):
         raise NotImplementedError(f"{machine} is not yet implemented.")
 
     if app.lower() in ["nvim", "neovim", "all"]:
+        being_replaced = "~/.config/nvim/"
+        replacing_with = f"{PROJECT_PATH}/nvim"
+
+        _replace(
+            being_replaced=being_replaced,
+            replacing_with=replacing_with,
+            folder=True,
+            update=update,
+        )
+
+    if app.lower() == "nvchad":
         if machine in ["mac", "unix"]:
             if not update:
                 nvchad_installed = input(
