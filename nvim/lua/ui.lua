@@ -10,4 +10,6 @@ vim.cmd([[
     hi NormalNC guibg=NONE ctermbg=NONE
     hi EndOfBuffer guibg=NONE ctermbg=NONE
     hi SignColumn guibg=NONE ctermbg=NONE
+    hi NvimTreeNormal guibg=NONE ctermbg=NONE
+    "hi ToggleTermVeritcal guibg=NONE ctermbg=NONE
 ]])

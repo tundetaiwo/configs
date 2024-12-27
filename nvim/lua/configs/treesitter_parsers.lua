@@ -1,6 +1,5 @@
 local TS_folder = "/Users/tundetaiwo/.local/share/nvim/treesitter/"
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-
 -- NOTE: YOU NEED TO TSInstall THE PARSER -- 
 
 require'nvim-treesitter.configs'.setup{

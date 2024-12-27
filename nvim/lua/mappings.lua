@@ -1,5 +1,6 @@
 -- Keymaps
 vim.keymap.set("i", "jj", "<ESC>")
+vim.keymap.set("i", "<C-s>", "<cmd>w<CR>")
 
 -- Buffer Commands
 vim.keymap.set({"n", "i"}, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer"})
@@ -30,6 +31,7 @@ vim.keymap.set("i", "<C-j>", "<Down>", { desc = "move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
 
 -- Terminal Movement
+local opts = {buffer = 0}
 vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
 vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
 vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
@@ -56,16 +58,19 @@ vim.keymap.set(
 vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
--- Toggle Term
-vim.keymap.set({"n", "t"}, "<A-h>", "<cmd>ToggleTerm size=25 direction=horizontal<CR>")
-vim.keymap.set({"n", "t"}, "<A-v>", "<cmd>ToggleTerm size=50 direction=vertical<CR>")
-vim.keymap.set({"n", "t"}, "<A-i>", "<cmd>ToggleTerm size=40 direction=float<CR>")
 
+vim.keymap.set("n", "<leader>it", "<cmd>ToggleTerm size=40 direction=float<CR>", { desc = "create interactive terminal" })
 -- lspconfig
-local function opts(desc)
-  return { buffer = bufnr, desc = "LSP " .. desc }
-end
-vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
-vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
-vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+-- local function opts(desc)
+--   return { buffer = bufnr, desc = "LSP " .. desc }
+-- end
+-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+-- vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+
+-- Toggle Term
+-- mappings are in configs/toggleterm.lua
+-- vim.keymap.set({"n", "t"}, "<A-h>", "<cmd>ToggleTerm size=25 direction=horizontal<CR>")
+-- vim.keymap.set({"n", "t"}, "<A-v>", "<cmd>ToggleTerm size=50 direction=vertical<CR>")
+-- vim.keymap.set({"n", "t"}, "<A-i>", "<cmd>ToggleTerm size=40 direction=float<CR>")
