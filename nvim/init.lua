@@ -4,5 +4,5 @@ require("mappings")
 require("configs.lazy")
 
 require("ui")
-
+require("lazygit")
 
