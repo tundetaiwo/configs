@@ -5,8 +5,8 @@ local custom_on_attach = function(_, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
-  -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
-  -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
   -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
   -- vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
   -- vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")

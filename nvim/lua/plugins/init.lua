@@ -20,7 +20,8 @@ local plugins = {
   },
   --  Telescope
   {
-    dir = plugin_folder .. "plenary.nvim"
+    -- dir = plugin_folder .. "plenary.nvim"
+   url = "nvim.lua/plenary.nvim",
   },
   {
     dir = plugin_folder .. "telescope.nvim",
@@ -53,11 +54,12 @@ local plugins = {
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
-    opt = function()
+    opts = function()
       return require "configs.treesitter"
     end,
-    config = function()
-      require("configs.treesitter_parsers")
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+      require("configs.treesitter_parsers") -- This isn't quite working
     end,
   },
   -- toggleterm
@@ -102,6 +104,11 @@ local plugins = {
     opts = function()
       return require "configs.cmp"
     end,
+  },
+  -- Theme
+  {
+    dir = plugin_folder .. "catppuccin-nvim",
+    priority=1000,
   }
 }
 return plugins

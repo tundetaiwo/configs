@@ -1,5 +1,7 @@
-local TS_folder = "/Users/tundetaiwo/.local/share/lazy/treesitter/"
+local TS_folder = "/Users/tundetaiwo/.local/share/nvim/treesitter/"
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+
+-- NOTE: YOU NEED TO TSInstall THE PARSER -- 
 
 require'nvim-treesitter.configs'.setup{
   parser_install_dir = TS_folder,
@@ -12,7 +14,7 @@ parser_config.python = {
     -- url = "/Users/tundetaiwo/.local/share/nvim/treesitter/tree-sitter-python",
     files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
   },
-  -- filetype = "py", -- if filetype does not match the parser name
+  -- filetype = "python", -- if filetype does not match the parser name
 }
 parser_config.lua = {
   install_info = {
@@ -20,7 +22,7 @@ parser_config.lua = {
     -- url = "/Users/tundetaiwo/.local/share/nvim/treesitter/tree-sitter-lua",
     files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
   },
-  filetype = "python", -- if filetype does not match the parser name
+  -- filetype = "lua", -- if filetype does not match the parser name
 }
 
 parser_config.rust = {
@@ -28,7 +30,7 @@ parser_config.rust = {
     url = TS_folder .. "tree-sitter-rust", -- local path or git repo
     files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
   },
-  filetype = "rust", -- if filetype does not match the parser name
+  -- filetype = "rust", -- if filetype does not match the parser name
 }
 
 parser_config.toml = {
@@ -36,5 +38,5 @@ parser_config.toml = {
     url = TS_folder .. "tree-sitter-toml", -- local path or git repo
     files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
   },
-  filetype = "toml", -- if filetype does not match the parser name
+  -- filetype = "toml", -- if filetype does not match the parser name
 }
