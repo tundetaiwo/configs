@@ -20,8 +20,13 @@ local plugins = {
   },
   --  Telescope
   {
-    -- dir = plugin_folder .. "plenary.nvim"
-   url = "nvim.lua/plenary.nvim",
+    dir = plugin_folder .. "plenary.nvim"
+   -- url = "nvim.lua/plenary.nvim",
+  },
+  {
+    -- url = 'nvim-telescope/',
+    dir = plugin_folder .. "telescope-fzf-native.nvim",
+    build = 'make',
   },
   {
     dir = plugin_folder .. "telescope.nvim",
@@ -30,7 +35,19 @@ local plugins = {
     -- opts = function()
       -- return require("configs.telescope")
     -- end,
-    opts = require("configs.telescope")
+    opts = require("configs.telescope"),
+    extensions = {
+      fzf = {
+        fuzzy = true,                    -- false will only do exact matching
+        override_generic_sorter = true,  -- override the generic sorter
+        override_file_sorter = true,     -- override the file sorter
+        case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+      },
+    },
+    config = function()
+      require('telescope').load_extension('fzf')
+    end,
   },
   -- Nvim Tree
   {
@@ -146,7 +163,8 @@ local plugins = {
   },
   -- Vim slime
   {
-    "jpalardy/vim-slime",
+    -- url = "jpalardy/vim-slime",
+    dir = plugin_folder .. "vim-slime",
     init = function()
       vim.g.slime_target = "neovim"
       vim.g.slime_python_ipython = 1
