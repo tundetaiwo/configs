@@ -1,48 +1,41 @@
 local Terminal  = require('toggleterm.terminal').Terminal
 -- Float Window --
-local float_toggle = Terminal:new({
+local float_window = Terminal:new({
   direction = "float",
-  size=70,
+  -- size=70,
   float_opts =  {
     border = "double",
     size = 40,
   },
   close_on_exit = true,
 })
-
 function _float_toggle()
-  float_toggle:toggle()
+  float_window:toggle()
 end
 
 vim.api.nvim_set_keymap("n", "<A-i>", "<cmd>lua _float_toggle()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("t", "<A-i>", "<cmd>lua _float_toggle()<CR>", {noremap = true, silent = true})
 
 -- Vertical Window --
-local vertical_toggle = Terminal:new({
+local vertical_window = Terminal:new({
   direction = "vertical",
-  size=70,
-  -- float_opts =  {
-  --   border = "double",
-  --   size = 40,
-  -- },
   close_on_exit = true,
 })
-
+vertical_window:resize(30)
 function _vertical_toggle()
-  vertical_toggle:toggle()
+  vertical_window:toggle()
 end
 vim.api.nvim_set_keymap("n", "<A-v>", "<cmd>lua _vertical_toggle()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("t", "<A-v>", "<cmd>lua _vertical_toggle()<CR>", {noremap = true, silent = true})
 
 -- Horizonal Window --
-local horizonal_toggle = Terminal:new({
+local horizonal_window = Terminal:new({
   direction = "horizontal",
-  size=100,
   close_on_exit = true,
 })
 
 function _horizonal_toggle()
-  horizonal_toggle:toggle()
+  horizonal_window:toggle()
 end
 vim.api.nvim_set_keymap("n", "<A-h>", "<cmd>lua _horizonal_toggle()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("t", "<A-h>", "<cmd>lua _horizonal_toggle()<CR>", {noremap = true, silent = true})
@@ -50,7 +43,7 @@ vim.api.nvim_set_keymap("t", "<A-h>", "<cmd>lua _horizonal_toggle()<CR>", {norem
 
 -- Lazy Git --
 local lazygit = Terminal:new({
-  name = "Lazy Git",
+  display_name = "Lazy Git",
   cmd = "lazygit",
   dir = "git_dir",
   direction = "float",
@@ -72,15 +65,14 @@ vim.api.nvim_set_keymap("t", "<A-g>", "<cmd>lua _lazygit_toggle()<CR>", {noremap
 
 
 -- Interactive Window --
-local interactive_window_toggle = Terminal:new({
+local interactive_window = Terminal:new({
   cmd = "ipython --autoindent",
-  name = "Interactive Window",
+  display_name = "Interactive Window",
   direction = "vertical",
-  size=70,
 })
-
+interactive_window:resize(vim.o.columns * 0.5)
 function _interactive_window_toggle()
-  interactive_window_toggle:toggle()
+  interactive_window:toggle()
 end
 
 vim.api.nvim_set_keymap("n", "<leader>ip", "<cmd>lua _interactive_window_toggle()<CR>", {noremap = true, silent = true})

@@ -109,16 +109,13 @@ local plugins = {
     "jpalardy/vim-slime",
     init = function()
       vim.g.slime_target = "neovim"
-      -- vim.g.slime_python_ipython = 1
+      vim.g.slime_python_ipython = 1
       vim.g.slime_cell_delimiter = "#\\s\\=%%"
       vim.slime_bracketed_paste = 1
     end,
     config = function ()
-      vim.keymap.set("n", "gzz", "<Plug>SlimeSendCell", { remap = true, silent = false })
-      vim.keymap.set("v", "gzz", "<Plug>SlimeLineSend", { remap = true, silent = false })
-      -- vim.keymap.set({"n", "i"}, "<leader>m", function ()
-      --   vim.cmd [[call slime#send_cell() ]]
-      -- end)
+      vim.keymap.set("n", "<leader>x", "<Plug>SlimeSendCell", { remap = true, silent = false })
+      vim.keymap.set("v", "<leader>x", "<Plug>SlimeLineSend", { remap = true, silent = false })
     end
   },
   -- Theme
