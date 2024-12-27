@@ -30,7 +30,8 @@ local custom_on_init = function(client, _)
   end
 end
 
-local custom_capabilities = vim.lsp.protocol.make_client_capabilities()
+-- local custom_capabilities = vim.lsp.protocol.make_client_capabilities()
+local custom_capabilities = require("cmp_nvim_lsp").default_capabilities()
 custom_capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext" },
   snippetSupport = true,
@@ -72,19 +73,30 @@ lspconfig.lua_ls.setup {
   },
 }
 
+-- Disable pyright type checking
+lspconfig.pyright.setup {
+  on_attach = custom_on_attach,
+  on_init = custom_on_init,
+  capabilities = custom_capabilities,
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "off",
+      },
+    },
+  },
+}
+-- Use ruff exclusively as a formatter
 lspconfig.ruff.setup {
   on_attach = custom_on_attach,
   on_init = custom_on_init,
   capabilities = custom_capabilities,
   init_options = {
     settings = {
-      configurationPreference = "filesystemFirst",
-      organizeImports = true,
-      showSyntaxErrors = true,
+      showSyntaxErrors = false,
       lint = {
-        enable = true,
-        ignore = {},
-      }
-    }
-  }
+        enable = false,
+      },
+    },
+  },
 }

@@ -1,8 +1,8 @@
 local Terminal  = require('toggleterm.terminal').Terminal
 -- Float Window --
+  -- size=70,
 local float_window = Terminal:new({
   direction = "float",
-  -- size=70,
   float_opts =  {
     border = "double",
     size = 40,
@@ -49,11 +49,9 @@ local lazygit = Terminal:new({
   direction = "float",
   float_opts = {
     border = "double",
-    size = 10,
+    -- size = 10,
+    title_pos = "center"
   },
-  shading_factor = 0,
-  persist_size = false,
-  persist_mode = false,
 })
 
 function _lazygit_toggle()

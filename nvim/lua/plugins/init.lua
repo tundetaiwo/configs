@@ -62,6 +62,46 @@ local plugins = {
       require("configs.treesitter_parsers") -- This isn't quite working
     end,
   },
+  -- Debugger
+  { dir = plugin_folder .. "nvim-nio"},
+  {
+    dir = plugin_folder .. "nvim-dap-ui",
+    dependencies = { dir = plugin_folder .. "nvim-dap"},
+    config = function()
+      local dap = require "dap"
+      local dapui = require "dapui"
+      dapui.setup()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.after.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.after.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+    end,
+  },
+  {
+    -- "mfussenegger/nvim-dap",
+    dir = plugin_folder .. "nvim-dap",
+    config = function(_, opts) end,
+  },
+  {
+    -- "mfussenegger/nvim-dap-python",
+    dir = plugin_folder .. "nvim-dap-python",
+    ft = "python",
+    dependencies = {
+      { dir = plugin_folder .. "nvim-dap" },
+      { dir = plugin_folder .. "nvim-dap-ui" },
+    },
+    config = function(_, opts)
+      local path = "~/.cache/venvs/debugpy_venv/bin/python"
+      -- local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+      require("dap-python").setup(path)
+      require("dap-python").test_runner = "pytest"
+    end,
+  },
   -- toggleterm
   {
     dir = plugin_folder .. "toggleterm.nvim",
@@ -114,8 +154,8 @@ local plugins = {
       vim.slime_bracketed_paste = 1
     end,
     config = function ()
-      vim.keymap.set("n", "<leader>x", "<Plug>SlimeSendCell", { remap = true, silent = false })
-      vim.keymap.set("v", "<leader>x", "<Plug>SlimeLineSend", { remap = true, silent = false })
+      vim.keymap.set("n", "<leader>r", "<Plug>SlimeSendCell", { remap = true, silent = false })
+      vim.keymap.set("v", "<leader>r", "<Plug>SlimeLineSend", { remap = true, silent = false })
     end
   },
   -- Theme

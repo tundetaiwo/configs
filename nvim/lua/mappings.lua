@@ -1,6 +1,6 @@
 -- Keymaps
 vim.keymap.set("i", "jj", "<ESC>")
-vim.keymap.set("i", "<C-s>", "<cmd>w<CR>")
+vim.keymap.set({"i", "n"}, "<C-s>", "<cmd>w<CR>", { desc = "save buffer with ctrl+s"})
 
 -- Buffer Commands
 vim.keymap.set({"n", "i"}, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer"})
@@ -10,7 +10,7 @@ vim.keymap.set({"n", "i"}, "<A-2>", "<cmd>bsecond<CR>", { desc = "go to second b
 vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", { desc = "buffer close" })
 -- vim.keymap.set("n", "<leader>X", "<cmd>LastBuf<CR>", { desc = "re-open last closed buffer" }) -- TODO
 -- vim.keymap.set("n", "<leader>x", "<cmd>w|bd<CR>", { desc = "buffer close" }) -- Need to get this to prompt for modified buffer
-    
+
 vim.keymap.set("n", "<leader>b", "<cmd>ls<CR>",{ desc = "buffer close" })
 
 -- Comment
@@ -31,7 +31,6 @@ vim.keymap.set("i", "<C-j>", "<Down>", { desc = "move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
 
 -- Terminal Movement
--- local opts = {buffer = 0}
 vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]])
 vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]])
 vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]])
@@ -58,19 +57,37 @@ vim.keymap.set(
 vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
+-- DebugPy
+vim.keymap.set({"i", "n"}, "<F5>", function()
+  require("dap").continue()
+end)
+vim.keymap.set({"i", "n"}, "<S-F5>", function()
+  require("dap").disconnect()
+end)
+vim.keymap.set({"i", "n"}, "<F10>", function()
+  require("dap").step_over()
+end)
+vim.keymap.set({"i", "n"}, "<F11>", function()
+  require("dap").step_into()
+end)
+vim.keymap.set({"i", "n"}, "<F12>", function()
+  require("dap").step_out()
+end)
+vim.keymap.set("n", "<Leader>b", function()
+  require("dap").toggle_breakpoint()
+end)
+vim.keymap.set("n", "<F9>", function()
+  require("dap").set_breakpoint()
+end)
+-- vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+vim.keymap.set("n", "<Leader>df", function()
+  require("dap").continue()
+end)
+vim.keymap.set("n", "<Leader>dr", function()
+  require("dap").repl.open()
+end)
 
-vim.keymap.set("n", "<leader>it", "<cmd>ToggleTerm size=40 direction=float<CR>", { desc = "create interactive terminal" })
--- lspconfig
--- local function opts(desc)
---   return { buffer = bufnr, desc = "LSP " .. desc }
--- end
--- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
--- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
--- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
--- vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
-
--- Toggle Term
--- mappings are in configs/toggleterm.lua
--- vim.keymap.set({"n", "t"}, "<A-h>", "<cmd>ToggleTerm size=25 direction=horizontal<CR>")
--- vim.keymap.set({"n", "t"}, "<A-v>", "<cmd>ToggleTerm size=50 direction=vertical<CR>")
--- vim.keymap.set({"n", "t"}, "<A-i>", "<cmd>ToggleTerm size=40 direction=float<CR>")
+vim.keymap.set("n", "<F9>", "<cmd> DapToggleBreakpoint <CR>")
+vim.keymap.set("n", "<leader>dlb", function()
+  require("dap").list_breakpoints()
+end)
