@@ -9,3 +9,4 @@ require("catppuccin").setup({
 
 -- Set Theme
 vim.cmd.colorscheme "catppuccin"
+

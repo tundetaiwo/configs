@@ -58,6 +58,11 @@ local plugins = {
       dir = plugin_folder .. "nvim-web-devicons",
     },
   },
+  -- AutoFormatting 
+  {
+    dir = plugin_folder .. "conform.nvim",
+    -- url = "stevearc/conform.nvim",
+  },
   -- lspconfig
   {
     dir = plugin_folder .. "nvim-lspconfig",
@@ -180,6 +185,6 @@ local plugins = {
   {
     dir = plugin_folder .. "catppuccin-nvim",
     priority=1000,
-  }
+    }
 }
 return plugins
