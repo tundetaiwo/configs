@@ -1,6 +1,7 @@
 -- Keymaps
 vim.keymap.set("i", "jj", "<ESC>")
 vim.keymap.set({"i", "n"}, "<C-s>", "<cmd>w<CR>", { desc = "save buffer with ctrl+s"})
+vim.keymap.set("i", "<S-tab>", "<BS>", { desc = "unindent", remap = true })
 
 -- Buffer Commands
 vim.keymap.set({"n", "i"}, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer"})
