@@ -12,7 +12,7 @@ vim.o.smartindent = true
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 
-vim.opt.scrolloff = 5
+vim.opt.scrolloff = 7
 
 vim.opt.updatetime = 500
 
