@@ -27,7 +27,7 @@ local close_nvim_but = dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>")
 local file_file_but = dashboard.button("Ctrl + p", "  Find File", ":Telescope find_files ")
 local open_sess_butt = dashboard.button("SPC s l", "󱈅  Open Session", function() require("persistence").select() end)
 local last_sess_butt = dashboard.button("SPC l s", "  Open Last Session",
-	function() require("persistence").load({ last = true }) end)
+	function() require("persistence").load() end)
 
 
 dashboard.section.buttons.val = {
