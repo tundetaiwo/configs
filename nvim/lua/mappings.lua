@@ -1,7 +1,27 @@
+-- NOTE: if mappings is slow use `:verbose map <mapping>` to check what other things are mapped to it
+
 -- Keymaps
 vim.keymap.set("i", "jj", "<ESC>")
 vim.keymap.set({ "i", "n" }, "<C-s>", "<cmd>w<CR>", { desc = "save buffer with ctrl+s" })
 vim.keymap.set("i", "<S-tab>", "<BS>", { desc = "unindent", remap = true })
+
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "keep cursor in middle scrolling down" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "keep cursor in middle scrolling up" })
+
+vim.keymap.set("v", "<leader>_", "\"_d", { desc = "delete to void" })
+
+vim.keymap.set("v", "<leader>y", "\"+y", { desc = "map clipboard yanking" })
+vim.keymap.set("n", "<leader>Y", "\"+y", { desc = "map clipboard yanking" })
+vim.keymap.set({ "n", "v" }, "<leader>p", "\"+p", { desc = "map clipboard pasting" })
+
+vim.keymap.set({ "n", "v" }, "p", "\"0p", { desc = "Paste from 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "P", "\"0P", { desc = "Paste from 0 register as clipboard overwrites unnamed register" })
+
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move visual selected block up 1 line" })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move visual selected block down 1 line" })
+
+vim.keymap.set("n", "n", "nzzzv", { desc = "When searching keep cursor in middle" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle" })
 
 -- Buffer Commands
 vim.keymap.set({ "n", "i" }, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer" })
@@ -47,13 +67,13 @@ vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "tele
 vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>",
-  { desc = "telescope find in current buffer" })
-vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }) -- Currently not working?
+	{ desc = "telescope find in current buffer" })
+-- vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }) -- Currently not working?
 vim.keymap.set(
-  "n",
-  "<leader>fa",
-  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-  { desc = "telescope find all files" }
+	"n",
+	"<leader>fa",
+	"<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+	{ desc = "telescope find all files" }
 )
 
 -- Nvim Tree
@@ -62,40 +82,40 @@ vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree fo
 
 -- DebugPy
 vim.keymap.set({ "i", "n" }, "<F5>", function()
-  require("dap").continue()
+	require("dap").continue()
 end)
 vim.keymap.set({ "i", "n" }, "<S-F5>", function()
-  require("dap").disconnect()
+	require("dap").disconnect()
 end)
 vim.keymap.set({ "i", "n" }, "<F10>", function()
-  require("dap").step_over()
+	require("dap").step_over()
 end)
 vim.keymap.set({ "i", "n" }, "<F11>", function()
-  require("dap").step_into()
+	require("dap").step_into()
 end)
 vim.keymap.set({ "i", "n" }, "<F12>", function()
-  require("dap").step_out()
+	require("dap").step_out()
 end)
 vim.keymap.set("n", "<Leader>b", function()
-  require("dap").toggle_breakpoint()
+	require("dap").toggle_breakpoint()
 end)
 vim.keymap.set("n", "<F9>", function()
-  require("dap").set_breakpoint()
+	require("dap").set_breakpoint()
 end)
 -- vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
 vim.keymap.set("n", "<Leader>df", function()
-  require("dap").continue()
+	require("dap").continue()
 end)
 vim.keymap.set("n", "<Leader>dr", function()
-  require("dap").repl.open()
+	require("dap").repl.open()
 end)
 
 vim.keymap.set("n", "<F9>", "<cmd> DapToggleBreakpoint <CR>")
 vim.keymap.set("n", "<leader>dlb", function()
-  require("dap").list_breakpoints()
+	require("dap").list_breakpoints()
 end)
 
 -- Format file
 vim.keymap.set("n", "<leader>fm", function()
-  require("conform").format { lsp_fallback = true }
+	require("conform").format { lsp_fallback = true }
 end, { desc = "general format file" })
