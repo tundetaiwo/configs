@@ -1,3 +1,12 @@
+"""
+This script is meant to be used when setting neovim. Neovim configuration 
+is for offline files so this script clones all extension to where they are 
+meant to be
+
+If a folder name is different to what is clone such as catppuccin-nvim you
+can set a value in the extension_urls dictionary to choose the folder name
+"""
+
 import os
 import subprocess
 
@@ -31,6 +40,7 @@ extension_urls = {
     "https://github.com/hrsh7th/nvim-cmp": "",
     "https://github.com/akinsho/bufferline.nvim": "",
     "https://github.com/catppuccin/nvim": "catppuccin-nvim",
+    "https://github.com/goolord/alpha-nvim": "",
 }
 
 for url, name in extension_urls.items():

@@ -1,4 +1,5 @@
-local plugin_folder = "/Users/tundetaiwo/.local/share/nvim/lazy/"
+-- local plugin_folder = "/root/.local/share/nvim/lazy/"
+local plugin_folder = vim.fn.stdpath("data") .. "/lazy/"
 local plugins = {
   --  Autopairs
   {
@@ -13,36 +14,34 @@ local plugins = {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-        require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-        })
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
     end
   },
   --  Telescope
   {
     dir = plugin_folder .. "plenary.nvim"
-   -- url = "nvim.lua/plenary.nvim",
   },
   {
-    -- url = 'nvim-telescope/',
     dir = plugin_folder .. "telescope-fzf-native.nvim",
     build = 'make',
   },
   {
     dir = plugin_folder .. "telescope.nvim",
     lazy = true,
-    -- dependencies = {dir = "/Users/tundetaiwo/.local/share/nvim/lazy/plenary.nvim"},
+    dependencies = { dir = plugin_folder .. "plenary.nvim" },
     -- opts = function()
-      -- return require("configs.telescope")
+    -- return require("configs.telescope")
     -- end,
     opts = require("configs.telescope"),
     extensions = {
       fzf = {
-        fuzzy = true,                    -- false will only do exact matching
-        override_generic_sorter = true,  -- override the generic sorter
-        override_file_sorter = true,     -- override the file sorter
-        case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
+        fuzzy = true,                   -- false will only do exact matching
+        override_generic_sorter = true, -- override the generic sorter
+        override_file_sorter = true,    -- override the file sorter
+        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+        -- the default case_mode is "smart_case"
       },
     },
     config = function()
@@ -58,10 +57,9 @@ local plugins = {
       dir = plugin_folder .. "nvim-web-devicons",
     },
   },
-  -- AutoFormatting 
+  -- AutoFormatting
   {
     dir = plugin_folder .. "conform.nvim",
-    -- url = "stevearc/conform.nvim",
   },
   -- lspconfig
   {
@@ -85,10 +83,12 @@ local plugins = {
     end,
   },
   -- Debugger
-  { dir = plugin_folder .. "nvim-nio"},
+  {
+    dir = plugin_folder .. "nvim-nio",
+  },
   {
     dir = plugin_folder .. "nvim-dap-ui",
-    dependencies = { dir = plugin_folder .. "nvim-dap"},
+    dependencies = { dir = plugin_folder .. "nvim-dap" },
     config = function()
       local dap = require "dap"
       local dapui = require "dapui"
@@ -105,17 +105,19 @@ local plugins = {
     end,
   },
   {
-    -- "mfussenegger/nvim-dap",
     dir = plugin_folder .. "nvim-dap",
     config = function(_, opts) end,
   },
   {
-    -- "mfussenegger/nvim-dap-python",
     dir = plugin_folder .. "nvim-dap-python",
     ft = "python",
     dependencies = {
-      { dir = plugin_folder .. "nvim-dap" },
-      { dir = plugin_folder .. "nvim-dap-ui" },
+      {
+        dir = plugin_folder .. "nvim-dap"
+      },
+      {
+        dir = plugin_folder .. "nvim-dap-ui",
+      },
     },
     config = function(_, opts)
       local path = "~/.cache/venvs/debugpy_venv/bin/python"
@@ -142,25 +144,35 @@ local plugins = {
     end,
   },
   -- Auto Completion
- {
-    dir = plugin_folder .."nvim-cmp",
+  {
+    dir = plugin_folder .. "nvim-cmp",
     event = "InsertEnter",
     dependencies = {
       {
         -- snippet plugin
         dir = plugin_folder .. "LuaSnip",
-        dependencies = {dir = plugin_folder .. "friendly-snippets"},
+        dependencies = { dir = plugin_folder .. "friendly-snippets" },
         opts = { history = true, updateevents = "TextChanged,TextChangedI" },
         config = function(_, opts)
           require("luasnip").config.set_config(opts)
           require("configs.luasnip")
         end,
       },
-      { dir = plugin_folder .. "cmp_luasnip" },
-      { dir = plugin_folder .. "cmp-nvim-lua" },
-      { dir = plugin_folder .. "cmp-nvim-lsp" },
-      { dir = plugin_folder .. "cmp-buffer" },
-      { dir = plugin_folder .. "cmp-path" },
+      {
+        dir = plugin_folder .. "cmp_luasnip",
+      },
+      {
+        dir = plugin_folder .. "cmp-nvim-lua"
+      },
+      {
+        dir = plugin_folder .. "cmp-nvim-lsp"
+      },
+      {
+        dir = plugin_folder .. "cmp-buffer"
+      },
+      {
+        dir = plugin_folder .. "cmp-path"
+      },
     },
     opts = function()
       return require "configs.cmp"
@@ -168,7 +180,6 @@ local plugins = {
   },
   -- Vim slime
   {
-    -- url = "jpalardy/vim-slime",
     dir = plugin_folder .. "vim-slime",
     init = function()
       vim.g.slime_target = "neovim"
@@ -176,7 +187,7 @@ local plugins = {
       vim.g.slime_cell_delimiter = "#\\s\\=%%"
       vim.slime_bracketed_paste = 1
     end,
-    config = function ()
+    config = function()
       vim.keymap.set("n", "<leader>r", "<Plug>SlimeSendCell", { remap = true, silent = false })
       vim.keymap.set("v", "<leader>r", "<Plug>SlimeLineSend", { remap = true, silent = false })
     end
@@ -184,8 +195,8 @@ local plugins = {
   -- Theme
   {
     dir = plugin_folder .. "catppuccin-nvim",
-    priority=1000,
-    }
+    priority = 1000,
+  },
   -- Custom Startup
   {
     "goolord/alpha-nvim",
@@ -201,5 +212,6 @@ local plugins = {
       require("configs.alpha")
     end,
   },
+
 }
 return plugins
