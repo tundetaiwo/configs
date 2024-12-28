@@ -2,6 +2,10 @@ vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.clipboard = ""
 
+vim.o.smartcase = true
+vim.o.ignorecase = true
+vim.o.incsearch = true
+
 -- Indenting
 vim.o.shiftwidth = 2
 vim.o.smartindent = true
