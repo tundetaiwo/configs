@@ -38,7 +38,8 @@ vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", { desc = "buffer close" })
 vim.keymap.set("n", "<leader>b", "<cmd>ls<CR>", { desc = "buffer close" })
 
 -- Comment
-vim.keymap.set({ "i", "n", "v" }, "<C-_>", "gcc", { desc = "Toggle Comment", remap = true })
+vim.keymap.set({ "i", "n" }, "<C-_>", "gcc", { desc = "Toggle Comment", remap = true })
+vim.keymap.set("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true })
 
 -- Search
 vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search highlighting" })
@@ -129,6 +130,7 @@ vim.keymap.set("n", "<leader>sl", function() require("persistence").select() end
 
 -- load the last session
 vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
+
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
