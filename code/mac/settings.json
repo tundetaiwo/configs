@@ -1,0 +1,169 @@
+{
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<esc>"
+            ]
+        }
+    ],
+    "editor.minimap.enabled": false,
+    "explorer.confirmDragAndDrop": false,
+    "python.formattting.provider": "black",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "jupyter.askForKernelRestart": false,
+    "vscode-neovim.neovimExecutablePaths.win32": "C:\\Program Files\\Neovim\\bin\\nvim.exe",
+    "editor.lineNumbers": "relative",
+    "workbench.iconTheme": "material-icon-theme",
+    "leetcode.workspaceFolder": "C:/Users/d_tai/.lc",
+    "leetcode.hint.commandShortcut": false,
+    "editor.wordWrap": "on",
+    "workbench.tree.indent": 4,
+    "leetcode.defaultLanguage": "python3",
+    "leetcode.filePath": {
+        "default": {
+            "folder": "",
+            "filename": "${id}.${kebab-case-name}.${ext}"
+        }
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true
+    },
+    "editor.inlineSuggest.enabled": true,
+    "python.languageServer": "Pylance",
+    "github.copilot.enable": {
+        "*": false,
+        "yaml": false,
+        "plaintext": false,
+        "markdown": false,
+        "cpp": false,
+        "python": true
+    },
+    "window.title": "${rootName}",
+    "window.doubleClickIconToClose": true,
+    "debug.onTaskErrors": "showErrors",
+    "autoDocstring.docstringFormat": "sphinx",
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "notebook.lineNumbers": "on",
+    "editor.accessibilitySupport": "off",
+    "jupyter.interactiveWindow.creationMode": "perFile",
+    "notebook.output.scrolling": true,
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.suggestSmartCommit": false,
+    "python.defaultInterpreterPath": "/Users/tundetaiwo/Documents/2024/Freespace_Desk_Booker/venv",
+    "files.simpleDialog.enable": true,
+    "jupyter.notebookFileRoot": "${Folder}",
+    "background.backgroundOpacity": [
+        0.9,
+        0.92,
+        0.9,
+        0.9
+    ],
+    "cursor-ruler.width": "10px",
+    "cursor-ruler.color": "#40808080",
+    "zenMode.hideStatusBar": false,
+    "zenMode.hideLineNumbers": false,
+    "zenMode.silentNotifications": false,
+    "clock.alignment": "Right",
+    "clock.format": "HH:MM",
+    "background.editorBackgrounds": [
+        "/home/tunde/Downloads/1324832.png"
+    ],
+    "git.terminalAuthentication": false,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "github.copilot.editor.enableAutoCompletions": false,
+    "interactiveWindow.executeWithShiftEnter": true,
+    "todo-tree.highlights.defaultHighlight": {
+        "icon": "alert",
+        "type": "text",
+        "background": "transparent",
+        "opacity": 50,
+        "iconColour": "blue"
+    },
+    "todo-tree.highlights.customHighlight": {
+        "TOMODIFY: 4.0.0": {
+            "icon": "alert",
+            "type": "text",
+            "background": "transparent",
+            "foreground": "#f90202",
+        },
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "jupyter.interactiveWindow.creationMode": "perFile",
+    "diffEditor.renderSideBySide": false,
+    "vim.statusBarColorControl": false,
+    "interactiveWindow.executeWithShiftEnter": true,
+    "explorer.copyRelativePathSeparator": "/",
+    "vim.history": 100,
+    "[snippets]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "editor.cursorBlinking": "solid",
+    "background.useInvertedOpacity": true,
+    "vim.neovimPath": "/opt/homebrew/bin/nvim",
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "f"
+            ],
+            "commands": [
+                "workbench.action.quickOpen"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "x",
+            ],
+            "commands": [
+                "workbench.action.closeActiveEditor"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "w"
+            ],
+            "commands": [
+                "workbench.action.findInFiles"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "m",
+            ],
+            "commands": [
+                "editor.action.formatDocument"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "e",
+            ],
+            "commands": [
+                "workbench.explorer.fileView.focus"
+            ]
+        }
+    ],
+    "workbench.colorTheme": "Tokyo Night"
+}

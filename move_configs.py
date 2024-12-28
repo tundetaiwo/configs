@@ -60,7 +60,7 @@ def move_configs(app: str, machine: str, update: bool = False):
 
     Parameters
     ----------
-    `app (str)`: application we want configuration file for e.g. vs code, tmux, zsh etc.
+    `app (str)`: application we want configuration file for, see notes section for all configs supported
     `machine (str)`: type of machine i.e. "Windows", "Mac", "Unix"
     `update (bool)`: whether to update config(s) stored in repository with config(s) on current machine
 
@@ -72,6 +72,7 @@ def move_configs(app: str, machine: str, update: bool = False):
     * tmux
     * vs code
     * git
+    * windows terminal
     """
 
     if app.lower() in [
@@ -85,6 +86,17 @@ def move_configs(app: str, machine: str, update: bool = False):
         raise NotImplementedError(f"{machine} is not yet implemented.")
 
     if app.lower() in ["nvim", "neovim", "all"]:
+        being_replaced = "~/.config/nvim/"
+        replacing_with = f"{PROJECT_PATH}/nvim"
+
+        _replace(
+            being_replaced=being_replaced,
+            replacing_with=replacing_with,
+            folder=True,
+            update=update,
+        )
+
+    if app.lower() == "nvchad":
         if machine in ["mac", "unix"]:
             if not update:
                 nvchad_installed = input(
@@ -166,7 +178,14 @@ def move_configs(app: str, machine: str, update: bool = False):
             replacing_with = f"{PROJECT_PATH}/iterm2.plist"
         else:
             raise ValueError(f"{machine} is not supported for {app}.")
-
+    if app.lower() in ["windows termial", "windows_terminal"]:
+        if machine.lower() in ["mac", "darwin"]:
+            raise ValueError(f"{machine} is not supported for {app}.")
+        else:
+            user = getpass.getuser()
+            being_replaced = f"C:/Users/{user}/AppData/Local/Microsoft/Windows Terminal/settings.json"
+            replacing_with = f"windows_settings.json"
+        
 
 if __name__ == "__main__":
     move_configs(

@@ -1,5 +1,3 @@
-dofile(vim.g.base46_cache .. "cmp")
-
 local cmp = require "cmp"
 
 local options = {
@@ -12,8 +10,8 @@ local options = {
   },
 
   mapping = {
-    ["<S-k>"] = cmp.mapping.select_prev_item(),
-    ["<S-j>"] = cmp.mapping.select_next_item(),
+    ["<C-k>"] = cmp.mapping.select_prev_item(),
+    ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
@@ -54,4 +52,4 @@ local options = {
   },
 }
 
-return vim.tbl_deep_extend("force", options, require "nvchad.cmp")
+return options
