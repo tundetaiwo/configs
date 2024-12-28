@@ -14,11 +14,14 @@ vim.keymap.set("v", "<leader>y", "\"+y", { desc = "map clipboard yanking" })
 vim.keymap.set("n", "<leader>Y", "\"+y", { desc = "map clipboard yanking" })
 vim.keymap.set({ "n", "v" }, "<leader>p", "\"+p", { desc = "map clipboard pasting" })
 
-vim.keymap.set({ "n", "v" }, "p", "\"0p", { desc = "Paste from 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "y", "\"0y", { desc = "yank to 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "d", "\"0d", { desc = "delete to 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "c", "\"0c", { desc = "cut to 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "p", "\"0p", { desc = "paste from 0 register as clipboard overwrites unnamed register" })
 vim.keymap.set({ "n", "v" }, "P", "\"0P", { desc = "Paste from 0 register as clipboard overwrites unnamed register" })
 
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move visual selected block up 1 line" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move visual selected block down 1 line" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move visual selected block up 1 line" })
 
 vim.keymap.set("n", "n", "nzzzv", { desc = "When searching keep cursor in middle" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle" })
@@ -119,3 +122,10 @@ end)
 vim.keymap.set("n", "<leader>fm", function()
 	require("conform").format { lsp_fallback = true }
 end, { desc = "general format file" })
+
+-- Sessions
+-- select a session to load
+vim.keymap.set("n", "<leader>sl", function() require("persistence").select() end)
+
+-- load the last session
+vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)

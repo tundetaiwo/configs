@@ -41,6 +41,7 @@ extension_urls = {
     "https://github.com/akinsho/bufferline.nvim": "",
     "https://github.com/catppuccin/nvim": "catppuccin-nvim",
     "https://github.com/goolord/alpha-nvim": "",
+    "https://github.com/folke/persistence.nvim": "",
 }
 
 for url, name in extension_urls.items():

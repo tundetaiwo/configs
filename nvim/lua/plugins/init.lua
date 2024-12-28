@@ -178,7 +178,15 @@ local plugins = {
       return require "configs.cmp"
     end,
   },
-  -- Vim slime
+	-- Session Manager
+	{
+		dir = plugin_folder .. "persistence.nvim",
+		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		opts = {
+			-- add any custom options here
+		}
+	},
+  -- Vim slime (Sends to REPL)
   {
     dir = plugin_folder .. "vim-slime",
     init = function()
