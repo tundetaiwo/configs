@@ -8,21 +8,27 @@ vim.keymap.set("i", "<S-tab>", "<BS>", { desc = "unindent", remap = true })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "keep cursor in middle scrolling down" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "keep cursor in middle scrolling up" })
 
+-- Paste & Yank
 vim.keymap.set("v", "<leader>_", "\"_d", { desc = "delete to void" })
 
-vim.keymap.set("v", "<leader>y", "\"+y", { desc = "map clipboard yanking" })
-vim.keymap.set("n", "<leader>Y", "\"+y", { desc = "map clipboard yanking" })
-vim.keymap.set({ "n", "v" }, "<leader>p", "\"+p", { desc = "map clipboard pasting" })
+vim.keymap.set({"n", "v"}, "<leader>y", "\"+y", { desc = "yank to clipboard" })
+vim.keymap.set("n", "<leader>Y", "\"+Y", { desc = "yank whole line to clipboard" })
+vim.keymap.set({ "n", "v" }, "<leader>p", "\"+p", { desc = "paste clipboard after" })
+vim.keymap.set({ "n", "v" }, "<leader>P", "\"+P", { desc = "paste clipboard before" })
 
 vim.keymap.set({ "n", "v" }, "y", "\"0y", { desc = "yank to 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "x", "\"0x", { desc = "yank to 0 register as clipboard overwrites unnamed register" })
 vim.keymap.set({ "n", "v" }, "d", "\"0d", { desc = "delete to 0 register as clipboard overwrites unnamed register" })
 vim.keymap.set({ "n", "v" }, "c", "\"0c", { desc = "cut to 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "s", "\"0s", { desc = "cut to 0 register as clipboard overwrites unnamed register" })
 vim.keymap.set({ "n", "v" }, "p", "\"0p", { desc = "paste from 0 register as clipboard overwrites unnamed register" })
 vim.keymap.set({ "n", "v" }, "P", "\"0P", { desc = "Paste from 0 register as clipboard overwrites unnamed register" })
 
+-- Move Selection Up & Down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move visual selected block down 1 line" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move visual selected block up 1 line" })
 
+-- Stay in middle whilst search
 vim.keymap.set("n", "n", "nzzzv", { desc = "When searching keep cursor in middle" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle" })
 
@@ -134,3 +140,5 @@ vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
+
+
