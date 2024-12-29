@@ -11,7 +11,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "keep cursor in middle scrollin
 -- Paste & Yank
 vim.keymap.set("v", "<leader>_", "\"_d", { desc = "delete to void" })
 
-vim.keymap.set({"n", "v"}, "<leader>y", "\"+y", { desc = "yank to clipboard" })
+vim.keymap.set({ "n", "v" }, "<leader>y", "\"+y", { desc = "yank to clipboard" })
 vim.keymap.set("n", "<leader>Y", "\"+Y", { desc = "yank whole line to clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>p", "\"+p", { desc = "paste clipboard after" })
 vim.keymap.set({ "n", "v" }, "<leader>P", "\"+P", { desc = "paste clipboard before" })
@@ -76,6 +76,7 @@ vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telesc
 vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
+vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
 vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>",
 	{ desc = "telescope find in current buffer" })
 -- vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }) -- Currently not working?
@@ -137,8 +138,12 @@ vim.keymap.set("n", "<leader>sl", function() require("persistence").select() end
 -- load the last session
 vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
 
+-- Copy Current Work Directory
+vim.api.nvim_create_user_command("CopyRelPath", "call setreg('+', expand('%'))", {})
+vim.api.nvim_create_user_command("CopyAbsPath", function() vim.fn.setreg('+', vim.fn.expand('%:p:h')) end, {})
+vim.keymap.set("n", "<leader>ca", "<cmd>CopyAbsPath<CR>")
+vim.keymap.set("n", "<leader>cr", "<cmd>CopyRelPath<CR>")
+
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
-
-
