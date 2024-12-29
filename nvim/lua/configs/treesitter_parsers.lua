@@ -11,14 +11,12 @@ vim.opt.runtimepath:prepend(TS_folder)
 parser_config.python = {
   install_info = {
     url = TS_folder .. "tree-sitter-python", -- local path or git repo
-    -- url = "/Users/tundetaiwo/.local/share/nvim/treesitter/tree-sitter-python",
     files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
   },
 }
 parser_config.lua = {
   install_info = {
     url = TS_folder .. "tree-sitter-lua", -- local path or git repo
-    -- url = "/Users/tundetaiwo/.local/share/nvim/treesitter/tree-sitter-lua",
     files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
   },
   -- filetype = "lua", -- if filetype does not match the parser name
@@ -29,13 +27,40 @@ parser_config.rust = {
     url = TS_folder .. "tree-sitter-rust", -- local path or git repo
     files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
   },
-  -- filetype = "rust", -- if filetype does not match the parser name
 }
 
 parser_config.toml = {
   install_info = {
-    url = TS_folder .. "tree-sitter-toml", -- local path or git repo
-    files = {"src/parser.c", "src/scanner.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+    url = TS_folder .. "tree-sitter-toml",
+    files = {"src/parser.c", "src/scanner.c"},
   },
-  -- filetype = "toml", -- if filetype does not match the parser name
+}
+
+parser_config.bash = {
+  install_info = {
+    url = TS_folder .. "tree-sitter-bash",
+    files = {"src/parser.c", "src/scanner.c"},
+  },
+}
+
+parser_config.dockerfile = {
+  install_info = {
+    url = TS_folder .. "tree-sitter-dockerfile",
+    files = {"src/parser.c", "src/scanner.c"},
+  },
+}
+
+parser_config.comment = {
+  install_info = {
+    url = TS_folder .. "tree-sitter-comment",
+    files = {"src/parser.c", "src/scanner.c"},
+  },
+}
+
+
+parser_config.yaml = {
+  install_info = {
+    url = TS_folder .. "tree-sitter-yaml",
+    files = {"src/parser.c", "src/scanner.c"},
+  },
 }
