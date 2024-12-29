@@ -28,6 +28,6 @@ require("lazy").setup({
   profiling = {
     loader = false,
     require = false,
-  }
+  },
 })
 

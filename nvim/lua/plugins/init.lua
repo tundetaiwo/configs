@@ -37,10 +37,10 @@ local plugins = {
 		opts = require("configs.telescope"),
 		extensions = {
 			fzf = {
-				fuzzy = true,                   -- false will only do exact matching
+				fuzzy = true,               -- false will only do exact matching
 				override_generic_sorter = true, -- override the generic sorter
-				override_file_sorter = true,    -- override the file sorter
-				case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+				override_file_sorter = true, -- override the file sorter
+				case_mode = "smart_case",   -- or "ignore_case" or "respect_case"
 				-- the default case_mode is "smart_case"
 			},
 		},
@@ -133,7 +133,7 @@ local plugins = {
 			require("configs.toggleterm")
 		end,
 	},
-	-- Bufferline
+	-- Bufferline (Tabs)
 	{
 		dir = plugin_folder .. "bufferline.nvim",
 		dependencies = {
@@ -142,6 +142,14 @@ local plugins = {
 		config = function()
 			require "configs.bufferline"
 		end,
+	},
+	-- Lualine (statusline)
+	{
+		dir = plugin_folder .. 'lualine.nvim',
+		dependencies = { dir = plugin_folder .. 'nvim-web-devicons' },
+		config = function()
+			require("configs/lualine")
+		end
 	},
 	-- Auto Completion
 	{
