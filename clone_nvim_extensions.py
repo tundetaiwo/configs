@@ -17,10 +17,12 @@ dest_folder = f"{os.environ['HOME']}/.local/share/nvim/lazy"
 extension_urls = {
     "https://github.com/windwp/nvim-autopairs": "",
     "https://github.com/kylechui/nvim-surround": "",
+    "https://github.com/nvim-telescope/telescope.nvim": "",
     "https://github.com/nvim-telescope/telescope-fzf-native.nvim": "",
     "https://github.com/nvim-tree/nvim-tree.lua": "",
     "https://github.com/nvim-tree/nvim-web-devicons": "",
     "https://github.com/stevearc/conform.nvim": "",
+    "https://github.com/neovim/nvim-lspconfig": "",
     "https://github.com/nvim-treesitter/nvim-treesitter": "",
     "https://github.com/nvim-neotest/nvim-nio": "",
     "https://github.com/mfussenegger/nvim-dap": "",
@@ -30,6 +32,7 @@ extension_urls = {
     "https://github.com/rcarriga/nvim-dap-ui": "",
     "https://github.com/L3MON4D3/LuaSnip": "",
     "https://github.com/saadparwaiz1/cmp_luasnip": "",
+    "https://github.com/rafamadriz/friendly-snippets": "",
     "https://github.com/hrsh7th/cmp-nvim-lua": "",
     "https://github.com/hrsh7th/cmp-nvim-lsp": "",
     "https://github.com/hrsh7th/cmp-buffer": "",
@@ -43,7 +46,7 @@ extension_urls = {
     "https://github.com/goolord/alpha-nvim": "",
     "https://github.com/folke/persistence.nvim": "",
     "https://github.com/abecodes/tabout.nvim": "",
-    "https://github.com/nvim.lua/plenary.nvim": "",
+    "https://github.com/nvim-lua/plenary.nvim": "",
 }
 
 for url, name in extension_urls.items():
