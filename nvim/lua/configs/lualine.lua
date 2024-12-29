@@ -1,7 +1,7 @@
 local filename = {
 	{
 		"filename",
-		path = 4,
+		path = 3,
 	}
 }
 
