@@ -54,11 +54,6 @@ last_sess_butt.opts.hl_shortcut = "DashboardColours"
 open_sess_butt.opts.hl = "DashboardColours"
 open_sess_butt.opts.hl_shortcut = "DashboardColours"
 
-local handle = io.popen('fortune')
-local fortune = handle:read("*a")
-handle:close()
-dashboard.section.footer.val = fortune
-
 dashboard.config.opts.noautocmd = true
 
 vim.cmd [[autocmd User AlphaReady echo 'ready']]
