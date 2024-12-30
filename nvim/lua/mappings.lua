@@ -61,6 +61,12 @@ vim.keymap.set("i", "<C-l>", "<Right>", { desc = "move right" })
 vim.keymap.set("i", "<C-j>", "<Down>", { desc = "move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
 
+-- Tabs
+vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<CR>")
+vim.keymap.set("n", "<leader>tc", "<cmd>tabclose<CR>")
+vim.keymap.set("n", "<leader>k", "<cmd>tabnext<CR>")
+vim.keymap.set("n", "<leader>j", "<cmd>tabprevious<CR>")
+
 
 -- Terminal Movement
 vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]])
@@ -147,3 +153,4 @@ vim.keymap.set("n", "<leader>cr", "<cmd>CopyRelPath<CR>")
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
+
