@@ -242,10 +242,6 @@ local plugins = {
 		dir = plugin_folder .. "catppuccin-nvim",
 		priority = 1000,
 	},
-	{
-		dir = plugin_folder .. "eldritch.nvim",
-		priority = 1000,
-	},
 	-- Custom Startup
 	{
 		"goolord/alpha-nvim",
