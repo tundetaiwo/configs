@@ -1,12 +1,12 @@
-return {
+require("telescope").setup {
   defaults = {
     prompt_prefix = "   ",
     selection_caret = " ",
     entry_prefix = " ",
-    sorting_strategy = "ascending",
+    sorting_strategy = "descending",
     layout_config = {
       horizontal = {
-        prompt_position = "top",
+        prompt_position = "bottom",
         preview_width = 0.55,
       },
       width = 0.87,
@@ -16,7 +16,13 @@ return {
       n = { ["q"] = require("telescope.actions").close },
     },
   },
-
   extensions_list = { "themes", "terms" },
   extensions = {},
+	pickers = {
+		buffers = {
+			initial_mode = "normal"
+		}
+	},
 }
+
+require('telescope').load_extension('fzf')

@@ -16,13 +16,16 @@ vim.keymap.set("n", "<leader>Y", "\"+Y", { desc = "yank whole line to clipboard"
 vim.keymap.set({ "n", "v" }, "<leader>p", "\"+p", { desc = "paste clipboard after" })
 vim.keymap.set({ "n", "v" }, "<leader>P", "\"+P", { desc = "paste clipboard before" })
 
-vim.keymap.set({ "n", "v" }, "y", "\"0y", { desc = "yank to 0 register as clipboard overwrites unnamed register" })
-vim.keymap.set({ "n", "v" }, "x", "\"0x", { desc = "yank to 0 register as clipboard overwrites unnamed register" })
-vim.keymap.set({ "n", "v" }, "d", "\"0d", { desc = "delete to 0 register as clipboard overwrites unnamed register" })
-vim.keymap.set({ "n", "v" }, "c", "\"0c", { desc = "cut to 0 register as clipboard overwrites unnamed register" })
-vim.keymap.set({ "n", "v" }, "s", "\"0s", { desc = "cut to 0 register as clipboard overwrites unnamed register" })
-vim.keymap.set({ "n", "v" }, "p", "\"0p", { desc = "paste from 0 register as clipboard overwrites unnamed register" })
-vim.keymap.set({ "n", "v" }, "P", "\"0P", { desc = "Paste from 0 register as clipboard overwrites unnamed register" })
+vim.keymap.set({ "n", "v" }, "y", "\"0y")
+vim.keymap.set({ "n", "v" }, "x", "\"0x")
+vim.keymap.set({ "n", "v" }, "d", "\"0d")
+vim.keymap.set({ "n", "v" }, "D", "\"0D")
+vim.keymap.set({ "n", "v" }, "c", "\"0c")
+vim.keymap.set({ "n", "v" }, "C", "\"0C")
+vim.keymap.set({ "n", "v" }, "s", "\"0s")
+vim.keymap.set({ "n", "v" }, "S", "\"0S")
+vim.keymap.set({ "n", "v" }, "p", "\"0p")
+vim.keymap.set({ "n", "v" }, "P", "\"0P")
 
 -- Move Selection Up & Down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move visual selected block down 1 line" })
@@ -33,6 +36,7 @@ vim.keymap.set("n", "n", "nzzzv", { desc = "When searching keep cursor in middle
 vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle" })
 
 -- Buffer Commands
+vim.keymap.set({ "n", "i" }, "<leader>-", "<C-6>", { remap = true, desc = "go to next buffer" })
 vim.keymap.set({ "n", "i" }, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer" })
 vim.keymap.set({ "n", "i" }, "<A-j>", "<cmd>bprevious<CR>", { desc = "go to previous buffer" })
 vim.keymap.set({ "n", "i" }, "<A-1>", "<cmd>bfirst<CR>", { desc = "go to first buffer" })
