@@ -19,25 +19,32 @@ local plugins = {
 			})
 		end
 	},
-	--  Telescope
 	{
-		dir = plugin_folder .. "plenary.nvim"
+		dir = plugin_folder .. "fzf-lua",
+		config =  function()
+			require("configs.fzf")
+		end
 	},
-	{
-		dir = plugin_folder .. "telescope-fzf-native.nvim",
-		build = 'make',
-	},
-	{
-		dir = plugin_folder .. "telescope.nvim",
-		-- lazy = true,
-		dependencies = {
-			{ dir = plugin_folder .. "telescope-fzf-native.nvim" },
-			{ dir = plugin_folder .. "plenary.nvim" },
-		},
-		config = function()
-			require("configs.telescope")
-		end,
-	},
+
+	-- --  Telescope
+	-- {
+	-- 	dir = plugin_folder .. "plenary.nvim"
+	-- },
+	-- {
+	-- 	dir = plugin_folder .. "telescope-fzf-native.nvim",
+	-- 	build = 'make',
+	-- },
+	-- {
+	-- 	dir = plugin_folder .. "telescope.nvim",
+	-- 	-- lazy = true,
+	-- 	dependencies = {
+	-- 		{ dir = plugin_folder .. "telescope-fzf-native.nvim" },
+	-- 		{ dir = plugin_folder .. "plenary.nvim" },
+	-- 	},
+	-- 	config = function()
+	-- 		require("configs.telescope")
+	-- 	end,
+	-- },
 	-- Nvim Tree
 	{
 		dir = plugin_folder .. "nvim-tree.lua",
