@@ -1,5 +1,28 @@
 local cmp = require "cmp"
 
+-- `/` cmdline setup.
+cmp.setup.cmdline('/', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = 'buffer' }
+	}
+})
+
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = 'path' }
+	}, {
+		{
+			name = 'cmdline',
+			option = {
+				ignore_cmds = { 'Man', '!' }
+			}
+		}
+	})
+})
+
 local options = {
   completion = { completeopt = "menu,menuone" },
 
@@ -49,6 +72,7 @@ local options = {
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
+    { name = "cmdline" },
   },
 }
 

@@ -31,11 +31,11 @@ local plugins = {
 		dir = plugin_folder .. "telescope.nvim",
 		-- lazy = true,
 		dependencies = {
-			{ dir = plugin_folder .. "telescope-fzf-native.nvim"},
+			{ dir = plugin_folder .. "telescope-fzf-native.nvim" },
 			{ dir = plugin_folder .. "plenary.nvim" },
 		},
 		config = function()
-			 require("configs.telescope")
+			require("configs.telescope")
 		end,
 	},
 	-- Nvim Tree
@@ -171,19 +171,36 @@ local plugins = {
 			{
 				dir = plugin_folder .. "cmp-path"
 			},
+			{
+				dir = plugin_folder .. "cmp-cmdline"
+			},
 		},
 		opts = function()
 			return require "configs.cmp"
 		end,
 	},
+	--  Command Line Completion
+	-- cmp.setup.cmdline(':', {
+	-- 	mapping = cmp.mapping.preset.cmdline(),
+	-- 	sources = cmp.config.sources({
+	-- 		{ name = 'path' }
+	-- 	}, {
+	-- 		{
+	-- 			name = 'cmdline',
+	-- 			option = {
+	-- 				ignore_cmds = { 'Man', '!' }
+	-- 			}
+	-- 		}
+	-- 	})
+	-- })
 	-- Session Manager
-	{
-		dir = plugin_folder .. "persistence.nvim",
-		event = "BufReadPre", -- this will only start session saving when an actual file was opened
-		opts = {
-			-- add any custom options here
-		}
-	},
+			{
+				dir = plugin_folder .. "persistence.nvim",
+				event = "BufReadPre", -- this will only start session saving when an actual file was opened
+				opts = {
+					-- add any custom options here
+				}
+			},
 	{
 		dir = plugin_folder .. "tabout.nvim",
 		lazy = false,
@@ -213,9 +230,13 @@ local plugins = {
 			vim.keymap.set("v", "<leader>r", "<Plug>SlimeLineSend", { remap = true, silent = false })
 		end
 	},
-	-- Theme
+	-- Themes
 	{
 		dir = plugin_folder .. "catppuccin-nvim",
+		priority = 1000,
+	},
+	{
+		dir = plugin_folder .. "eldritch.nvim",
 		priority = 1000,
 	},
 	-- Custom Startup

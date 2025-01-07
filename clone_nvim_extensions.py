@@ -37,6 +37,7 @@ extension_urls = {
     "https://github.com/hrsh7th/cmp-nvim-lsp": "",
     "https://github.com/hrsh7th/cmp-buffer": "",
     "https://github.com/hrsh7th/cmp-path": "",
+    "https://github.com/hrsh7th/cmp-cmdline": "",
     "https://github.com/jpalardy/vim-slime": "",
     "https://github.com/folke/lazy.nvim": "",
     "https://github.com/akinsho/toggleterm.nvim": "",

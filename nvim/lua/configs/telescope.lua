@@ -13,7 +13,10 @@ require("telescope").setup {
       height = 0.80,
     },
     mappings = {
-      n = { ["q"] = require("telescope.actions").close },
+      n = {
+				["q"] = require("telescope.actions").close,
+				["x"] = require("telescope.actions").delete_buffer,
+			},
     },
   },
   extensions_list = { "themes", "terms" },

@@ -89,6 +89,12 @@ vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "teles
 vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
 vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>",
 	{ desc = "telescope find in current buffer" })
+
+vim.keymap.set("n", "<C-x>", function()
+		require('telescope.actions').delete_buffer()
+	end,
+	{ desc = "delete buffer in buffer picker" }
+)
 -- vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }) -- Currently not working?
 vim.keymap.set(
 	"n",
@@ -157,4 +163,3 @@ vim.keymap.set("n", "<leader>cr", "<cmd>CopyRelPath<CR>")
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
-
