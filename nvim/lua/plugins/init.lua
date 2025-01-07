@@ -134,15 +134,15 @@ local plugins = {
 		end,
 	},
 	-- Bufferline (Tabs)
-	{
-		dir = plugin_folder .. "bufferline.nvim",
-		dependencies = {
-			dir = plugin_folder .. "nvim-web-devicons",
-		},
-		config = function()
-			require "configs.bufferline"
-		end,
-	},
+	-- {
+	-- 	dir = plugin_folder .. "bufferline.nvim",
+	-- 	dependencies = {
+	-- 		dir = plugin_folder .. "nvim-web-devicons",
+	-- 	},
+	-- 	config = function()
+	-- 		require "configs.bufferline"
+	-- 	end,
+	-- },
 	-- Lualine (statusline)
 	{
 		dir = plugin_folder .. 'lualine.nvim',
