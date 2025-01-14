@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "tunde-configs"
+version = "0.1.0"
+description = "Repo storing all of tunde's config files"
+authors = ["tundetaiwo <dantaiwo96@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

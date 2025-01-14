@@ -43,7 +43,7 @@ def _replace(
         del_fn = os.remove
 
     if _being_replaced.exists():
-        del_flag = input(f"{_being_replaced} exists, do you want to delete? (Y/N)")
+        del_flag = input(f"{_being_replaced} exists, do you want to overwrite? (Y/N)")
 
         if del_flag.lower() in ["y", "yes"]:
             del_fn(_being_replaced)

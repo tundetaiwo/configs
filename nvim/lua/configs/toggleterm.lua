@@ -9,12 +9,17 @@ local float_window = Terminal:new({
   },
   close_on_exit = true,
 })
-function _float_toggle()
-  float_window:toggle()
-end
 
-vim.api.nvim_set_keymap("n", "<A-i>", "<cmd>lua _float_toggle()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("t", "<A-i>", "<cmd>lua _float_toggle()<CR>", {noremap = true, silent = true})
+function _window_toggle(window)
+	window:toggle()
+	-- change to insert mode when toggling
+	if window:is_open() then
+		window:set_mode("i")
+	end
+end
+vim.keymap.set("n", "<A-i>", function() _window_toggle(float_window) end, { noremap = true, silent = true })
+vim.keymap.set("t", "<A-i>", function() _window_toggle(float_window) end, { noremap = true, silent = true })
+
 
 -- Vertical Window --
 local vertical_window = Terminal:new({
@@ -22,23 +27,17 @@ local vertical_window = Terminal:new({
   close_on_exit = true,
 })
 vertical_window:resize(30)
-function _vertical_toggle()
-  vertical_window:toggle()
-end
-vim.api.nvim_set_keymap("n", "<A-v>", "<cmd>lua _vertical_toggle()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("t", "<A-v>", "<cmd>lua _vertical_toggle()<CR>", {noremap = true, silent = true})
+vim.keymap.set("n", "<A-v>", function() _window_toggle(vertical_window) end, { noremap = true, silent = true })
+vim.keymap.set("t", "<A-v>", function() _window_toggle(vertical_window) end, { noremap = true, silent = true })
 
 -- Horizonal Window --
-local horizonal_window = Terminal:new({
+local horizontal_window = Terminal:new({
   direction = "horizontal",
   close_on_exit = true,
 })
 
-function _horizonal_toggle()
-  horizonal_window:toggle()
-end
-vim.api.nvim_set_keymap("n", "<A-h>", "<cmd>lua _horizonal_toggle()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("t", "<A-h>", "<cmd>lua _horizonal_toggle()<CR>", {noremap = true, silent = true})
+vim.keymap.set("n", "<A-h>", function() _window_toggle(horizontal_window) end, { noremap = true, silent = true })
+vim.keymap.set("t", "<A-h>", function() _window_toggle(horizontal_window) end, { noremap = true, silent = true })
 
 
 -- Lazy Git --
@@ -54,12 +53,8 @@ local lazygit = Terminal:new({
   },
 })
 
-function _lazygit_toggle()
-  lazygit:toggle()
-end
-
-vim.api.nvim_set_keymap("n", "<A-g>", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("t", "<A-g>", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+vim.keymap.set("n", "<A-g>", function() _window_toggle(lazygit) end, { noremap = true, silent = true })
+vim.keymap.set("t", "<A-g>", function() _window_toggle(lazygit) end, { noremap = true, silent = true })
 
 
 -- Interactive Window --
@@ -69,9 +64,6 @@ local interactive_window = Terminal:new({
   direction = "vertical",
 })
 interactive_window:resize(vim.o.columns * 0.5)
-function _interactive_window_toggle()
-  interactive_window:toggle()
-end
 
-vim.api.nvim_set_keymap("n", "<leader>ip", "<cmd>lua _interactive_window_toggle()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("t", "<leader>ip", "<cmd>lua _interactive_window_toggle()<CR>", {noremap = true, silent = true})
+vim.keymap.set("n", "<A-p>", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
+vim.keymap.set("t", "<A-p>", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
