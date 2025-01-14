@@ -65,5 +65,5 @@ local interactive_window = Terminal:new({
 })
 interactive_window:resize(vim.o.columns * 0.5)
 
-vim.keymap.set("n", "<leader>ip", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
-vim.keymap.set("t", "<leader>ip", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
+vim.keymap.set("n", "<A-p>", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
+vim.keymap.set("t", "<A-p>", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })

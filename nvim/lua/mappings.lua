@@ -36,7 +36,7 @@ vim.keymap.set("n", "n", "nzzzv", { desc = "When searching keep cursor in middle
 vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle" })
 
 -- Buffer Commands
-vim.keymap.set({ "n", "i" }, "<leader>-", "<C-6>", { remap = true, desc = "go to next buffer" })
+vim.keymap.set("n", "<leader>-", "<C-6>", { remap = true, desc = "go to next buffer" })
 vim.keymap.set({ "n", "i" }, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer" })
 vim.keymap.set({ "n", "i" }, "<A-j>", "<cmd>bprevious<CR>", { desc = "go to previous buffer" })
 vim.keymap.set({ "n", "i" }, "<A-1>", "<cmd>bfirst<CR>", { desc = "go to first buffer" })
@@ -79,37 +79,37 @@ vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]])
 vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]])
 
 -- Fuzzy Finder
-vim.keymap.set("n", "<C-P>", function () require("fzf-lua").files() end, { desc = "find files" })
-vim.keymap.set("n", "<leader>ff", function() require("fzf-lua").files() end, { desc = "find files" })
-vim.keymap.set("n", "<leader>fw", function() require("fzf-lua").live_grep() end, { desc = "live grep" })
-vim.keymap.set("n", "<leader>fm", function() require("fzf-lua").marks() end, { desc = "show all marks" })
-vim.keymap.set("n", "<leader>fb", function() require("fzf-lua").buffers() end, { desc = "live grep" })
-vim.keymap.set("n", "<leader>b", function() require("fzf-lua").buffers() end, { desc = "live grep" })
+-- vim.keymap.set("n", "<C-P>", function () require("fzf-lua").files() end, { desc = "find files" })
+-- vim.keymap.set("n", "<leader>ff", function() require("fzf-lua").files() end, { desc = "find files" })
+-- vim.keymap.set("n", "<leader>fw", function() require("fzf-lua").live_grep() end, { desc = "live grep" })
+-- vim.keymap.set("n", "<leader>fm", function() require("fzf-lua").marks() end, { desc = "show all marks" })
+-- vim.keymap.set("n", "<leader>fb", function() require("fzf-lua").buffers() end, { desc = "live grep" })
+-- vim.keymap.set("n", "<leader>b", function() require("fzf-lua").buffers() end, { desc = "live grep" })
 
 -- Telescope
--- vim.keymap.set("n", "<C-p>", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
--- vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
--- vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
--- vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
--- vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
--- vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
--- vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
--- vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
--- vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>",
--- 	{ desc = "telescope find in current buffer" })
---
--- vim.keymap.set("n", "<C-x>", function()
--- 		require('telescope.actions').delete_buffer()
--- 	end,
--- 	{ desc = "delete buffer in buffer picker" }
--- )
--- vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }) -- Currently not working?
--- vim.keymap.set(
--- 	"n",
--- 	"<leader>fa",
--- 	"<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
--- 	{ desc = "telescope find all files" }
--- )
+vim.keymap.set("n", "<C-p>", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
+vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
+vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
+vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
+vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
+vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
+vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
+vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
+vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>",
+	{ desc = "telescope find in current buffer" })
+
+vim.keymap.set("n", "<C-x>", function()
+		require('telescope.actions').delete_buffer()
+	end,
+	{ desc = "delete buffer in buffer picker" }
+)
+vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }) -- Currently not working?
+vim.keymap.set(
+	"n",
+	"<leader>fa",
+	"<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+	{ desc = "telescope find all files" }
+)
 
 -- Nvim Tree
 vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
