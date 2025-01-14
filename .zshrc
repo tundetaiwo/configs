@@ -7,8 +7,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH="/Users/tundetaiwo/Library/Python/3.8/bin:/Users/tundetaiwo/Library/Python/3.11/bin:/opt/homebrew/bin:$PATH"
-alias vim=nvim
+local_path="$HOME/.local/bin"
+ruff_path=""
+lua_path=""
+python310_path=""
+python311_path=""
+python312_path=""
+
+export PATH="$ruff_path:$python312_path:$python311_path:$python310_path:$lua_path:$local_path:/opt/homebrew/bin:$PATH"
 
 # Remap 'jj' to Escape in Zsh with Vim bindings
 bindkey -v   # Ensure vim mode is enabled
