@@ -65,3 +65,4 @@ for url, name in extension_urls.items():
     else: 
         print(f"'{extension}' exists in {dest_folder}")
     
+subprocess.run(["make", "~/.local/share/nvim/lazy/telescope-fzf-native.nvim/"])
