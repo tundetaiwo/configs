@@ -42,6 +42,20 @@
         "list": 
         [
             {
+                "colorScheme": "Tuni",
+                "font": 
+                {
+                    "face": "Hack Nerd Font Mono",
+                    "size": 11
+                },
+                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+                "hidden": true,
+                "name": "Ubuntu",
+                "opacity": 90,
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc",
+                "useAcrylic": false
+            },
+            {
                 "backgroundImage": "desktopWallpaper",
                 "backgroundImageOpacity": 0.080000000000000002,
                 "colorScheme": "Tuni",
@@ -74,20 +88,6 @@
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
             },
-            {
-                "colorScheme": "Tuni",
-                "font": 
-                {
-                    "face": "Hack Nerd Font Mono",
-                    "size": 11
-                },
-                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-                "hidden": true,
-                "name": "Ubuntu",
-                "opacity": 90,
-                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc",
-                "useAcrylic": false
-            }
         ]
     },
     "schemes": 

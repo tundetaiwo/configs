@@ -117,8 +117,7 @@ local plugins = {
 			},
 		},
 		config = function(_, opts)
-			local path = "~/.cache/venvs/debugpy_venv/bin/python"
-			-- local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+			local path = "~/.local/venvs/debugpy_venv/bin/python"
 			require("dap-python").setup(path)
 			require("dap-python").test_runner = "pytest"
 		end,

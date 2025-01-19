@@ -15,7 +15,7 @@ python310_path=""
 python311_path=""
 python312_path=""
 
-export PATH="$ruff_path:$python312_path:$python311_path:$python310_path:$lua_path:$local_path:/opt/homebrew/bin:$PATH"
+export PATH="$neovim_path:$ruff_path:$python312_path:$python311_path:$python310_path:$lua_path:$local_path:/opt/homebrew/bin:$PATH"
 
 # Remap 'jj' to Escape in Zsh with Vim bindings
 bindkey -v   # Ensure vim mode is enabled
