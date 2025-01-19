@@ -191,5 +191,5 @@ if __name__ == "__main__":
     move_configs(
         app="neovim",
         machine="mac",
-        update=True,
+        update=False,
     )

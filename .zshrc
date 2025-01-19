@@ -10,6 +10,7 @@ fi
 local_path="$HOME/.local/bin"
 ruff_path=""
 lua_path=""
+neovim_path="/opt/nvim-linux64/bin/"
 python310_path=""
 python311_path=""
 python312_path=""

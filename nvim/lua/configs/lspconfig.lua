@@ -19,7 +19,7 @@ local custom_on_attach = function(_, bufnr)
   -- vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts "Go to type definition")
   vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts "Rename variable")
 
-  vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
+  -- vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
   vim.keymap.set("n", "sr", vim.lsp.buf.references, opts "Show references")
 end
 
