@@ -165,9 +165,11 @@ vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
 
 -- Copy Current Work Directory
 vim.api.nvim_create_user_command("CopyRelPath", "call setreg('+', expand('%'))", {})
-vim.api.nvim_create_user_command("CopyAbsPath", function() vim.fn.setreg('+', vim.fn.expand('%:p:h')) end, {})
-vim.keymap.set("n", "<leader>ca", "<cmd>CopyAbsPath<CR>")
+vim.api.nvim_create_user_command("CopyAbsPath", function() vim.fn.setreg('+', vim.fn.expand('%:p')) end, {})
+vim.api.nvim_create_user_command("CopyAbsDir", function() vim.fn.setreg('+', vim.fn.expand('%:p:h')) end, {})
 vim.keymap.set("n", "<leader>cr", "<cmd>CopyRelPath<CR>")
+vim.keymap.set("n", "<leader>ca", "<cmd>CopyAbsPath<CR>")
+vim.keymap.set("n", "<leader>cd", "<cmd>CopyAbsDir<CR>")
 
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })

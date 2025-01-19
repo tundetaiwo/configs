@@ -18,4 +18,5 @@ vim.opt.updatetime = 500
 
 
 -- Snippets Path
-vim.g.vscode_snippets_path = "/Users/tundetaiwo/.config/nvim/lua/snippets"
+vim.g.vscode_snippets_path = vim.fn.stdpath("config") .. "/lua/snippets/"
+
