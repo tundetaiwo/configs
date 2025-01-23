@@ -129,6 +129,10 @@ local plugins = {
 			require("configs.toggleterm")
 		end,
 	},
+	-- Diffview
+	{
+		dir = plugin_folder .. "diffview.nvim",
+	},
 	-- Bufferline (Tabs)
 	-- {
 	-- 	dir = plugin_folder .. "bufferline.nvim",

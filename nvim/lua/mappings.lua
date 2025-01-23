@@ -67,7 +67,7 @@ vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
 
 -- Tabs
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<CR>")
-vim.keymap.set("n", "<leader>tc", "<cmd>tabclose<CR>")
+vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>")
 vim.keymap.set("n", "<leader>k", "<cmd>tabnext<CR>")
 vim.keymap.set("n", "<leader>j", "<cmd>tabprevious<CR>")
 
