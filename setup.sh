@@ -3,7 +3,7 @@ sudo apt update
 
 # Install fundamentals
 sudo apt install -y git 
-sudo apt install -y vim-gtk
+sudo apt install -y vim-gtk  # won't work for wsh
 sudo apt install -y tmux
 sudo apt install -y zsh
 sudo apt install -y gcc
@@ -29,8 +29,32 @@ sudo install lazygit -D -t /usr/local/bin/
 # Create venvs
 mkdir -p $HOME/.local/venvs
 python3.12 -m venv $HOME/.local/venvs/ruff_venv/
+python3.12 -m venv $HOME/.local/venvs/misc_venv/
 $HOME/.local/venvs/ruff_venv/bin/python -m pip install ruff
-$HOME/.local/venvs/ruff_venv/bin/python -m pip install pyperclip
+$HOME/.local/venvs/misc_venv/bin/python -m pip install pyperclip
 
 python3.12 -m venv $HOME/.local/venvs/debugpy_venv/
 $HOME/.local/venvs/debugpy_venv/bin/python -m pip install debugpy pytest 
+
+# oh my zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# set default zsh
+chsh -s $(which zsh)
+
+# power10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+
+# npm and pyright
+sudo apt install -y npm
+npm install -g pyright
+
+
+$HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/clone_nvim_extensions.py
+$HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/treesitter_install.py
+
+# Media Installation
+sudo apt install -y mpv
+sudo apt install -y yt-dlp
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
