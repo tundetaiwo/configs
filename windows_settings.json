@@ -16,10 +16,6 @@
             "keys": "ctrl+v"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -27,16 +23,29 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         }
     ],
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
         {
-            "opacity": 65,
+            "backgroundImage": "desktopWallpaper",
+            "backgroundImageOpacity": 0.07,
+            "bellStyle": "none",
+            "opacity": 100,
             "useAcrylic": false
         },
         "list": 
@@ -46,28 +55,14 @@
                 "font": 
                 {
                     "face": "Hack Nerd Font Mono",
-                    "size": 11
+                    "size": 11.0
                 },
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": true,
                 "name": "Ubuntu",
-                "opacity": 90,
+                "opacity": 100,
                 "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc",
                 "useAcrylic": false
-            },
-            {
-                "backgroundImage": "desktopWallpaper",
-                "backgroundImageOpacity": 0.080000000000000002,
-                "colorScheme": "Tuni",
-                "font": 
-                {
-                    "face": "Hack Nerd Font Mono"
-                },
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "hidden": false,
-                "name": "Ubuntu",
-                "opacity": 100,
-                "source": "Windows.Terminal.Wsl"
             },
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -88,6 +83,12 @@
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
             },
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": true,
+                "name": "Ubuntu",
+                "source": "Windows.Terminal.Wsl"
+            }
         ]
     },
     "schemes": 
@@ -346,5 +347,6 @@
             "yellow": "#808000"
         }
     ],
-    "startOnUserLogin": true
+    "startOnUserLogin": true,
+    "themes": []
 }
