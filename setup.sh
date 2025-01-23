@@ -20,6 +20,7 @@ pipx install poetry==1.8.0
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux64.tar.gz
+rm nvim-linux64.tar.gz
 
 # Install lazygit
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
@@ -39,24 +40,24 @@ $HOME/.local/venvs/misc_venv/bin/python -m pip install pyperclip
 python3.12 -m venv $HOME/.local/venvs/debugpy_venv/
 $HOME/.local/venvs/debugpy_venv/bin/python -m pip install debugpy pytest 
 
-# oh my zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# set default zsh
-chsh -s $(which zsh)
-
-# power10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
 # npm and pyright
 sudo apt install -y npm
-npm install -g pyright
+sudo npm install -g pyright
 
 $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/clone_nvim_extensions.py
 $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/treesitter_install.py
+
 
 # Media Installation
 sudo apt install -y mpv
 sudo apt install -y yt-dlp
 sudo -v ; curl https://rclone.org/install.sh | sudo bash
+
+# oh my zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# power10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+
