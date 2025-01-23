@@ -9,6 +9,7 @@ sudo apt install -y zsh
 sudo apt install -y gcc
 sudo apt install -y make 
 sudo apt install -y ripgrep
+sudo apt install -y fd-find
 
 # Install Python
 sudo apt install -y python3.10 python3.11 python3.12
@@ -25,6 +26,8 @@ LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/re
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit -D -t /usr/local/bin/
+rm lazygit.tar.gz
+rm lazygit
 
 # Create venvs
 mkdir -p $HOME/.local/venvs
@@ -49,7 +52,6 @@ echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 # npm and pyright
 sudo apt install -y npm
 npm install -g pyright
-
 
 $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/clone_nvim_extensions.py
 $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/treesitter_install.py
