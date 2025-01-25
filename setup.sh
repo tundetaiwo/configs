@@ -10,6 +10,7 @@ sudo apt install -y gcc
 sudo apt install -y make 
 sudo apt install -y ripgrep
 sudo apt install -y fd-find
+sudo apt install -y p7zip-full p7zip-rar
 
 # Install Python
 sudo apt install -y python3.10 python3.11 python3.12

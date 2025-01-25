@@ -48,3 +48,8 @@ bindkey "^[[B" history-search-forward
 
 bindkey "^K" history-search-backward
 bindkey "^J" history-search-forward
+
+
+# GDrive Mount
+alias mount_GDrive="rclone mount GDrive: /GDrive"
+alias GDrive="cd /GDrive"
