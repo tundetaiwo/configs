@@ -53,6 +53,7 @@ $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/treesitter_
 # Media Installation
 sudo apt install -y mpv
 sudo apt install -y yt-dlp
+sudo apt install -y fuse3
 sudo -v ; curl https://rclone.org/install.sh | sudo bash
 
 # oh my zsh

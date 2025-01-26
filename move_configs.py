@@ -121,7 +121,6 @@ def move_configs(app: str, machine: str, update: bool = False):
         "bashrc",
         "vimrc",
         "nvim",
-        "gitconfig",
         "tmux",
         "code",
         "gitconfig",
@@ -211,7 +210,7 @@ def move_configs(app: str, machine: str, update: bool = False):
         else:
             logger.warning("VS Code configs only implemented for mac os.")
 
-    if app.lower() in ["all", "git"]:
+    if app.lower() in ["all", "gitconfig"]:
         if machine.lower() in ["unix", "mac", "wsl"]:
             being_replaced = f"{HOME_PATH}/.gitconfig"
             replacing_with = f"{PROJECT_PATH}/dotfiles/.gitconfig"
