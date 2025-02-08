@@ -5,6 +5,7 @@ from pathlib import Path
 import getpass
 import logging
 from argparse import ArgumentParser
+import sys
 
 # --  Logger Config -- #
 logger = logging.getLogger(__name__)
@@ -35,6 +36,12 @@ parser.add_argument(
     "--machine",
     required=True,
     help="type of machine i.e. 'Windows', 'Mac', 'Unix'",
+)
+parser.add_argument(
+    "-u",
+    "--update",
+    action="store_true",  # default is false but true if specified
+    help="flag to update config with system that on the system",
 )
 
 cli_args = parser.parse_args()
@@ -81,6 +88,7 @@ def _replace(
             del_fn(_being_replaced)
         else:
             print("Exiting Function...")
+            sys.exit()
 
     # create folders if they don't exist
 
@@ -250,5 +258,5 @@ if __name__ == "__main__":
     move_configs(
         app=cli_args.app,
         machine=cli_args.machine,
-        update=False,
+        update=cli_args.update,
     )
