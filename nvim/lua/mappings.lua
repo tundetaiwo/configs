@@ -36,11 +36,7 @@ vim.keymap.set("n", "n", "nzzzv", { desc = "When searching keep cursor in middle
 vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle" })
 
 -- Buffer Commands
-vim.keymap.set("n", "<leader>-", "<C-6>", { remap = true, desc = "go to next buffer" })
-vim.keymap.set({ "n", "i" }, "<A-k>", "<cmd>bnext<CR>", { desc = "go to next buffer" })
-vim.keymap.set({ "n", "i" }, "<A-j>", "<cmd>bprevious<CR>", { desc = "go to previous buffer" })
-vim.keymap.set({ "n", "i" }, "<A-1>", "<cmd>bfirst<CR>", { desc = "go to first buffer" })
-vim.keymap.set({ "n", "i" }, "<A-2>", "<cmd>bsecond<CR>", { desc = "go to second buffer" })
+vim.keymap.set("n", "<leader>-", "<C-6>", { remap = true, desc = "go to previous buffer" })
 vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", { desc = "buffer close" })
 -- vim.keymap.set("n", "<leader>X", "<cmd>LastBuf<CR>", { desc = "re-open last closed buffer" }) -- TODO
 -- vim.keymap.set("n", "<leader>x", "<cmd>w|bd<CR>", { desc = "buffer close" }) -- Need to get this to prompt for modified buffer
@@ -68,8 +64,8 @@ vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
 -- Tabs
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<CR>")
 vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>")
-vim.keymap.set("n", "<leader>k", "<cmd>tabnext<CR>")
-vim.keymap.set("n", "<leader>j", "<cmd>tabprevious<CR>")
+vim.keymap.set("n", "<A-k>", "<cmd>tabnext<CR>")
+vim.keymap.set("n", "<A-j>", "<cmd>tabprevious<CR>")
 
 
 -- Terminal Movement
@@ -82,8 +78,6 @@ vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]])
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
--- vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
--- vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
@@ -123,9 +117,6 @@ end)
 vim.keymap.set({ "i", "n" }, "<F12>", function()
 	require("dap").step_out()
 end)
--- vim.keymap.set("n", "<Leader>b", function()
--- 	require("dap").toggle_breakpoint()
--- end)
 vim.keymap.set("n", "<F9>", function()
 	require("dap").set_breakpoint()
 end)
@@ -162,10 +153,16 @@ vim.keymap.set("n", "<leader>fh", "<cmd>DiffviewFileHistory<CR>")
 vim.api.nvim_create_user_command("CopyRelPath", "call setreg('+', expand('%'))", {})
 vim.api.nvim_create_user_command("CopyAbsPath", function() vim.fn.setreg('+', vim.fn.expand('%:p')) end, {})
 vim.api.nvim_create_user_command("CopyAbsDir", function() vim.fn.setreg('+', vim.fn.expand('%:p:h')) end, {})
+
 vim.keymap.set("n", "<leader>cr", "<cmd>CopyRelPath<CR>")
 vim.keymap.set("n", "<leader>ca", "<cmd>CopyAbsPath<CR>")
 vim.keymap.set("n", "<leader>cd", "<cmd>CopyAbsDir<CR>")
 
+-- Slime 
+vim.keymap.set("n", "<A-C-j>", [[/^#%%<CR>]], { silent = true })  -- Next cell
+vim.keymap.set("n", "<A-C-k>", [[?^#%%<CR>]], { silent = true })  -- Previous cell
+
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
+

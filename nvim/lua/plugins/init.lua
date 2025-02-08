@@ -1,4 +1,3 @@
--- local plugin_folder = "/root/.local/share/nvim/lazy/"
 local plugin_folder = vim.fn.stdpath("data") .. "/lazy/"
 local plugins = {
 	--  Autopairs
@@ -19,14 +18,7 @@ local plugins = {
 			})
 		end
 	},
-	-- {
-	-- 	dir = plugin_folder .. "fzf-lua",
-	-- 	config =  function()
-	-- 		require("configs.fzf")
-	-- 	end
-	-- },
-
-	-- --  Telescope
+	--  Telescope
 	{
 		dir = plugin_folder .. "plenary.nvim"
 	},
@@ -133,16 +125,6 @@ local plugins = {
 	{
 		dir = plugin_folder .. "diffview.nvim",
 	},
-	-- Bufferline (Tabs)
-	-- {
-	-- 	dir = plugin_folder .. "bufferline.nvim",
-	-- 	dependencies = {
-	-- 		dir = plugin_folder .. "nvim-web-devicons",
-	-- 	},
-	-- 	config = function()
-	-- 		require "configs.bufferline"
-	-- 	end,
-	-- },
 	-- Lualine (statusline)
 	{
 		dir = plugin_folder .. 'lualine.nvim',
@@ -236,8 +218,7 @@ local plugins = {
 			vim.slime_bracketed_paste = 1
 		end,
 		config = function()
-			vim.keymap.set("n", "<leader>r", "<Plug>SlimeSendCell", { remap = true, silent = false })
-			vim.keymap.set("v", "<leader>r", "<Plug>SlimeLineSend", { remap = true, silent = false })
+			require("configs.slime")
 		end
 	},
 	-- Themes
