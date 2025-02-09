@@ -124,9 +124,11 @@ end)
 vim.keymap.set("n", "<Leader>df", function()
 	require("dap").continue()
 end)
-vim.keymap.set("n", "<Leader>dr", function()
-	require("dap").repl.open()
-end)
+
+vim.keymap.set("n", "<leader>du", function()
+	require("dapui").toggle({})
+end
+)
 
 vim.keymap.set("n", "<F9>", "<cmd> DapToggleBreakpoint <CR>")
 vim.keymap.set("n", "<leader>dlb", function()
