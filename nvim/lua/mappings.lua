@@ -161,8 +161,8 @@ vim.keymap.set("n", "<leader>ca", "<cmd>CopyAbsPath<CR>")
 vim.keymap.set("n", "<leader>cd", "<cmd>CopyAbsDir<CR>")
 
 -- Slime 
-vim.keymap.set("n", "<A-C-j>", [[/^#%%<CR>]], { silent = true })  -- Next cell
-vim.keymap.set("n", "<A-C-k>", [[?^#%%<CR>]], { silent = true })  -- Previous cell
+vim.keymap.set("n", "<A-C-j>", [[/^#\s*%%<CR>]], { silent = true })  -- Next cell
+vim.keymap.set("n", "<A-C-k>", [[?^#\s*%%<CR>]], { silent = true })  -- Previous cell
 
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
