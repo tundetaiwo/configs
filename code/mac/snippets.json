@@ -202,7 +202,9 @@
 		"prefix": "reload_code",
 		"body": [
 			"from IPython import get_ipython",
-			"if get_ipython() is not None and 'IPKernelApp' in get_ipython().config:",
+			"if get_ipython() is not None and any(",
+			"		key in get_ipython().config for key in ['TerminalInteractiveShell', 'IPKernelApp']",
+			"):",
 			"    get_ipython().run_line_magic('load_ext', 'autoreload')",
 			"    get_ipython().run_line_magic('autoreload', '2') "
 		]
