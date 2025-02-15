@@ -62,7 +62,7 @@ for url, name in extension_urls.items():
     dest_path = f"{dest_folder}/{extension}"
     if not os.path.exists(dest_path):
         print(f"Cloning {extension}")
-        subprocess.run(["git", "clone", url, dest_path])
+        os.system(["git", "clone", url, dest_path])
     else: 
         print(f"'{extension}' exists in {dest_folder}")
     
