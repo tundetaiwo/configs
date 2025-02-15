@@ -138,7 +138,8 @@ def move_configs(app: str, machine: str, update: bool = False):
     valid_machines = ["unix", "mac", "wsl", "windows"]
 
     if app.lower() not in valid_apps:
-        raise NotImplementedError(f"{app} is not yet implemented. Please choose from one of: \n{'\n'.join(valid_apps)}")
+        valid_machine_strings = '\\n'.join(valid_apps)
+        raise NotImplementedError(f"{app} is not yet implemented. Please choose from one of: \n{valid_machine_strings}")
 
     if machine.lower() not in valid_machines:
         raise NotImplementedError(f"{machine} is not yet implemented. Please choose from one of: {valid_machines}")
