@@ -42,8 +42,8 @@ python3.12 -m venv $HOME/.local/venvs/debugpy_venv/
 $HOME/.local/venvs/debugpy_venv/bin/python -m pip install debugpy pytest 
 
 
-# npm and pyright
-sudo apt install -y npm
+# Install npv and subsequently npm & pyright
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 sudo npm install -g pyright
 
 $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/clone_nvim_extensions.py
@@ -64,3 +64,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
+
+# install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
