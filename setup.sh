@@ -47,6 +47,7 @@ sudo apt install -y npm
 sudo npm install -g pyright
 
 $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/clone_nvim_extensions.py
+make -C $HOME/.local/share/nvim/lazy/telescope-fzf-native.nvim/
 $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/treesitter_install.py
 
 
