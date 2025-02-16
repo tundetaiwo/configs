@@ -160,20 +160,14 @@ local plugins = {
 			return require "configs.cmp"
 		end,
 	},
-	--  Command Line Completion
-	-- cmp.setup.cmdline(':', {
-	-- 	mapping = cmp.mapping.preset.cmdline(),
-	-- 	sources = cmp.config.sources({
-	-- 		{ name = 'path' }
-	-- 	}, {
-	-- 		{
-	-- 			name = 'cmdline',
-	-- 			option = {
-	-- 				ignore_cmds = { 'Man', '!' }
-	-- 			}
-	-- 		}
-	-- 	})
-	-- })
+	{
+		dir = plugin_folder .. "tabby.nvim",
+		-- dependencies = 'nvim-tree/nvim-web-devicons',
+		dependencies = plugin_folder .. "nvim-web-devicons",
+		config = function()
+				require("configs.tabby")
+		end,
+	},
 	-- Session Manager
 			{
 				dir = plugin_folder .. "persistence.nvim",

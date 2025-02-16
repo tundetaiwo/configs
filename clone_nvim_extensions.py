@@ -51,6 +51,7 @@ extension_urls = {
     "https://github.com/nvim-lualine/lualine.nvim": "",
     "https://github.com/ibhagwan/fzf-lua": "",
     "https://github.com/sindrets/diffview.nvim": "",
+    "https://github.com/nanozuki/tabby.nvim": "",
 }
 
 for url, name in extension_urls.items():

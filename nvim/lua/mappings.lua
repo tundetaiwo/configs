@@ -164,6 +164,15 @@ vim.keymap.set("n", "<leader>cd", "<cmd>CopyAbsDir<CR>")
 vim.keymap.set("n", "<A-C-j>", [[/^#\s*%%<CR>]], { silent = true })  -- Next cell
 vim.keymap.set("n", "<A-C-k>", [[?^#\s*%%<CR>]], { silent = true })  -- Previous cell
 
+
+local rename_tab = function() 
+	local name = vim.fn.input("Rename Tab: ")
+	vim.cmd("TabRename " .. name)	
+end
+
+vim.keymap.set("n", "<leader>t$", rename_tab)
+
+
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
