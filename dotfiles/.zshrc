@@ -34,7 +34,8 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
-alias ls='ls -la'
+alias ls='ls -l'
+alias la='ls -la'
 alias cls='clear'
 alias cwd="pwd | pbcopy"
 plugins=(web-search)
