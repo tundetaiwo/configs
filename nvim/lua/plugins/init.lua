@@ -42,9 +42,7 @@ local plugins = {
 		dir = plugin_folder .. "nvim-tree.lua",
 		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
 		opts = require("configs.nvimtree"),
-		dependencies = {
-			dir = plugin_folder .. "nvim-web-devicons",
-		},
+		dependencies = { dir = plugin_folder .. "nvim-web-devicons" },
 	},
 	-- AutoFormatting
 	{
@@ -114,14 +112,6 @@ local plugins = {
 	{
 		dir = plugin_folder .. "diffview.nvim",
 	},
-	-- Lualine (statusline)
-	{
-		dir = plugin_folder .. 'lualine.nvim',
-		dependencies = { dir = plugin_folder .. 'nvim-web-devicons' },
-		config = function()
-			require("configs/lualine")
-		end
-	},
 	-- Auto Completion
 	{
 		dir = plugin_folder .. "nvim-cmp",
@@ -161,9 +151,12 @@ local plugins = {
 		end,
 	},
 	{
+		dir = plugin_folder .. "nvim-web-devicons",
+	},
+	{
 		dir = plugin_folder .. "tabby.nvim",
 		-- dependencies = 'nvim-tree/nvim-web-devicons',
-		dependencies = plugin_folder .. "nvim-web-devicons",
+		dependencies = { dir = plugin_folder .. "nvim-web-devicons" },
 		config = function()
 				require("configs.tabby")
 		end,

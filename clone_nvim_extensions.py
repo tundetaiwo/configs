@@ -63,8 +63,9 @@ for url, name in extension_urls.items():
     dest_path = f"{dest_folder}/{extension}"
     if not os.path.exists(dest_path):
         print(f"Cloning {extension}")
-        os.system(["git", "clone", url, dest_path])
+        os.system(f"git clone {url} {dest_path}")
     else: 
         print(f"'{extension}' exists in {dest_folder}")
-    
-subprocess.run(["make", "~/.local/share/nvim/lazy/telescope-fzf-native.nvim/"])
+
+    if extension == "telescope-fzf-native.nvim":
+        os.system("make -C ~/.local/share/nvim/lazy/telescope-fzf-native.nvim/")
