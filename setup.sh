@@ -14,8 +14,7 @@ sudo apt install -y p7zip-full p7zip-rar
 
 # Install Python
 sudo apt install -y python3.10 python3.11 python3.12
-sudo apt install -y pipx
-pipx install poetry==1.8.0
+sudo apt install -y python3.10-venv python3.11-venv python3.12-venv
 
 # Install Neovim
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
@@ -33,10 +32,8 @@ rm lazygit
 
 # Create venvs
 mkdir -p $HOME/.local/venvs
-python3.12 -m venv $HOME/.local/venvs/ruff_venv/
 python3.12 -m venv $HOME/.local/venvs/misc_venv/
-$HOME/.local/venvs/ruff_venv/bin/python -m pip install ruff
-$HOME/.local/venvs/misc_venv/bin/python -m pip install pyperclip
+$HOME/.local/venvs/misc_venv/bin/python -m pip install ruff pyperclip
 
 python3.12 -m venv $HOME/.local/venvs/debugpy_venv/
 $HOME/.local/venvs/debugpy_venv/bin/python -m pip install debugpy pytest 
@@ -55,6 +52,7 @@ $HOME/.local/venvs/misc_venv/bin/python $HOME/Documents/Misc/configs/treesitter_
 sudo apt install -y mpv
 sudo apt install -y yt-dlp
 sudo apt install -y fuse3
+
 sudo -v ; curl https://rclone.org/install.sh | sudo bash
 
 # oh my zsh
@@ -62,8 +60,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # power10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
-
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
 # install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh

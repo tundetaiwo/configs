@@ -8,14 +8,19 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 local_path="$HOME/.local/bin"
-ruff_path="$HOME/.local/venvs/ruff_venv/bin/"
+misc_path="$HOME/.local/venvs/misc_venv/bin"
 lua_path=""
-neovim_path="/opt/nvim-linux64/bin/"
+neovim_path="/opt/nvim-linux-x86_64/bin"
 python310_path=""
 python311_path=""
 python312_path=""
 
-export PATH="$neovim_path:$python312_path:$python311_path:$python310_path:$lua_path:$local_path:$ruff_path:/opt/homebrew/bin:$PATH"
+export PATH="$neovim_path:\
+$python312_path:\ $python311_path:\ $python310_path:\
+$lua_path:\
+$local_path:\
+$misc_path:\
+/opt/homebrew/bin:$PATH"
 
 # Remap 'jj' to Escape in Zsh with Vim bindings
 bindkey -v   # Ensure vim mode is enabled
