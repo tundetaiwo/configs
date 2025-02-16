@@ -31,6 +31,12 @@ function _window_toggle(window)
     end
 end
 
+require('toggleterm').setup({
+    on_enter = function()
+        vim.cmd('startinsert!')
+    end
+})
+
 -- Float Window --
 local float_window = Terminal:new({
     direction = "float",
