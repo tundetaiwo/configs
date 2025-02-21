@@ -15,7 +15,7 @@ require("telescope").setup {
     mappings = {
       n = {
 				["q"] = require("telescope.actions").close,
-				["x"] = require("telescope.actions").delete_buffer,
+				["<C-x>"] = require("telescope.actions").delete_buffer,
 			},
     },
   },
