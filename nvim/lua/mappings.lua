@@ -37,8 +37,8 @@ vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle
 
 -- Buffer Commands
 vim.keymap.set("n", "<leader>-", "<C-6>", { remap = true, desc = "go to previous buffer" })
-vim.keymap.set('n', '<leader>x', "<cmd>bp|bd #<CR>", { desc = "close buffer without closing window"})
-vim.keymap.set('n', '<leader><S-x>', '<cmd>e #<CR>', { desc="re-open last closed buffer"})
+vim.keymap.set('n', '<leader>x', "<cmd>bp|bd #<CR>", { desc = "close buffer without closing window" })
+vim.keymap.set('n', '<leader><S-x>', '<cmd>e #<CR>', { desc = "re-open last closed buffer" })
 vim.keymap.set("t", "<A-x>", "<cmd>bd!<CR>", { desc = "terminal buffer close" })
 
 vim.keymap.set("n", "<leader>b", "<cmd>ls<CR>", { desc = "buffer close" })
@@ -60,6 +60,7 @@ vim.keymap.set("i", "<C-h>", "<Left>", { desc = "move left" })
 vim.keymap.set("i", "<C-l>", "<Right>", { desc = "move right" })
 vim.keymap.set("i", "<C-j>", "<Down>", { desc = "move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
+vim.keymap.set("n", "<C-k><C-m>", "<C-w><S-|>", { noremap = true })
 
 -- Tabs
 vim.keymap.set("n", "<leader>tc", "<cmd>tabnew<CR>")
@@ -77,6 +78,7 @@ vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]])
 -- Telescope
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
+vim.keymap.set("n", "<leader><S-f><S-f>", "<cmd>Telescope find_files follow=true no_ignore=true hidden=false<CR>")
 vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
 vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
