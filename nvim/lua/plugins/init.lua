@@ -161,17 +161,17 @@ local plugins = {
 		-- dependencies = 'nvim-tree/nvim-web-devicons',
 		dependencies = { dir = plugin_folder .. "nvim-web-devicons" },
 		config = function()
-				require("configs.tabby")
+			require("configs.tabby")
 		end,
 	},
 	-- Session Manager
-			{
-				dir = plugin_folder .. "persistence.nvim",
-				event = "BufReadPre", -- this will only start session saving when an actual file was opened
-				opts = {
-					-- add any custom options here
-				}
-			},
+	{
+		dir = plugin_folder .. "persistence.nvim",
+		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		opts = {
+			-- add any custom options here
+		}
+	},
 	{
 		dir = plugin_folder .. "tabout.nvim",
 		lazy = false,
