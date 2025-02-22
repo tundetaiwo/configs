@@ -8,9 +8,9 @@ require("catppuccin").setup({
 	custom_highlights = function(colors)
 		return {
 			DiffAdd = { bg = "#106e3c" },
-			DiffDelete = { bg = "#805844" },
-			-- DiffChange = {bg = "grey"},
-			-- DiffText = {bg = "grey"},
+			DiffDelete = { bg = "#822322" },
+			DiffText = { bg = "#803280" },
+			-- DiffChange = { bg = "" },
 		}
 	end,
 	integrations = {
