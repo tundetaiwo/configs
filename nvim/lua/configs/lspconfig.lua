@@ -54,6 +54,7 @@ lspconfig.lua_ls.setup {
   on_attach = custom_on_attach,
   on_init = custom_on_init,
   capabilities = custom_capabilities,
+	cmd = {"/home/tunde/.local/share/lua-language-server/bin/lua-language-server"},
   settings = {
     Lua = {
       diagnostics = {
