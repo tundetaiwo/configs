@@ -111,6 +111,9 @@ local plugins = {
 	-- Diffview
 	{
 		dir = plugin_folder .. "diffview.nvim",
+		config = function()
+			require("configs.diffview")
+		end
 	},
 	-- Auto Completion
 	{
