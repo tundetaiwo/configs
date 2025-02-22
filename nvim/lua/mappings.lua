@@ -37,10 +37,9 @@ vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle
 
 -- Buffer Commands
 vim.keymap.set("n", "<leader>-", "<C-6>", { remap = true, desc = "go to previous buffer" })
-vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", { desc = "buffer close" })
+vim.keymap.set('n', '<leader>x', "<cmd>bp|bd #<CR>", { desc = "close buffer without closing window"})
+vim.keymap.set('n', '<leader><S-x>', '<cmd>e #<CR>', { desc="re-open last closed buffer"})
 vim.keymap.set("t", "<A-x>", "<cmd>bd!<CR>", { desc = "terminal buffer close" })
--- vim.keymap.set("n", "<leader>X", "<cmd>LastBuf<CR>", { desc = "re-open last closed buffer" }) -- TODO
--- vim.keymap.set("n", "<leader>x", "<cmd>w|bd<CR>", { desc = "buffer close" }) -- Need to get this to prompt for modified buffer
 
 vim.keymap.set("n", "<leader>b", "<cmd>ls<CR>", { desc = "buffer close" })
 
