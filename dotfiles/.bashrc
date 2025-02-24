@@ -1,3 +1,2 @@
-set inoremap jj <Esc>
-set number
-set relativenumber
+set -o vi
+bind '"jj": vi-movement-mode'
