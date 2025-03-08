@@ -64,6 +64,7 @@ extension_urls = {
     "https://github.com/sindrets/diffview.nvim": ("4516612fe98ff56ae0415a259ff6361a89419b0a", None),
     "https://github.com/nanozuki/tabby.nvim": ("c119c91f3ada1a7c62ca2d10685ac8a3e2928fb8", None),
     "https://github.com/tpope/vim-fugitive": ("4a745ea72fa93bb15dd077109afbb3d1809383f2", None),
+    "https://github.com/lewis6991/gitsigns.nvim": ("6668f379ca634c36b8e11453118590b91bf8b295", None)
 }
 
 def clone_extensions(extension_urls: dict, overwrite: bool | list = False) -> None:
@@ -114,4 +115,4 @@ def clone_extensions(extension_urls: dict, overwrite: bool | list = False) -> No
             os.system("make -C ~/.local/share/nvim/lazy/telescope-fzf-native.nvim/")
 
 if __name__ == "__main__":
-    clone_extensions(extension_urls, overwrite=True)
+    clone_extensions(extension_urls, overwrite=False)

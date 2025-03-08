@@ -38,6 +38,7 @@ vim.keymap.set("n", "N", "Nzzzv", { desc = "When searching keep cursor in middle
 -- Buffer Commands
 vim.keymap.set("n", "<leader>-", "<C-6>", { remap = true, desc = "go to previous buffer" })
 vim.keymap.set('n', '<leader>x', "<cmd>bp|bd #<CR>", { desc = "close buffer without closing window" })
+vim.keymap.set('n', '<leader><C-x>', "<cmd>bd!<CR>", { desc = "force close buffer without closing window" })
 vim.keymap.set('n', '<leader><S-x>', '<cmd>e #<CR>', { desc = "re-open last closed buffer" })
 vim.keymap.set("t", "<A-x>", "<cmd>bd!<CR>", { desc = "terminal buffer close" })
 
@@ -50,27 +51,47 @@ vim.keymap.set("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true })
 -- Search
 vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search highlighting" })
 
---  Window Movement
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "switch window left", noremap = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "switch window right", noremap = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "switch window down", noremap = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "switch window up", noremap = true })
-vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "close window", noremap = true })
-vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Remove original window close mapping", noremap = true })
+-- NvimTree Toggle and state tracking
+local treeActive = false
+local function toggleTree()
+	vim.cmd("NvimTreeToggle")
+	treeActive = not treeActive
+end
+
+vim.keymap.set("n", "<C-b>", toggleTree, { desc = "Toggle NvimTree" })
+
+-- Window movement key mappings
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Switch window left", noremap = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Switch window right", noremap = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Switch window down", noremap = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Switch window up", noremap = true })
+vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
+vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping", noremap = true })
 
 local maximised = false
-vim.keymap.set("n", "<leader>km", function()
-		if maximised then
+local saved_win = nil
+local toggle_maximise = function()
+	if maximised then
+		vim.cmd("wincmd =")
+		maximised = false
+		if treeActive then
+			-- activate toggleTree twice to restore it
+			toggleTree()
+			toggleTree()
 			vim.cmd("wincmd =")
-			maximised = false
-		else
-			vim.cmd("wincmd |")
-			vim.cmd("wincmd _")
-			maximised = true
 		end
-	end,
-	{ desc = "Remove original window close mapping", noremap = true })
-
+		if saved_win and vim.api.nvim_win_is_valid(saved_win) then
+			vim.api.nvim_set_current_win(saved_win)
+		end
+	else
+		saved_win = vim.api.nvim_get_current_win() -- Save the current window.
+		vim.cmd("wincmd |")                      -- Maximize width.
+		vim.cmd("wincmd _")                      -- Maximize height.
+		maximised = true
+	end
+end
+vim.keymap.set("n", "<leader>km", toggle_maximise
+, { desc = "Toggle window maximisation", noremap = true })
 
 -- Tabs
 vim.keymap.set("n", "<leader>tc", "<cmd>tabnew<CR>")
@@ -126,9 +147,6 @@ vim.keymap.set(
 	{ desc = "telescope find all files" }
 )
 
--- Nvim Tree
-vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
--- vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
 -- DebugPy
 vim.keymap.set({ "i", "n" }, "<F5>", function()
@@ -200,6 +218,7 @@ local rename_tab = function()
 end
 
 vim.keymap.set("n", "<leader>t$", rename_tab)
+
 
 
 -- Remove Mappings
