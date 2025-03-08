@@ -51,16 +51,13 @@ vim.keymap.set("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true })
 vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search highlighting" })
 
 --  Window Movement
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
-
-vim.keymap.set("i", "<C-h>", "<Left>", { desc = "move left" })
-vim.keymap.set("i", "<C-l>", "<Right>", { desc = "move right" })
-vim.keymap.set("i", "<C-j>", "<Down>", { desc = "move down" })
-vim.keymap.set("i", "<C-k>", "<Up>", { desc = "move up" })
-vim.keymap.set("n", "<C-k><C-m>", "<C-w><S-|>", { noremap = true })
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "switch window left", noremap = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "switch window right", noremap = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "switch window down", noremap = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "switch window up", noremap = true })
+vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "close window", noremap = true })
+vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Remove original window close mapping", noremap = true })
+-- vim.keymap.set("n", "<C-1>", function() vim.cmd("normal! 100 <C-h> <C-l>") end)
 
 -- Tabs
 vim.keymap.set("n", "<leader>tc", "<cmd>tabnew<CR>")
@@ -186,3 +183,4 @@ vim.keymap.set("n", "<leader>t$", rename_tab)
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
+

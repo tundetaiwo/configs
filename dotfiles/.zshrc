@@ -48,6 +48,8 @@ setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
 setopt append_history
+setopt no_share_history
+unsetopt share_history
 
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
