@@ -195,8 +195,18 @@ vim.keymap.set("n", "<leader>sl", function() require("persistence").select() end
 vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
 
 -- Nvim Diff
-vim.keymap.set("n", "<leader>oc", "<cmd>DiffviewOpen<CR>")
-vim.keymap.set("n", "<leader>fh", "<cmd>DiffviewFileHistory<CR>")
+vim.keymap.set("n", "<leader>gs", function()
+	vim.cmd("DiffviewOpen")
+	vim.cmd("TabRename " .. "Git Status Diffview")
+end
+)
+vim.keymap.set("n", "<leader>fh", function()
+	vim.cmd("DiffviewFileHistory")
+	vim.cmd("TabRename " .. "Commit History")
+end
+)
+
+-- vim.keymap.set("n", "<leader>fh", "<cmd>DiffviewFileHistory<CR>")
 
 -- Copy Current Work Directory
 vim.keymap.set("n", "<leader>ca", function()
