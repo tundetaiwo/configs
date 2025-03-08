@@ -110,6 +110,13 @@ local plugins = {
 			require("configs.toggleterm")
 		end,
 	},
+	-- Gitsigns
+	{
+		dir = plugin_folder .. "gitsigns.nvim",
+		config = function()
+			require("configs.gitsigns")
+		end
+	},
 	-- Diffview
 	{
 		dir = plugin_folder .. "diffview.nvim",
