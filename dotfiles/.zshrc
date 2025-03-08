@@ -61,6 +61,8 @@ bindkey "^J" history-search-forward
 # GDrive Mount
 alias mount_GDrive="rclone mount GDrive: /GDrive"
 alias GDrive="cd /GDrive"
+alias unmount_GDrive='fusermount -u /GDrive'
 
 
 alias trw="tmux movew -r"
+alias tsf="tmux source-file ~/.config/tmux/tmux.conf"
