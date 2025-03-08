@@ -199,13 +199,21 @@ vim.keymap.set("n", "<leader>oc", "<cmd>DiffviewOpen<CR>")
 vim.keymap.set("n", "<leader>fh", "<cmd>DiffviewFileHistory<CR>")
 
 -- Copy Current Work Directory
-vim.api.nvim_create_user_command("CopyRelPath", "call setreg('+', expand('%'))", {})
-vim.api.nvim_create_user_command("CopyAbsPath", function() vim.fn.setreg('+', vim.fn.expand('%:p')) end, {})
-vim.api.nvim_create_user_command("CopyAbsDir", function() vim.fn.setreg('+', vim.fn.expand('%:p:h')) end, {})
-
-vim.keymap.set("n", "<leader>cr", "<cmd>CopyRelPath<CR>")
-vim.keymap.set("n", "<leader>ca", "<cmd>CopyAbsPath<CR>")
-vim.keymap.set("n", "<leader>cd", "<cmd>CopyAbsDir<CR>")
+vim.keymap.set("n", "<leader>ca", function()
+	local path = vim.fn.expand('%:p')
+	print("Copied path: '" .. path .. "'")
+	vim.fn.setreg('+', path)
+end, { desc = "Copy relative path to file" })
+vim.keymap.set("n", "<leader>cr", function()
+	local path = vim.fn.expand('%')
+	print("Copied path: '" .. path .. "'")
+	vim.fn.setreg('+', path)
+end, { desc = "Copy absolute path to file" })
+vim.keymap.set("n", "<leader>cd", function()
+	local path = vim.fn.expand('%:p:h')
+	print("Copied path: '" .. path .. "'")
+	vim.fn.setreg('+', path)
+end, { desc = "Copy absolute path to directory" })
 
 -- Slime
 vim.keymap.set("n", "<A-C-j>", [[/^#\s*%%<CR>]], { silent = true }) -- Next cell
