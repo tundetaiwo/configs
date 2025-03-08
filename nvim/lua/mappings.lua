@@ -220,7 +220,6 @@ end
 vim.keymap.set("n", "<leader>t$", rename_tab)
 
 
-
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })

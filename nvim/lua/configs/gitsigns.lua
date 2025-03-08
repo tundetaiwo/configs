@@ -54,18 +54,30 @@ require('gitsigns').setup {
 			opts.buffer = bufnr
 			vim.keymap.set(mode, l, r, opts)
 		end
-		map('v', '<leader>gs', function()
-      gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-    end)
+		map('v', 'gs', function()
+			gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+		end)
 
-    map('v', '<leader>gu', function()
-      gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-    end)
+		map('v', 'gr', function()
+			gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+		end)
 		map('n', '<leader>gs', gitsigns.stage_hunk)
-		map('n', '<leader>gu', gitsigns.reset_hunk)
+		map('n', '<leader>gr', gitsigns.reset_hunk)
 		map('n', '<leader>gb', gitsigns.toggle_current_line_blame)
-		map('n', '<leader>gd', gitsigns.diffthis)
+
 		map('n', '<leader>gp', gitsigns.preview_hunk)
 		map('n', '<leader>gQ', function() gitsigns.setqflist('all') end)
+
+		map("n", "<leader>gd", function()
+			local current_file = vim.fn.expand('%:p')
+			if current_file == '' then
+				print("No file loaded")
+				return
+			end
+			-- Open the current file in a new tab
+			vim.cmd("tabnew " .. vim.fn.fnameescape(current_file))
+			-- Call gitsigns diffthis on the new tab
+			require("gitsigns").diffthis()
+		end, { desc = "Open gitsigns diffthis in new tab", noremap = true })
 	end
 }
