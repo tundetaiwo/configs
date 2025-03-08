@@ -57,7 +57,20 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "switch window down", noremap = 
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "switch window up", noremap = true })
 vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "close window", noremap = true })
 vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Remove original window close mapping", noremap = true })
--- vim.keymap.set("n", "<C-1>", function() vim.cmd("normal! 100 <C-h> <C-l>") end)
+
+local maximised = false
+vim.keymap.set("n", "<leader>km", function()
+		if maximised then
+			vim.cmd("wincmd =")
+			maximised = false
+		else
+			vim.cmd("wincmd |")
+			vim.cmd("wincmd _")
+			maximised = true
+		end
+	end,
+	{ desc = "Remove original window close mapping", noremap = true })
+
 
 -- Tabs
 vim.keymap.set("n", "<leader>tc", "<cmd>tabnew<CR>")
@@ -81,13 +94,13 @@ vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescop
 vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
 vim.keymap.set("n", "<leader>f<S-w>", function()
-	require('telescope.builtin').live_grep({
-		additional_args = function(args)
-			return vim.list_extend(args, { "--no-ignore" })
-		end,
-	})
-end,
-	{desc = "grep all files"}
+		require('telescope.builtin').live_grep({
+			additional_args = function(args)
+				return vim.list_extend(args, { "--no-ignore" })
+			end,
+		})
+	end,
+	{ desc = "grep all files" }
 )
 vim.keymap.set("n", "<leader>ts", function()
 		require("telescope.builtin").resume()
@@ -115,7 +128,7 @@ vim.keymap.set(
 
 -- Nvim Tree
 vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
-vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+-- vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
 -- DebugPy
 vim.keymap.set({ "i", "n" }, "<F5>", function()
