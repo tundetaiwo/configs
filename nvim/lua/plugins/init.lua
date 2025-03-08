@@ -41,7 +41,9 @@ local plugins = {
 	{
 		dir = plugin_folder .. "nvim-tree.lua",
 		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-		opts = require("configs.nvimtree"),
+		config = function()
+			require("configs.nvimtree")
+		end,
 		dependencies = { dir = plugin_folder .. "nvim-web-devicons" },
 	},
 	-- AutoFormatting

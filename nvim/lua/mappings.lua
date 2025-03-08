@@ -80,6 +80,15 @@ vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "tele
 vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
+vim.keymap.set("n", "<leader>f<S-w>", function()
+	require('telescope.builtin').live_grep({
+		additional_args = function(args)
+			return vim.list_extend(args, { "--no-ignore" })
+		end,
+	})
+end,
+	{desc = "grep all files"}
+)
 vim.keymap.set("n", "<leader>ts", function()
 		require("telescope.builtin").resume()
 	end,
@@ -183,4 +192,3 @@ vim.keymap.set("n", "<leader>t$", rename_tab)
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
-
