@@ -66,7 +66,7 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Switch window right", noremap =
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Switch window down", noremap = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Switch window up", noremap = true })
 vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
-vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping", noremap = true })
+vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping"})
 
 local maximised = false
 local saved_win = nil
@@ -105,48 +105,6 @@ vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]])
 vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]])
 vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]])
 vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]])
-
--- Telescope
-vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
-vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
-vim.keymap.set("n", "<leader><S-f><S-f>", "<cmd>Telescope find_files follow=true no_ignore=true hidden=false<CR>")
-vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
-vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
-vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
-vim.keymap.set("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", { desc = "telescope choose colorscheme" })
-vim.keymap.set("n", "<leader>f<S-w>", function()
-		require('telescope.builtin').live_grep({
-			additional_args = function(args)
-				return vim.list_extend(args, { "--no-ignore" })
-			end,
-		})
-	end,
-	{ desc = "grep all files" }
-)
-vim.keymap.set("n", "<leader>ts", function()
-		require("telescope.builtin").resume()
-	end,
-	{
-		noremap = true,
-		silent = true,
-	}
-)
-vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>",
-	{ desc = "telescope find in current buffer" })
-
-vim.keymap.set("n", "<C-x>", function()
-		require('telescope.actions').delete_buffer()
-	end,
-	{ desc = "delete buffer in buffer picker" }
-)
-vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }) -- Currently not working?
-vim.keymap.set(
-	"n",
-	"<leader>fa",
-	"<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-	{ desc = "telescope find all files" }
-)
-
 
 -- DebugPy
 vim.keymap.set({ "i", "n" }, "<F5>", function()
@@ -195,7 +153,7 @@ vim.keymap.set("n", "<leader>sl", function() require("persistence").select() end
 vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
 
 -- Nvim Diff
-vim.keymap.set("n", "<leader>gs", function()
+vim.keymap.set("n", "<leader>dv", function()
 	vim.cmd("DiffviewOpen")
 	vim.cmd("TabRename " .. "Git Status Diffview")
 end
@@ -213,12 +171,14 @@ vim.keymap.set("n", "<leader>ca", function()
 	local path = vim.fn.expand('%:p')
 	print("Copied path: '" .. path .. "'")
 	vim.fn.setreg('+', path)
-end, { desc = "Copy relative path to file" })
+end, { desc = "Copy absolute path to file" })
+
 vim.keymap.set("n", "<leader>cr", function()
 	local path = vim.fn.expand('%')
 	print("Copied path: '" .. path .. "'")
 	vim.fn.setreg('+', path)
-end, { desc = "Copy absolute path to file" })
+end, { desc = "Copy relative path to file" })
+
 vim.keymap.set("n", "<leader>cd", function()
 	local path = vim.fn.expand('%:p:h')
 	print("Copied path: '" .. path .. "'")

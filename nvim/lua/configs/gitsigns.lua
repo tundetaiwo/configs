@@ -1,3 +1,4 @@
+local gs_helpers = require("configs.gitsigns_helpers")
 require('gitsigns').setup {
 	signs                        = {
 		add          = { text = '┃' },
@@ -64,22 +65,10 @@ require('gitsigns').setup {
 		-- map('n', '<leader>gs', gitsigns.stage_hunk)
 		map('n', '<leader>gr', gitsigns.reset_hunk)
 		map('n', '<leader>gb', gitsigns.toggle_current_line_blame)
-
 		map('n', '<leader>gp', gitsigns.preview_hunk)
-		map('n', '<leader>gQ', function() gitsigns.setqflist('all') end)
 
 		map("n", "<leader>oc", function()
-			local current_file = vim.fn.expand('%:p')
-			if current_file == '' then
-				print("No file loaded")
-				return
-			end
-			-- Open the current file in a new tab
-			vim.cmd("tabnew " .. vim.fn.fnameescape(current_file))
-			vim.cmd("TabRename " .. "Diff - " .. vim.fn.expand('%'))
-
-			-- Call gitsigns diffthis on the new tab
-			require("gitsigns").diffthis()
+			gs_helpers.open_diff_new_tab(vim.fn.expand("%:p"), vim.fn.expand("%"))
 		end, { desc = "Open gitsigns diffthis in new tab", noremap = true })
 	end
 }
