@@ -230,5 +230,25 @@
 			"        return inner_wrapper",
 			"    return wrapper"
 		]
+	},
+	"dummy_timeseries": {
+		"prefix": "dummy_timeseries",
+		"body": [
+			"import pandas as pd",
+			"import numpy as np",
+			"import numpy as np",
+			"import pandas as pd",
+			"",
+			"np.random.seed(1010)",
+			"date_range = pd.date_range(start='2023-01-01', periods=365, freq='D')",
+			"",
+			"df = pd.DataFrame(",
+			"    {",
+			"			  'position': np.random.choice(range(1000), len(date_range)),",
+			"			  'returns': np.random.choice(range(-100, 100), len(date_range)),",
+			"    },",
+		  "		 index=date_range,",
+			")"
+		]
 	}
 }
