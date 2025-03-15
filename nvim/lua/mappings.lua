@@ -51,13 +51,20 @@ vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search high
 
 -- NvimTree Toggle and state tracking
 local treeActive = false
-local function toggleTree()
+local toggleTree = function ()
 	vim.cmd("NvimTreeToggle")
 	vim.cmd("wincmd =")
 	treeActive = not treeActive
 end
 
+local focusTree = function ()
+	if treeActive then
+		vim.cmd("NvimTreeFocus")
+	end
+end
+
 vim.keymap.set("n", "<C-b>", toggleTree, { desc = "Toggle NvimTree" })
+vim.keymap.set("n", "<leader>e", focusTree, { desc = "Focus NvimTree" })
 
 local go_to_pane = function(number)
 	if treeActive then
