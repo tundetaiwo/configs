@@ -42,8 +42,6 @@ vim.keymap.set('n', '<leader><C-x>', "<cmd>bd!<CR>", { desc = "force close buffe
 vim.keymap.set('n', '<leader><S-x>', '<cmd>e #<CR>', { desc = "re-open last closed buffer" })
 vim.keymap.set("t", "<A-x>", "<cmd>bd!<CR>", { desc = "terminal buffer close" })
 
-vim.keymap.set("n", "<leader>b", "<cmd>ls<CR>", { desc = "buffer close" })
-
 -- Comment
 vim.keymap.set({ "i", "n" }, "<C-_>", "gcc", { desc = "Toggle Comment", remap = true })
 vim.keymap.set("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true })
