@@ -55,10 +55,26 @@ vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search high
 local treeActive = false
 local function toggleTree()
 	vim.cmd("NvimTreeToggle")
+	vim.cmd("wincmd =")
 	treeActive = not treeActive
 end
 
 vim.keymap.set("n", "<C-b>", toggleTree, { desc = "Toggle NvimTree" })
+
+local go_to_pane = function(number)
+	if treeActive then
+		number = number + 1
+	end
+	vim.cmd("wincmd 999h")
+	if number > 0 then
+		vim.cmd("wincmd " .. number .. "l")
+	end
+end
+
+vim.keymap.set({"n", "t"}, "<A-1>", function() go_to_pane(0) end)
+vim.keymap.set({"n", "t"}, "<A-2>", function() go_to_pane(1) end)
+vim.keymap.set({"n", "t"}, "<A-3>", function() go_to_pane(2) end)
+vim.keymap.set({"n", "t"}, "<A-4>", function() go_to_pane(3) end)
 
 -- Window movement key mappings
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Switch window left", noremap = true })

@@ -1,9 +1,6 @@
 local Terminal = require('toggleterm.terminal').Terminal
 
 require('toggleterm').setup({
-	on_open = function(term)
-		vim.api.nvim_buf_set_keymap(term.bufnr, 't', '<C-u>', '<C-\\><C-n><C-d>i', { noremap = true })
-	end,
 	on_enter = function()
 		vim.cmd('startinsert!')
 	end,
@@ -41,7 +38,26 @@ function _window_toggle(window)
 end
 
 -- Float Window --
-local float_window = Terminal:new({
+local float_window_1 = Terminal:new({
+	display_name = "Terminal 1",
+	direction = "float",
+	float_opts = {
+		border = "double",
+		size = 40,
+	},
+	close_on_exit = true,
+})
+local float_window_2 = Terminal:new({
+	display_name = "Terminal 2",
+	direction = "float",
+	float_opts = {
+		border = "double",
+		size = 40,
+	},
+	close_on_exit = true,
+})
+local float_window_3 = Terminal:new({
+	display_name = "Terminal 3",
 	direction = "float",
 	float_opts = {
 		border = "double",
@@ -50,8 +66,9 @@ local float_window = Terminal:new({
 	close_on_exit = true,
 })
 
-vim.keymap.set("n", "<A-i>", function() _window_toggle(float_window) end, { noremap = true, silent = true })
-vim.keymap.set("t", "<A-i>", function() _window_toggle(float_window) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-i>", function() _window_toggle(float_window_1) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-q>", function() _window_toggle(float_window_2) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-w>", function() _window_toggle(float_window_3) end, { noremap = true, silent = true })
 
 -- Vertical Window --
 local vertical_window = Terminal:new({
@@ -104,3 +121,9 @@ end
 
 vim.keymap.set("n", "<A-p>", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
 vim.keymap.set("t", "<A-p>", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
+
+
+vim.keymap.set("t", "<C-u", "<C-\\><C-n><C-u>",
+	{ noremap = true, silent = true, desc = "scroll up in terminal" })
+
+vim.keymap.set("t", "<A-e>","<C-\\><C-n>", { noremap = true, desc="escape terminal mode"})
