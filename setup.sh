@@ -24,6 +24,7 @@ rm nvim-linux-x86_64.tar.gz
 
 # Lua Language Server
 curl -LO https://github.com/LuaLS/lua-language-server/releases/download/3.13.6/lua-language-server-3.13.6-linux-x64.tar.gz
+mkdir $HOME/.local/share/lua-language-server/
 tar -C $HOME/.local/share/lua-language-server/ -xzf lua-language-server-3.13.6-linux-x64.tar.gz
 rm lua-language-server-3.13.6-linux-x64.tar.gz
 
