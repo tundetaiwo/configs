@@ -12,9 +12,17 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "keep cursor in middle scrollin
 vim.keymap.set("v", "<leader>_", "\"_d", { desc = "delete to void" })
 
 vim.keymap.set({ "n", "v" }, "<leader>y", "\"+y", { desc = "yank to clipboard" })
+vim.keymap.set({ "n", "v" }, "\"+y", "\"+y", { desc = "yank to clipboard" })
+
 vim.keymap.set("n", "<leader>Y", "\"+Y", { desc = "yank whole line to clipboard" })
+vim.keymap.set("n", "\"+Y", "\"+Y", { desc = "yank whole line to clipboard" })
+
+
 vim.keymap.set({ "n", "v" }, "<leader>p", "\"+p", { desc = "paste clipboard after" })
+vim.keymap.set({ "n", "v" }, "\"+p", "\"+p", { desc = "paste clipboard after" })
+
 vim.keymap.set({ "n", "v" }, "<leader>P", "\"+P", { desc = "paste clipboard before" })
+vim.keymap.set({ "n", "v" }, "\"+P", "\"+P", { desc = "paste clipboard before" })
 
 vim.keymap.set({ "n", "v" }, "y", "\"0y")
 vim.keymap.set({ "n", "v" }, "x", "\"0x")
@@ -51,13 +59,13 @@ vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search high
 
 -- NvimTree Toggle and state tracking
 local treeActive = false
-local toggleTree = function ()
+local toggleTree = function()
 	vim.cmd("NvimTreeToggle")
 	vim.cmd("wincmd =")
 	treeActive = not treeActive
 end
 
-local focusTree = function ()
+local focusTree = function()
 	if treeActive then
 		vim.cmd("NvimTreeFocus")
 	end
@@ -76,10 +84,10 @@ local go_to_pane = function(number)
 	end
 end
 
-vim.keymap.set({"n", "t"}, "<A-1>", function() go_to_pane(0) end)
-vim.keymap.set({"n", "t"}, "<A-2>", function() go_to_pane(1) end)
-vim.keymap.set({"n", "t"}, "<A-3>", function() go_to_pane(2) end)
-vim.keymap.set({"n", "t"}, "<A-4>", function() go_to_pane(3) end)
+vim.keymap.set({ "n", "t" }, "<A-1>", function() go_to_pane(0) end)
+vim.keymap.set({ "n", "t" }, "<A-2>", function() go_to_pane(1) end)
+vim.keymap.set({ "n", "t" }, "<A-3>", function() go_to_pane(2) end)
+vim.keymap.set({ "n", "t" }, "<A-4>", function() go_to_pane(3) end)
 
 -- Window movement key mappings
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Switch window left", noremap = true })
@@ -87,7 +95,7 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Switch window right", noremap =
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Switch window down", noremap = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Switch window up", noremap = true })
 vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
-vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping"})
+vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping" })
 
 local maximised = false
 local saved_win = nil

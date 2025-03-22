@@ -28,7 +28,7 @@ end
 
 local on_enter_toggle = true
 
-vim.keymap.set({"n", "t"}, "<A-m>", function()
+vim.keymap.set({ "n", "t" }, "<A-m>", function()
 	on_enter_toggle = not on_enter_toggle
 	print("Terminal Auto-Focus: " .. tostring(on_enter_toggle))
 end)
@@ -131,7 +131,7 @@ if check_ipython() then
 	})
 end
 
-vim.keymap.set("n", "<A-p>", function() 
+vim.keymap.set("n", "<A-p>", function()
 	_window_toggle(interactive_window)
 	print(interactive_window.job_id)
 end, { noremap = true, silent = true })
@@ -141,16 +141,14 @@ vim.keymap.set("t", "<A-p>", function() _window_toggle(interactive_window) end, 
 vim.keymap.set("t", "<C-u", "<C-\\><C-n><C-u>",
 	{ noremap = true, silent = true, desc = "scroll up in terminal" })
 
-vim.keymap.set("t", "<A-d>","<C-\\><C-n>", { noremap = true, desc="escape terminal mode"})
+vim.keymap.set("t", "<A-d>", "<C-\\><C-n>", { noremap = true, desc = "escape terminal mode" })
 
 -- Function to echo the current terminal ID
 function _G.echo_terminal_id()
-  local term_id = vim.b.toggle_number
-  if term_id then
-    print("Terminal ID: " .. term_id)
-  else
-    print("Not in a ToggleTerm buffer.")
-  end
+	local term_id = vim.b.toggle_number
+	if term_id then
+		print("Terminal ID: " .. term_id)
+	else
+		print("Not in a ToggleTerm buffer.")
+	end
 end
-
-
