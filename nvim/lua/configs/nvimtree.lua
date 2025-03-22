@@ -73,7 +73,7 @@ end
 -- pass to setup along with your other options
 require("nvim-tree").setup {
 	on_attach = my_on_attach,
-	filters = { dotfiles = false },
+	filters = { dotfiles = true, git_ignored = false },
 	disable_netrw = true,
 	hijack_cursor = true,
 	sync_root_with_cwd = true,
@@ -105,4 +105,3 @@ require("nvim-tree").setup {
 		},
 	},
 }
-

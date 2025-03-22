@@ -49,6 +49,7 @@ function _window_toggle(window)
 	end
 end
 
+
 -- Float Window --
 local float_window_1 = Terminal:new({
 	display_name = "Terminal 1",
@@ -130,10 +131,11 @@ if check_ipython() then
 		end
 	})
 end
+vim.keymap.set("t", "<A-,>",function() print(interactive_window.job_id) end)
 
 vim.keymap.set("n", "<A-p>", function()
 	_window_toggle(interactive_window)
-	print(interactive_window.job_id)
+	vim.wo.statusline = 'Terminal: ' .. interactive_window.job_id
 end, { noremap = true, silent = true })
 vim.keymap.set("t", "<A-p>", function() _window_toggle(interactive_window) end, { noremap = true, silent = true })
 
@@ -152,3 +154,4 @@ function _G.echo_terminal_id()
 		print("Not in a ToggleTerm buffer.")
 	end
 end
+
