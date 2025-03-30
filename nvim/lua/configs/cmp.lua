@@ -35,10 +35,10 @@ cmp.setup(options)
 -- Command-line (search "/" and "?") completion setup
 cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline({
-		["<Tab>"]   = { c = function() end },  -- Disable Tab in cmdline mode
-		["<S-Tab>"] = { c = function() end },  -- Disable Shift-Tab in cmdline mode
+		["<Tab>"]   = { c = function() end }, -- Disable Tab in cmdline mode
+		["<S-Tab>"] = { c = function() end }, -- Disable Shift-Tab in cmdline mode
 		["<C-j>"]   = {
-			c = function(fallback)               -- Ctrl+j: next item
+			c = function(fallback)            -- Ctrl+j: next item
 				if cmp.visible() then
 					cmp.select_next_item()
 				else
@@ -47,7 +47,7 @@ cmp.setup.cmdline({ "/", "?" }, {
 			end
 		},
 		["<C-k>"]   = {
-			c = function(fallback)               -- Ctrl+k: previous item
+			c = function(fallback) -- Ctrl+k: previous item
 				if cmp.visible() then
 					cmp.select_prev_item()
 				else
@@ -91,3 +91,5 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline" }
 	})
 })
+
+return options

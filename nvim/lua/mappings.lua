@@ -124,12 +124,18 @@ vim.keymap.set("n", "<leader>km", toggle_maximise
 
 -- Tabs
 local function move_tab_right()
-	vim.cmd("tabmove +1")
-	-- vim.fn
+	local current_tab = vim.fn.tabpagenr()
+	local total_tabs = vim.fn.tabpagenr("$")
+	if current_tab < total_tabs then
+		vim.cmd("tabmove +1")
+	end
 end
-local function move_tab_left()
 
-	vim.cmd("tabmove -1")
+local function move_tab_left()
+	local current_tab = vim.fn.tabpagenr()
+	if current_tab > 1 then
+		vim.cmd("tabmove -1")
+	end
 end
 
 vim.keymap.set("n", "<leader>tc", "<cmd>tabnew<CR>")
