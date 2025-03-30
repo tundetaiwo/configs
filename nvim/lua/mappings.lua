@@ -123,10 +123,21 @@ vim.keymap.set("n", "<leader>km", toggle_maximise
 , { desc = "Toggle window maximisation", noremap = true })
 
 -- Tabs
+local function move_tab_right()
+	vim.cmd("tabmove +1")
+	-- vim.fn
+end
+local function move_tab_left()
+
+	vim.cmd("tabmove -1")
+end
+
 vim.keymap.set("n", "<leader>tc", "<cmd>tabnew<CR>")
 vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>")
 vim.keymap.set("n", "<A-k>", "<cmd>tabnext<CR>")
 vim.keymap.set("n", "<A-j>", "<cmd>tabprevious<CR>")
+vim.keymap.set("n", "<C-A-l>", move_tab_right)
+vim.keymap.set("n", "<C-A-h>", move_tab_left)
 
 
 -- Terminal Movement

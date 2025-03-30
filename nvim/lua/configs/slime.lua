@@ -29,5 +29,8 @@ local function send_cell_and_advance()
 	move_to_next_cell()
 end
 
-vim.keymap.set("n", "<A-r>", send_cell_and_advance, { silent = true })
 vim.keymap.set("n", "<C-r>", "<Plug>SlimeSendCell", { remap = true, silent = false })
+vim.keymap.set("n", "<A-r>", send_cell_and_advance, { silent = true })
+
+-- Change Active Terminal For Sending Code
+vim.keymap.set("n", "<leader>ct", "<Cmd>SlimeConfig<CR>")
