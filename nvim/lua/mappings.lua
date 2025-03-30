@@ -214,10 +214,6 @@ vim.keymap.set("n", "<leader>cd", function()
 	vim.fn.setreg('+', path)
 end, { desc = "Copy absolute path to directory" })
 
--- Slime
-vim.keymap.set("n", "<A-C-j>", [[/^#\s*%%<CR>]], { silent = true }) -- Next cell
-vim.keymap.set("n", "<A-C-k>", [[?^#\s*%%<CR>]], { silent = true }) -- Previous cell
-
 
 local rename_tab = function()
 	local name = vim.fn.input("Rename Tab: ")
