@@ -20,4 +20,8 @@ vim.opt.updatetime = 500
 -- Snippets Path
 vim.g.vscode_snippets_path = vim.fn.stdpath("config") .. "/lua/snippets/"
 
-vim.opt.shell = "/usr/bin/zsh"
+if jit.os == "OSX" then
+	vim.opt.shell = "/bin/zsh"
+else
+	vim.opt.shell = "/usr/bin/zsh"
+end
