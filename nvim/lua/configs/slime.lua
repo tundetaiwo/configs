@@ -23,14 +23,16 @@ vim.keymap.set("n", "<A-C-k>", move_to_prev_cell, { silent = true }) -- Next cel
 vim.keymap.set("n", "<A-C-j>", move_to_next_cell, { silent = true }) -- Next cell
 
 local function send_cell_and_advance()
-	local last_line = vim.fn.line('$')
-
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Plug>SlimeSendCell', true, true, true), 'n', true)
+	vim.api.nvim_feedkeys(
+		vim.api.nvim_replace_termcodes('<Plug>SlimeSendCell', true, true, true),
+		'n',
+		true
+	)
 	move_to_next_cell()
 end
 
-vim.keymap.set("n", "<C-r>", "<Plug>SlimeSendCell", { remap = true, silent = false })
 vim.keymap.set("n", "<A-r>", send_cell_and_advance, { silent = true })
+vim.keymap.set("n", "<S-A-r>", "<Plug>SlimeSendCell", { remap = true, silent = false })
 
 -- Change Active Terminal For Sending Code
 vim.keymap.set("n", "<leader>ct", "<Cmd>SlimeConfig<CR>")
