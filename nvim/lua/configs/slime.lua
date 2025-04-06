@@ -1,5 +1,5 @@
 -- Cell Navigation
-local delimiter = "^#\\s*%%" -- Adjust this if your delimiter differs
+local delimiter = "^#\\s*%%"
 
 local function move_to_prev_cell()
 	local current_line = vim.fn.line('.')
