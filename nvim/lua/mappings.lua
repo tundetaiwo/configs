@@ -98,10 +98,22 @@ vim.keymap.set({ "n", "t" }, "<A-3>", function() go_to_pane(2) end)
 vim.keymap.set({ "n", "t" }, "<A-4>", function() go_to_pane(3) end)
 
 -- Window movement key mappings
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Switch window left", noremap = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Switch window right", noremap = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Switch window down", noremap = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Switch window up", noremap = true })
+vim.api.nvim_create_autocmd('WinEnter', {
+	-- Allows for Ctrl+L to clear floating terminal
+	callback = function()
+		if vim.api.nvim_win_get_config(0).relative ~= '' then
+			pcall(vim.keymap.del, {"n", "t"}, "<C-l}")
+		else
+			vim.keymap.set({ "n", "t" }, '<C-l>', [[<Cmd>wincmd l<CR>]])
+		end
+	end
+})
+
+vim.keymap.set({ 'n', 't' }, '<C-l>', "<Cmd>wincmd l<CR>")
+vim.keymap.set({ 'n', 't' }, '<C-h>', "<Cmd>wincmd h<CR>")
+vim.keymap.set({ 'n', 't' }, '<C-j>', "<Cmd>wincmd j<CR>")
+vim.keymap.set({ 'n', 't' }, '<C-k>', "<Cmd>wincmd k<CR>")
+
 vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
 vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping" })
 
@@ -111,6 +123,7 @@ local toggle_maximise = function()
 	if maximised then
 		vim.cmd("wincmd =")
 		maximised = false
+		local treeActive = isTreeActive()
 		if treeActive then
 			-- activate toggleTree twice to restore it
 			toggleTree()
@@ -152,13 +165,6 @@ vim.keymap.set("n", "<A-k>", "<cmd>tabnext<CR>")
 vim.keymap.set("n", "<A-j>", "<cmd>tabprevious<CR>")
 vim.keymap.set("n", "<C-A-l>", move_tab_right)
 vim.keymap.set("n", "<C-A-h>", move_tab_left)
-
-
--- Terminal Movement
-vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]])
-vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]])
-vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]])
-vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]])
 
 -- DebugPy
 vim.keymap.set({ "i", "n" }, "<F5>", function()
@@ -251,3 +257,4 @@ vim.keymap.set("n", "<leader>t$", rename_tab)
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
+
