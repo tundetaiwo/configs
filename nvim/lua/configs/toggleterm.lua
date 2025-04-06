@@ -33,7 +33,7 @@ vim.keymap.set({ "n", "t" }, "<A-m>", function()
 	print("Terminal Auto-Focus: " .. tostring(on_enter_toggle))
 end)
 
-function _window_toggle(window)
+local function _window_toggle(window)
 	-- Special handling for interactive window
 	if window == interactive_window and not check_ipython() then
 		show_error_message()
