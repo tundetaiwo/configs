@@ -2,6 +2,23 @@ local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local gs_helpers = require("configs.gitsigns_helpers")
 
+
+local function switch_and_delete_buffer(prompt_bufnr)
+  local current_picker = action_state.get_current_picker(prompt_bufnr)
+  local selection = current_picker:get_selection()
+  actions.close(prompt_bufnr)  -- Close the Telescope prompt
+
+  -- Switch to the previous buffer
+  vim.cmd("bp")
+
+  -- Delete the buffer that was selected in Telescope
+  vim.schedule(function()
+    vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+  end)
+end
+
+
+
 require("telescope").setup {
 	defaults = {
 		prompt_prefix = "   ",
@@ -19,7 +36,7 @@ require("telescope").setup {
 		mappings = {
 			n = {
 				["q"] = require("telescope.actions").close,
-				["<C-x>"] = require("telescope.actions").delete_buffer,
+				["<C-x>"] = switch_and_delete_buffer,
 			},
 		},
 	},
