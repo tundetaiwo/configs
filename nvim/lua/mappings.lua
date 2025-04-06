@@ -58,14 +58,21 @@ vim.keymap.set("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true })
 vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search highlighting" })
 
 -- NvimTree Toggle and state tracking
-local treeActive = false
-local toggleTree = function()
-	vim.cmd("NvimTreeToggle")
-	vim.cmd("wincmd =")
-	treeActive = not treeActive
+local function isTreeActive()
+	local success, treeActive = pcall(vim.api.nvim_tabpage_get_var, 0, "treeActive")
+	treeActive = success and treeActive or false
+	return treeActive
 end
 
-local focusTree = function()
+local function toggleTree()
+	vim.cmd("NvimTreeToggle")
+	vim.cmd("wincmd =")
+	local treeActive = isTreeActive()
+	vim.api.nvim_tabpage_set_var(0, "treeActive", not treeActive)
+end
+
+local function focusTree()
+	local treeActive = isTreeActive()
 	if treeActive then
 		vim.cmd("NvimTreeFocus")
 	end
@@ -75,6 +82,7 @@ vim.keymap.set("n", "<C-b>", toggleTree, { desc = "Toggle NvimTree" })
 vim.keymap.set("n", "<leader>e", focusTree, { desc = "Focus NvimTree" })
 
 local go_to_pane = function(number)
+	local treeActive = isTreeActive()
 	if treeActive then
 		number = number + 1
 	end
