@@ -233,11 +233,10 @@ vim.keymap.set("n", "<leader>fh", function()
 	end,
 	{ desc = "Show git history for file" }
 )
+
 vim.keymap.set("n", "<leader>fd", "<cmd>DiffOrig<CR>",
 	{ desc = "Compare file difference between current buffer and disk" }
 )
-
--- vim.keymap.set("n", "<leader>fh", "<cmd>DiffviewFileHistory<CR>")
 
 -- Copy Current Work Directory
 vim.keymap.set("n", "<leader>ca", function()
