@@ -63,8 +63,8 @@ extension_urls = {
     "https://github.com/ibhagwan/fzf-lua": ("0a3b70feb05879a8001c51f7a2a42fa52a9e552c", None),
     "https://github.com/sindrets/diffview.nvim": ("4516612fe98ff56ae0415a259ff6361a89419b0a", None),
     "https://github.com/nanozuki/tabby.nvim": ("c119c91f3ada1a7c62ca2d10685ac8a3e2928fb8", None),
-    # "https://github.com/tpope/vim-fugitive": ("4a745ea72fa93bb15dd077109afbb3d1809383f2", None),
-    "https://github.com/lewis6991/gitsigns.nvim": ("6668f379ca634c36b8e11453118590b91bf8b295", None)
+    "https://github.com/lewis6991/gitsigns.nvim": ("6668f379ca634c36b8e11453118590b91bf8b295", None),
+    "https://github.com/ellisonleao/gruvbox.nvim": ("cc202a7c5e5ffca06f92a04073275dec371cbfe3", None),
 }
 
 def clone_extensions(extension_urls: dict, overwrite: bool | list = False) -> None:
