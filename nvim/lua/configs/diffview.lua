@@ -21,13 +21,13 @@ require("diffview").setup({
 	view = {
 		-- Configure the layout and behavior of different types of views.
 		-- Available layouts:
-		--  'diff1_plain'
-		--    |'diff2_horizontal'
-		--    |'diff2_vertical'
-		--    |'diff3_horizontal'
-		--    |'diff3_vertical'
-		--    |'diff3_mixed'
-		--    |'diff4_mixed'
+		--  "diff1_plain"
+		--    |"diff2_horizontal"
+		--    |"diff2_vertical"
+		--    |"diff3_horizontal"
+		--    |"diff3_vertical"
+		--    |"diff3_mixed"
+		--    |"diff4_mixed"
 		-- For more info, see |diffview-config-view.x.layout|.
 		default = {
 			-- Config for changed files, and staged files in diff views.
@@ -49,10 +49,10 @@ require("diffview").setup({
 		},
 	},
 	file_panel = {
-		listing_style = "tree",         -- One of 'list' or 'tree'
-		tree_options = {                -- Only applies when listing_style is 'tree'
+		listing_style = "tree",         -- One of "list" or "tree"
+		tree_options = {                -- Only applies when listing_style is "tree"
 			flatten_dirs = true,          -- Flatten dirs that only contain one single dir
-			folder_statuses = "only_folded", -- One of 'never', 'only_folded' or 'always'.
+			folder_statuses = "only_folded", -- One of "never", "only_folded" or "always".
 		},
 		win_config = {                  -- See |diffview-config-win_config|
 			position = "left",
@@ -177,7 +177,7 @@ require("diffview").setup({
 			-- { "n", "gf",            actions.goto_file_edit,                { desc = "Open the file in the previous tabpage" } },
 			-- { "n", "<C-w><C-f>",    actions.goto_file_split,               { desc = "Open the file in a new split" } },
 			-- { "n", "<C-w>gf",       actions.goto_file_tab,                 { desc = "Open the file in a new tabpage" } },
-			-- { "n", "i",             actions.listing_style,                 { desc = "Toggle between 'list' and 'tree' views" } },
+			-- { "n", "i",             actions.listing_style,                 { desc = "Toggle between "list" and "tree" views" } },
 			-- { "n", "f",             actions.toggle_flatten_dirs,           { desc = "Flatten empty subdirectories in tree listing style" } },
 			-- { "n", "R",             actions.refresh_files,                 { desc = "Update stats and entries in the file list" } },
 			{ "n", "<leader>e",     actions.focus_files,        { desc = "Bring focus to the file panel" } },
@@ -266,3 +266,21 @@ vim.api.nvim_create_autocmd("WinEnter", {
 		end
 	end,
 })
+
+
+vim.api.nvim_create_user_command("DiffOrig", function()
+		local relative_path = vim.fn.expand("%")
+		local current_buffer = vim.api.nvim_get_current_buf()
+		vim.cmd("tabnew")
+		vim.cmd("TabRename DiffOrig " .. relative_path)
+		vim.api.nvim_set_current_buf(current_buffer)
+
+		vim.cmd("vnew")
+		vim.bo.buftype = "nofile"
+		-- Read the contents of the alternate file into the new buffer
+		vim.cmd("read ++edit #")
+		-- Delete the first (empty) line
+		vim.cmd("normal! 0d_")
+		vim.cmd("diffthis | wincmd p | diffthis")
+	end,
+	{ desc = "" })

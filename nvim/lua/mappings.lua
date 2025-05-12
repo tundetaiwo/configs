@@ -102,7 +102,7 @@ vim.api.nvim_create_autocmd('WinEnter', {
 	-- Allows for Ctrl+L to clear floating terminal
 	callback = function()
 		if vim.api.nvim_win_get_config(0).relative ~= '' then
-			pcall(vim.keymap.del, {"n", "t"}, "<C-l}")
+			pcall(vim.keymap.del, { "n", "t" }, "<C-l}")
 		else
 			vim.keymap.set({ "n", "t" }, '<C-l>', [[<Cmd>wincmd l<CR>]])
 		end
@@ -218,10 +218,23 @@ vim.keymap.set("n", "<leader>dv", function()
 	vim.cmd("TabRename " .. "Git Status Diffview")
 end
 )
+
+vim.keymap.set("n", "<leader>dh", function()
+		vim.cmd("DiffviewFileHistory")
+		vim.cmd("TabRename " .. "Commit History")
+	end,
+	{ desc = "Show git history for entire directory" }
+)
+
 vim.keymap.set("n", "<leader>fh", function()
-	vim.cmd("DiffviewFileHistory")
-	vim.cmd("TabRename " .. "Commit History")
-end
+		local relative_path = vim.fn.expand('%')
+		vim.cmd("DiffviewFileHistory " .. relative_path)
+		vim.cmd("TabRename " .. "Commit History " .. relative_path)
+	end,
+	{ desc = "Show git history for file" }
+)
+vim.keymap.set("n", "<leader>fd", "<cmd>DiffOrig<CR>",
+	{ desc = "Compare file difference between current buffer and disk" }
 )
 
 -- vim.keymap.set("n", "<leader>fh", "<cmd>DiffviewFileHistory<CR>")
@@ -254,7 +267,7 @@ end
 vim.keymap.set("n", "<leader>t$", rename_tab)
 
 
+
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
-
