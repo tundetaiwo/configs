@@ -173,6 +173,12 @@ local plugins = {
 			require("configs.tabby")
 		end,
 	},
+	{
+		dir = plugin_folder .. "lualine.nvim",
+		config = function()
+			require("configs.lualine")
+		end
+	},
 	-- Session Manager
 	{
 		dir = plugin_folder .. "persistence.nvim",

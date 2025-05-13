@@ -156,14 +156,3 @@ function _G.echo_terminal_id()
 end
 
 
--- Close and Save all Open Buffers
-vim.api.nvim_create_user_command("Wqa", function()
-  local term_mod = require("toggleterm.terminal")
-  for _, term in ipairs(term_mod.get_all(true)) do
-
-    term:shutdown()
-  end
-  -- Now write all and quit
-  vim.cmd("wqa")
-end, {})
-
