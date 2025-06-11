@@ -114,6 +114,8 @@ vim.keymap.set({ 'n', 't' }, '<C-h>', "<Cmd>wincmd h<CR>")
 vim.keymap.set({ 'n', 't' }, '<C-j>', "<Cmd>wincmd j<CR>")
 vim.keymap.set({ 'n', 't' }, '<C-k>', "<Cmd>wincmd k<CR>")
 
+vim.keymap.set('n', '<C-w>b', "<Cmd>split<CR>")
+
 vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
 vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping" })
 
@@ -270,3 +272,4 @@ vim.keymap.set("n", "<leader>t$", rename_tab)
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
+
