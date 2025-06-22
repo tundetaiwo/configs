@@ -14,6 +14,7 @@ download zip file from github repo
 import os
 import logging
 import shutil
+from argparse import ArgumentParser
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -63,7 +64,15 @@ extension_urls = {
     "https://github.com/nanozuki/tabby.nvim": ("c119c91f3ada1a7c62ca2d10685ac8a3e2928fb8", None),
     "https://github.com/lewis6991/gitsigns.nvim": ("6668f379ca634c36b8e11453118590b91bf8b295", None),
     "https://github.com/ellisonleao/gruvbox.nvim": ("cc202a7c5e5ffca06f92a04073275dec371cbfe3", None),
+    "https://github.com/nvim-treesitter/nvim-treesitter-context": ("1a1a7c5d6d75cb49bf64049dafab15ebe294a79f", None),
 }
+
+def setup_cli():
+    parser = ArgumentParser()
+
+    parser.add_argument("--overwrite", action="store_true", default=False, required=False)
+
+    return parser.parse_args()
 
 def clone_extensions(extension_urls: dict, overwrite: bool | list = False) -> None:
     """
@@ -79,6 +88,7 @@ def clone_extensions(extension_urls: dict, overwrite: bool | list = False) -> No
     `None`
 
     """
+
     if not isinstance(overwrite, (bool, list)):
         raise TypeError("overwrite must be a boolean or a list of extension urls, see docstrings.")
     elif overwrite is True:
@@ -86,8 +96,6 @@ def clone_extensions(extension_urls: dict, overwrite: bool | list = False) -> No
     elif overwrite is False:
         overwrite = []
 
-    
-        
 
     for url, (commit_id, name) in extension_urls.items():
         if name is not None:
@@ -112,5 +120,8 @@ def clone_extensions(extension_urls: dict, overwrite: bool | list = False) -> No
             logger.info(f"Building (via make) {extension}")
             os.system("make -C ~/.local/share/nvim/lazy/telescope-fzf-native.nvim/")
 
+
 if __name__ == "__main__":
-    clone_extensions(extension_urls, overwrite=False)
+    args = setup_cli()
+    overwrite = args.overwrite
+    clone_extensions(extension_urls, overwrite=overwrite)

@@ -71,6 +71,13 @@ local plugins = {
 			require("configs.treesitter_parsers") -- This isn't quite working
 		end,
 	},
+	{
+		dir = plugin_folder .. "nvim-treesitter-context",
+		config =
+				function()
+					require("configs.treesitter-context")
+				end
+	},
 	-- Debugger
 	{
 		dir = plugin_folder .. "nvim-nio",
