@@ -78,10 +78,31 @@ local float_window_3 = Terminal:new({
 	},
 	close_on_exit = true,
 })
+local float_window_4 = Terminal:new({
+	display_name = "Terminal 4",
+	direction = "float",
+	float_opts = {
+		border = "double",
+		size = 40,
+	},
+	close_on_exit = true,
+})
+local float_window_5 = Terminal:new({
+	display_name = "Terminal 5",
+	direction = "float",
+	float_opts = {
+		border = "double",
+		size = 40,
+	},
+	close_on_exit = true,
+})
 
 vim.keymap.set({ "n", "t" }, "<A-i>", function() _window_toggle(float_window_1) end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-q>", function() _window_toggle(float_window_2) end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-w>", function() _window_toggle(float_window_3) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-1>", function() _window_toggle(float_window_1) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-2>", function() _window_toggle(float_window_2) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-3>", function() _window_toggle(float_window_3) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-4>", function() _window_toggle(float_window_4) end, { noremap = true, silent = true })
+vim.keymap.set({ "n", "t" }, "<A-5>", function() _window_toggle(float_window_5) end, { noremap = true, silent = true })
 
 -- Vertical Window --
 local vertical_window = Terminal:new({
