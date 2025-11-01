@@ -15,12 +15,12 @@ python310_path=""
 python311_path=""
 python312_path=""
 
-export PATH="$neovim_path:\
+export PATH="$PATH:$neovim_path:\
 $python312_path:\ $python311_path:\ $python310_path:\
 $lua_path:\
 $local_path:\
 $misc_path:\
-/opt/homebrew/bin:$PATH"
+/opt/homebrew/bin"
 
 # Remap 'jj' to Escape in Zsh with Vim bindings
 bindkey -v   # Ensure vim mode is enabled
