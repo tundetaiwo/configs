@@ -22,29 +22,31 @@ logger.addHandler(handler)
 PROJECT_PATH = Path(__file__).parent
 HOME_PATH = os.environ["HOME"]
 
-parser = ArgumentParser()
 
+def cli_app():
+    parser = ArgumentParser()
+    parser.add_argument(
+        "-a",
+        "--app",
+        required=True,
+        help="Application we want configuration file for, see notes section for all configs supported",
+    )
+    parser.add_argument(
+        "-m",
+        "--machine",
+        required=True,
+        help="Type of machine i.e. 'Windows', 'Mac', 'Unix'",
+    )
+    parser.add_argument(
+        "-u",
+        "--update",
+        action="store_true",  # default is false but true if specified
+        required=True,
+        help="Flag to update config with system that on the system.",
+    )
 
-parser.add_argument(
-    "-a",
-    "--app",
-    required=True,
-    help="application we want configuration file for, see notes section for all configs supported",
-)
-parser.add_argument(
-    "-m",
-    "--machine",
-    required=True,
-    help="type of machine i.e. 'Windows', 'Mac', 'Unix'",
-)
-parser.add_argument(
-    "-u",
-    "--update",
-    action="store_true",  # default is false but true if specified
-    help="flag to update config with system that on the system",
-)
-
-cli_args = parser.parse_args()
+    cli_args = parser.parse_args()
+    return cli_args
 
 
 def _replace(
@@ -138,11 +140,15 @@ def move_configs(app: str, machine: str, update: bool = False):
     valid_machines = ["unix", "mac", "wsl", "windows"]
 
     if app.lower() not in valid_apps:
-        valid_machine_strings = '\\n'.join(valid_apps)
-        raise NotImplementedError(f"{app} is not yet implemented. Please choose from one of: \n{valid_machine_strings}")
+        valid_machine_strings = "\\n".join(valid_apps)
+        raise NotImplementedError(
+            f"{app} is not yet implemented. Please choose from one of: \n{valid_machine_strings}"
+        )
 
     if machine.lower() not in valid_machines:
-        raise NotImplementedError(f"{machine} is not yet implemented. Please choose from one of: {valid_machines}")
+        raise NotImplementedError(
+            f"{machine} is not yet implemented. Please choose from one of: {valid_machines}"
+        )
 
     if app.lower() in ["nvim", "neovim", "all"]:
         being_replaced = f"{HOME_PATH}/.config/nvim/"
@@ -256,6 +262,7 @@ def move_configs(app: str, machine: str, update: bool = False):
 
 
 if __name__ == "__main__":
+    cli_args = cli_app()
     move_configs(
         app=cli_args.app,
         machine=cli_args.machine,
