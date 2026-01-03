@@ -235,33 +235,44 @@ extensions_list = [
 # --  easily retrieve object -- #
 extensions_dict = {extension.name: extension for extension in extensions_list}
 
+def parse_overwrite(overwrite: str) -> list[str] | bool:
+    if isinstance(overwrite, str):
+        match overwrite.lower():
+            case "true":
+                return True
+            case "false":
+                return False
+            case _:
+                ext_to_overwrite = overwrite.split(sep=";")
+                return [ext.strip() for ext in ext_to_overwrite]
+
 def setup_cli():
     parser = ArgumentParser(prog="clone_nvim")
 
-    parser.add_argument("--overwrite", action="store_true", default=False, required=False)
+    parser.add_argument("--overwrite", default=False, required=False, type=parse_overwrite)
 
     return parser.parse_args()
 
-def clone_extensions(extensions: list[Extension], overwrite: bool | list = False) -> None:
+def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = False) -> None:
     """
     Parameters
     ----------
     `extensions`: list of extension objects to clone. Note that the name of the folder 
         is defined by the name attribute of the extension object.
-    `overwrite (bool | list)`: whether to overwrite extensions if they've already been 
-        cloned. True will overwrite all extensions provided - can also provide a list 
-        where the values are extenion url you want to overwrite.
+    `overwrite (bool | list)`: Provide a list of 
+
+    Examples
+    --------
+    overwrite parameter should be a list 
 
     Return
     ------
     `None`
     """
 
-    if not isinstance(overwrite, (bool, list)):
-        raise TypeError("overwrite must be a boolean or a list of extension urls, see docstrings.")
-    elif overwrite is True:
+    if overwrite:
         overwrite = [extension.name for extension in extensions]
-    elif overwrite is False:
+    else :
         overwrite = []
 
 
