@@ -66,3 +66,17 @@ alias unmount_GDrive='fusermount -u /GDrive'
 
 alias trw="tmux movew -r"
 alias tsf="tmux source-file ~/.config/tmux/tmux.conf"
+
+###############
+# ZSH Widgets #
+###############
+# -- Edit Command Line In Nvim -- #
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
+# -- Auto Completion -- #
+fpath=(~/.zsh $fpath)
+autoload -Uz compinit
+compinit
+
