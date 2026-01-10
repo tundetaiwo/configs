@@ -1,17 +1,14 @@
-[tool.poetry]
+[project]
 name = "tunde-configs"
 version = "0.2.0"
 description = "Repo storing all of tunde's config files"
-authors = ["tundetaiwo <dantaiwo96@gmail.com>"]
+authors = [{ name = "tundetaiwo", email = "dantaiwo96@gmail.com" }]
+requires-python = ">=3.10,<4"
 readme = "README.md"
+dependencies = [
+    "ruff>=0.11.9,<0.12",
+    "gitpython>=3.1.44,<4",
+    "ipython<9.0.0",
+    "ty>=0.0.8,<0.0.9",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-ruff = "^0.11.9"
-gitpython = "^3.1.44"
-ipython = "<9.0.0"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
