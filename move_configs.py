@@ -42,7 +42,7 @@ def cli_app():
         "--update",
         action="store_true",  # default is false but true if specified
         required=True,
-        help="Flag to update config with system that on the system.",
+        help="Flag to update repository config with local config.",
     )
 
     cli_args = parser.parse_args()
