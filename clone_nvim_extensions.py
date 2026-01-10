@@ -16,6 +16,7 @@ import logging
 import shutil
 from argparse import ArgumentParser
 from dataclasses import dataclass
+from git import Repo
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -48,7 +49,7 @@ extensions_list = [
     Extension(
         name="telescope.nvim",
         url="https://github.com/nvim-telescope/telescope.nvim",
-        commit_id="78857db9e8d819d3cc1a9a7bdc1d39d127a36495",
+        commit_id="3333a52ff548ba0a68af6d8da1e54f9cd96e9179",
     ),
     Extension(
         name="telescope-fzf-native.nvim",
@@ -248,12 +249,11 @@ def parse_overwrite(overwrite: str) -> list[str] | bool:
 
 def setup_cli():
     parser = ArgumentParser(prog="clone_nvim")
-
     parser.add_argument("--overwrite", default=False, required=False, type=parse_overwrite)
-
+    parser.add_argument("--verbose", action="store_true", default=False, required=False)
     return parser.parse_args()
 
-def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = False) -> None:
+def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = False, verbose: bool = False) -> None:
     """
     Parameters
     ----------
@@ -270,9 +270,9 @@ def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = 
     `None`
     """
 
-    if overwrite:
+    if overwrite is True:
         overwrite = [extension.name for extension in extensions]
-    else :
+    elif overwrite is False :
         overwrite = []
 
 
@@ -285,9 +285,12 @@ def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = 
 
         if not os.path.exists(dest_path):
             logger.info(f"Cloning {ext.name} - checked out at {ext.commit_id}")
-            os.system(f"git clone {ext.url} {dest_path} && cd {dest_path} && git switch -c {ext.commit_id}")
+            repo = Repo.clone_from(url=ext.url, to_path=dest_path)
+
+            repo.git.checkout(ext.commit_id)
         else: 
-            logger.info(f"'{ext.name}' exists in {dest_folder}")
+            if verbose:
+                logger.info(f"'{ext.name}' exists in {dest_folder}")
 
         if ext.name == "telescope-fzf-native.nvim":
             logger.info(f"Building (via make) {ext.name}")
@@ -297,4 +300,7 @@ def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = 
 if __name__ == "__main__":
     args = setup_cli()
     overwrite = args.overwrite
-    clone_extensions(extensions_list, overwrite=overwrite)
+    verbose = args.verbose
+    clone_extensions(extensions_list, overwrite=overwrite, verbose=verbose)
+
+
