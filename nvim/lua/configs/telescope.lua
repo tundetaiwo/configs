@@ -4,17 +4,17 @@ local gs_helpers = require("configs.gitsigns_helpers")
 
 
 local function switch_and_delete_buffer(prompt_bufnr)
-  local current_picker = action_state.get_current_picker(prompt_bufnr)
-  local selection = current_picker:get_selection()
-  actions.close(prompt_bufnr)  -- Close the Telescope prompt
+	local current_picker = action_state.get_current_picker(prompt_bufnr)
+	local selection = current_picker:get_selection()
+	actions.close(prompt_bufnr) -- Close the Telescope prompt
 
-  -- Switch to the previous buffer
-  vim.cmd("bp")
+	-- Switch to the previous buffer
+	vim.cmd("bp")
 
-  -- Delete the buffer that was selected in Telescope
-  vim.schedule(function()
-    vim.api.nvim_buf_delete(selection.bufnr, { force = true })
-  end)
+	-- Delete the buffer that was selected in Telescope
+	vim.schedule(function()
+		vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+	end)
 end
 
 
@@ -86,6 +86,10 @@ vim.keymap.set("n", "<leader>gs", custom_git_status, {
 })
 
 -- Keymaps
+vim.keymap.set("n", "<leader>fs", function()
+	require("telescope.builtin").lsp_document_symbols({ symbols = { "function", "methods", "classes" } })
+end, { desc = "Find Symbols" })
+
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader><S-f><S-f>", "<cmd>Telescope find_files follow=true no_ignore=true hidden=false<CR>")
