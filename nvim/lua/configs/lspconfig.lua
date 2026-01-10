@@ -1,4 +1,5 @@
 -- LSP utilities
+
 local function make_on_attach()
 	return function(client, bufnr)
 		local function opts(desc)
@@ -105,5 +106,5 @@ define_server("ty")
 
 -- Required: Enable the language server
 define_server("lua_ls", lua_config)
-define_server("basedpyright", basedpyright_config)
+-- define_server("basedpyright", basedpyright_config)
 define_server("ty", ty_config)
