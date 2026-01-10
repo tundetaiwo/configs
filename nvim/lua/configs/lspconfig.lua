@@ -1,4 +1,4 @@
--- LSP utilities
+local util = require("lspconfig.util")
 
 local function make_on_attach()
 	return function(client, bufnr)
@@ -56,7 +56,7 @@ local lua_config = {
     vim.fn.stdpath("data") .. "/../lua-language-server/bin/lua-language-server",
   },
   filetypes = { "lua" },
-  root_dir = vim.lsp.util.root_pattern(".git", "lua"),
+  root_dir = util.root_pattern(".git", "lua"),
   settings = {
     Lua = {
       diagnostics = { globals = { "vim" } },
@@ -83,7 +83,7 @@ local basedpyright_config = {
 		"--stdio",
 	},
 	filetypes    = { "python" },
-	root_dir     = vim.lsp.util.root_pattern(
+	root_dir     = util.root_pattern(
 		"pyproject.toml", "setup.py", "setup.cfg"
 	),
 	settings     = {

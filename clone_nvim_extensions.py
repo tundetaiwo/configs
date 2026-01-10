@@ -169,7 +169,7 @@ extensions_list = [
     Extension(
         name="catppuccin-nvim",
         url="https://github.com/catppuccin/nvim",
-        commit_id="0b2437bcc12b4021614dc41fcea9d0f136d94063",
+        commit_id="beaf41a30c26fd7d6c386d383155cbd65dd554cd",
     ),
     Extension(
         name="alpha-nvim",
