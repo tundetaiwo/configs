@@ -92,10 +92,9 @@ local go_to_pane = function(number)
 	end
 end
 
-vim.keymap.set({ "n", "t" }, "<A-1>", function() go_to_pane(0) end)
-vim.keymap.set({ "n", "t" }, "<A-2>", function() go_to_pane(1) end)
-vim.keymap.set({ "n", "t" }, "<A-3>", function() go_to_pane(2) end)
-vim.keymap.set({ "n", "t" }, "<A-4>", function() go_to_pane(3) end)
+vim.keymap.set({ "n", "t" }, "<A-q>", function() go_to_pane(1) end)
+vim.keymap.set({ "n", "t" }, "<A-w>", function() go_to_pane(2) end)
+vim.keymap.set({ "n", "t" }, "<A-e>", function() go_to_pane(3) end)
 
 -- Window movement key mappings
 vim.api.nvim_create_autocmd('WinEnter', {
