@@ -53,10 +53,10 @@ local lua_config = {
   on_init  = make_on_init(),
   capabilities = capabilities,
   cmd = {
-    vim.fn.stdpath("data") .. "/../lua-language-server/bin/lua-language-server",
+  vim.fn.expand("~/.local/share/lua-language-server/bin/lua-language-server")
   },
   filetypes = { "lua" },
-  root_dir = util.root_pattern(".git", "lua"),
+	root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
   settings = {
     Lua = {
       diagnostics = { globals = { "vim" } },
@@ -83,9 +83,7 @@ local basedpyright_config = {
 		"--stdio",
 	},
 	filetypes    = { "python" },
-	root_dir     = util.root_pattern(
-		"pyproject.toml", "setup.py", "setup.cfg"
-	),
+	root_markers = { {"pyproject.toml", "setup.py", "seutp.cfg"}, ".git"},
 	settings     = {
 		pyright = { disableOrganizeImports = true },
 		basedpyright = {
@@ -101,10 +99,17 @@ local ty_config = {
 	on_attach    = make_on_attach(),
 	on_init      = make_on_init(),
 	capabilities = capabilities,
+	root_markers = { {"pyproject.toml", "setup.py", "seutp.cfg"}, ".git"},
 }
-define_server("ty")
 
 -- Required: Enable the language server
 define_server("lua_ls", lua_config)
 -- define_server("basedpyright", basedpyright_config)
 define_server("ty", ty_config)
+
+vim.diagnostic.config({
+  virtual_text = true,        -- show the message after the line
+  signs = true,               -- keep the gutter sign
+  underline = true,
+})
+
