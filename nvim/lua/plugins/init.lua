@@ -186,20 +186,19 @@ local plugins = {
 			require("configs.lualine")
 		end
 	},
-	-- Session Manager
-	-- {
-	-- 	dir = plugin_folder .. "persistence.nvim",
-	-- 	event = "BufReadPre", -- this will only start session saving when an actual file was opened
-	-- 	opts = {
-	-- 		-- add any custom options here
-	-- 	}
-	-- },
 	{
-		dir = plugin_folder .. "persistence.nvim",
-		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		"rmagatti/auto-session",
+		dir=plugin_folder .. "auto-session",
+		lazy = false,
+
+		---enables autocomplete for opts
+		---@module "auto-session"
+		---@type AutoSession.Config
 		opts = {
-			-- add any custom options here
-		}
+			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+			bypass_save_filetypes = { "alpha", "dashboard", "snacks_dashboard" }, -- or whatever dashboard you use
+			-- log_level = 'debug',
+		},
 	},
 	{
 		dir = plugin_folder .. "tabout.nvim",
