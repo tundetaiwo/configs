@@ -188,7 +188,7 @@ local plugins = {
 	},
 	{
 		"rmagatti/auto-session",
-		dir=plugin_folder .. "auto-session",
+		dir = plugin_folder .. "auto-session",
 		lazy = false,
 
 		---enables autocomplete for opts
@@ -196,9 +196,11 @@ local plugins = {
 		---@type AutoSession.Config
 		opts = {
 			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-			bypass_save_filetypes = { "alpha", "dashboard", "snacks_dashboard" }, -- or whatever dashboard you use
-			-- log_level = 'debug',
+			bypass_save_filetypes = { "alpha" }, -- or whatever dashboard you use
 		},
+		config = function()
+			require("configs.auto-session")
+		end,
 	},
 	{
 		dir = plugin_folder .. "tabout.nvim",

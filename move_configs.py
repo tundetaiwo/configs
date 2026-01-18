@@ -41,7 +41,7 @@ def cli_app():
         "-u",
         "--update",
         action="store_true",  # default is false but true if specified
-        required=True,
+        default=False,
         help="Flag to update repository config with local config.",
     )
 
@@ -54,6 +54,7 @@ def _replace(
     replacing_with: PathLike | str,
     folder: bool,
     update: bool,
+    ignore: list[str]
 ) -> None:
     """
     Function that replaces a file/folder with another file/folder
@@ -64,6 +65,7 @@ def _replace(
     `replacing_wtih (PathLike)`: file/folder we are using to replace
     `folder (bool)`: Flag whether replacing a folder or a singular file
     `update (bool)`: whether to update config(s) stored in repository with config(s) on current machine
+    `ignore` (list[str]): list of patterns to be ignored during replacement
 
     Return
     ------
@@ -72,6 +74,7 @@ def _replace(
     """
     _being_replaced: Path = Path(being_replaced).expanduser()
     _replacing_with: Path = Path(replacing_with).expanduser()
+    kwargs = {}
 
     if update:
         _being_replaced, _replacing_with = _replacing_with, _being_replaced
@@ -79,6 +82,8 @@ def _replace(
     if folder:
         replace_fn = shutil.copytree
         del_fn = shutil.rmtree
+        kwargs["ignore"] = shutil.ignore_patterns(*ignore)
+
     else:
         replace_fn = shutil.copyfile
         del_fn = os.remove
@@ -97,10 +102,10 @@ def _replace(
     if not _being_replaced.parent.exists():
         os.makedirs(_being_replaced.parent)
 
-    replace_fn(_replacing_with, _being_replaced)
+    replace_fn(_replacing_with, _being_replaced, **kwargs)
 
 
-def move_configs(app: str, machine: str, update: bool = False):
+def move_configs(app: str, machine: str, update: bool = False, ignore: list[str] | None= None):
     """
     Function to retrieve or place certain configs on a machine
 
@@ -125,6 +130,8 @@ def move_configs(app: str, machine: str, update: bool = False):
     * iterm2
     """
 
+    if ignore is None:
+        ignore = []
     valid_apps = [
         "all",
         "zshrc",
@@ -159,6 +166,7 @@ def move_configs(app: str, machine: str, update: bool = False):
             replacing_with=replacing_with,
             folder=True,
             update=update,
+            ignore=ignore,
         )
 
     if app.lower() in ["bash", "bashrc", "all"]:
@@ -171,6 +179,7 @@ def move_configs(app: str, machine: str, update: bool = False):
                 replacing_with=replacing_with,
                 folder=False,
                 update=update,
+            ignore=ignore,
             )
 
     if app.lower() in ["zsh", "zshrc", "all"]:

@@ -231,6 +231,11 @@ extensions_list = [
         url="https://github.com/rmagatti/auto-session",
         commit_id="292492ab7af4bd8b9e37e28508bc8ce995722fd5",
     ),
+    Extension(
+        name="harpoon",
+        url="https://github.com/ThePrimeagen/harpoon",
+        commit_id="master",
+    ),
 ]
 
 # --  easily retrieve object -- #
