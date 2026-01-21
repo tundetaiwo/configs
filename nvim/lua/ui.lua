@@ -55,3 +55,4 @@ vim.cmd.colorscheme "catppuccin"
 
 -- Remove '~' from eob
 vim.opt.fillchars:append('eob: ')
+

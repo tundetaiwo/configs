@@ -110,6 +110,10 @@ local plugins = {
 			require("dap-python").test_runner = "pytest"
 		end,
 	},
+	{
+		dir = plugin_folder .. "nvim-dap-virtual-text",
+		config = function() require("configs.dap-virtual-text") end
+	},
 	-- toggleterm
 	{
 		dir = plugin_folder .. "toggleterm.nvim",
@@ -216,6 +220,10 @@ local plugins = {
 		-- opt = true,  -- Set this to true if the plugin is optional
 		event = 'InsertCharPre', -- Set the event to 'InsertCharPre' for better compatibility
 		priority = 1000,
+	},
+	-- Harpoon
+	{
+		dir = plugin_folder .. "harpoon"
 	},
 	-- Vim slime (Sends to REPL)
 	{
