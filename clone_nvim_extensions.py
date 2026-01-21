@@ -59,7 +59,7 @@ extensions_list = [
     Extension(
         name="nvim-tree.lua",
         url="https://github.com/nvim-tree/nvim-tree.lua",
-        commit_id="1020869742ecb191f260818234517f4a1515cfe8",
+        commit_id="v1.15.0",
     ),
     Extension(
         name="nvim-web-devicons",
@@ -89,17 +89,17 @@ extensions_list = [
     Extension(
         name="nvim-dap",
         url="https://github.com/mfussenegger/nvim-dap",
-        commit_id="8df427aeba0a06c6577dc3ab82de3076964e3b8d",
+        commit_id="0.10.0",
     ),
     Extension(
         name="nvim-dap-python",
         url="https://github.com/mfussenegger/nvim-dap-python",
-        commit_id="261ce649d05bc455a29f9636dc03f8cdaa7e0e2c",
+        commit_id="1808458eba2b18f178f990e01376941a42c7f93b",
     ),
     Extension(
         name="nvim-dap-ui",
         url="https://github.com/rcarriga/nvim-dap-ui",
-        commit_id="bc81f8d3440aede116f821114547a476b082b319",
+        commit_id="cf91d5e2d07c72903d052f5207511bf7ecdb7122",
     ),
     Extension(
         name="LuaSnip",
@@ -194,7 +194,7 @@ extensions_list = [
     Extension(
         name="lualine.nvim",
         url="https://github.com/nvim-lualine/lualine.nvim",
-        commit_id="master",
+        commit_id="47f91c416daef12db467145e16bed5bbfe00add8",
     ),
     Extension(
         name="fzf-lua",
@@ -224,7 +224,7 @@ extensions_list = [
     Extension(
         name="nvim-treesitter-context",
         url="https://github.com/nvim-treesitter/nvim-treesitter-context",
-        commit_id="1a1a7c5d6d75cb49bf64049dafeb294a79f",
+        commit_id="v1.0.0",
     ),
     Extension(
         name="auto-session",
@@ -234,7 +234,12 @@ extensions_list = [
     Extension(
         name="harpoon",
         url="https://github.com/ThePrimeagen/harpoon",
-        commit_id="master",
+        commit_id="87b1a3506211538f460786c23f98ec63ad9af4e5",  # working commit of harpoon2
+    ),
+    Extension(
+        name="nvim-dap-virtual-text",
+        url="https://github.com/theHamsta/nvim-dap-virtual-text",
+        commit_id="fbdb48c2ed45f4a8293d0d483f7730d24467ccb6",
     ),
 ]
 
