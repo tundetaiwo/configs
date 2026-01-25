@@ -1,4 +1,4 @@
-local defaults = {
+require("auto-session").setup{
   -- Saving / restoring
   enabled = true, -- Enables/disables auto creating, saving and restoring
   auto_save = true, -- Enables/disables auto saving session on exit
@@ -65,3 +65,4 @@ local defaults = {
     },
   },
 }
+return defaults

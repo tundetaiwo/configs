@@ -49,41 +49,38 @@ local function define_server(name, config)
 end
 
 local lua_config = {
-  on_attach = make_on_attach(),
-  on_init  = make_on_init(),
-  capabilities = capabilities,
-  cmd = {
-  vim.fn.expand("~/.local/share/lua-language-server/bin/lua-language-server")
-  },
-  filetypes = { "lua" },
-	root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
-  settings = {
-    Lua = {
-      diagnostics = { globals = { "vim" } },
-      workspace = {
-        library = {
-          vim.fn.expand("$VIMRUNTIME/lua"),
-          vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
-          vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
-        },
-        maxPreload = 100000,
-        preloadFileSize = 10000,
-      },
-    },
-  },
-}
-
--- based_pyright_config = 
-local basedpyright_config = {
 	on_attach    = make_on_attach(),
 	on_init      = make_on_init(),
 	capabilities = capabilities,
 	cmd          = {
-		vim.fn.expand("~/.local/venvs/misc_venv/bin/basedpyright-langserver"),
-		"--stdio",
+		vim.fn.expand("~/.local/share/lua-language-server/bin/lua-language-server")
 	},
+	filetypes    = { "lua" },
+	root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
+	settings     = {
+		Lua = {
+			diagnostics = { globals = { "vim" } },
+			workspace = {
+				library = {
+					vim.fn.expand("$VIMRUNTIME/lua"),
+					vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+					vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
+				},
+				maxPreload = 100000,
+				preloadFileSize = 10000,
+			},
+		},
+	},
+}
+
+-- based_pyright_config =
+local basedpyright_config = {
+	on_attach    = make_on_attach(),
+	on_init      = make_on_init(),
+	capabilities = capabilities,
+	cmd = {"basedpyright-langserver", "--stdio"},
 	filetypes    = { "python" },
-	root_markers = { {"pyproject.toml", "setup.py", "seutp.cfg"}, ".git"},
+	root_markers = { { "pyproject.toml", "setup.py", "seutp.cfg" }, ".git" },
 	settings     = {
 		pyright = { disableOrganizeImports = true },
 		basedpyright = {
@@ -95,21 +92,24 @@ local basedpyright_config = {
 	},
 }
 
+
 local ty_config = {
 	on_attach    = make_on_attach(),
 	on_init      = make_on_init(),
 	capabilities = capabilities,
-	root_markers = { {"pyproject.toml", "setup.py", "seutp.cfg"}, ".git"},
+	root_markers = { { "pyproject.toml", "setup.py", "setup.cfg" }, ".git" },
+	-- Default starter command (required to initialize, though immediately overwritten)
+	cmd          = { "ty", "server" }
 }
 
 -- Required: Enable the language server
 define_server("lua_ls", lua_config)
--- define_server("basedpyright", basedpyright_config)
-define_server("ty", ty_config)
+define_server("basedpyright", basedpyright_config)
+-- Currently issue with ty and toggleterm
+-- define_server("ty", ty_config)
 
 vim.diagnostic.config({
-  virtual_text = true,        -- show the message after the line
-  signs = true,               -- keep the gutter sign
-  underline = true,
+	virtual_text = true, -- show the message after the line
+	signs = true,       -- keep the gutter sign
+	underline = true,
 })
-

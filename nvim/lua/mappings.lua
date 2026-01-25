@@ -173,12 +173,6 @@ vim.keymap.set("n", "<leader>fm", function()
 	require("conform").format { lsp_fallback = true }
 end, { desc = "general format file" })
 
--- Sessions
--- select a session to load
-vim.keymap.set("n", "<leader>sl", function() require("persistence").select() end)
-
--- load the last session
-vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
 
 -- Nvim Diff
 vim.keymap.set("n", "<leader>dv", function()
