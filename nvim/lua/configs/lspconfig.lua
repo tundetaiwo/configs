@@ -98,6 +98,7 @@ local ruff_config = {
 	on_init      = make_on_init(),
 	capabilities = capabilities,
 	root_markers = { { "pyproject.toml", "setup.py", "setup.cfg" }, ".git" },
+	filetypes    = { "python" },
 	-- Default starter command (required to initialize, though immediately overwritten)
 	cmd          = { "ruff", "server" }
 }
@@ -107,6 +108,7 @@ local ty_config = {
 	on_init      = make_on_init(),
 	capabilities = capabilities,
 	root_markers = { { "pyproject.toml", "setup.py", "setup.cfg" }, ".git" },
+	filetypes    = { "python" },
 	-- Default starter command (required to initialize, though immediately overwritten)
 	cmd          = { "ruff", "server" },
 	init_options = {
@@ -121,10 +123,10 @@ local ty_config = {
 
 -- Required: Enable the language server
 define_server("lua_ls", lua_config)
-define_server("basedpyright", basedpyright_config)
+-- define_server("basedpyright", basedpyright_config)
 define_server("ruff", ruff_config)
 -- Currently issue with ty and toggleterm
--- define_server("ty", ty_config)
+define_server("ty", ty_config)
 
 vim.diagnostic.config({
 	virtual_text = true, -- show the message after the line
