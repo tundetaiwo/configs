@@ -234,7 +234,8 @@ extensions_list = [
     Extension(
         name="harpoon",
         url="https://github.com/ThePrimeagen/harpoon",
-        commit_id="87b1a3506211538f460786c23f98ec63ad9af4e5",  # working commit of harpoon2
+        commit_id="87b1a3506211538f460786c23f98ec63ad9af4e5",
+        Notes="Working commit of harpoon2"
     ),
     Extension(
         name="nvim-dap-virtual-text",
@@ -312,5 +313,4 @@ if __name__ == "__main__":
     overwrite = args.overwrite
     verbose = args.verbose
     clone_extensions(extensions_list, overwrite=overwrite, verbose=verbose)
-
 
