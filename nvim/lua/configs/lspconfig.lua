@@ -93,17 +93,17 @@ local basedpyright_config = {
 }
 
 
-local ruff_config = {
+local ty_config = {
 	on_attach    = make_on_attach(),
 	on_init      = make_on_init(),
 	capabilities = capabilities,
 	root_markers = { { "pyproject.toml", "setup.py", "setup.cfg" }, ".git" },
 	filetypes    = { "python" },
 	-- Default starter command (required to initialize, though immediately overwritten)
-	cmd          = { "ruff", "server" }
+	cmd          = { "ty", "server" }
 }
 
-local ty_config = {
+local ruff_config = {
 	on_attach    = make_on_attach(),
 	on_init      = make_on_init(),
 	capabilities = capabilities,
