@@ -78,7 +78,7 @@ local basedpyright_config = {
 	on_attach    = make_on_attach(),
 	on_init      = make_on_init(),
 	capabilities = capabilities,
-	cmd = {"basedpyright-langserver", "--stdio"},
+	cmd          = { "basedpyright-langserver", "--stdio" },
 	filetypes    = { "python" },
 	root_markers = { { "pyproject.toml", "setup.py", "seutp.cfg" }, ".git" },
 	settings     = {
@@ -93,18 +93,36 @@ local basedpyright_config = {
 }
 
 
+local ruff_config = {
+	on_attach    = make_on_attach(),
+	on_init      = make_on_init(),
+	capabilities = capabilities,
+	root_markers = { { "pyproject.toml", "setup.py", "setup.cfg" }, ".git" },
+	-- Default starter command (required to initialize, though immediately overwritten)
+	cmd          = { "ruff", "server" }
+}
+
 local ty_config = {
 	on_attach    = make_on_attach(),
 	on_init      = make_on_init(),
 	capabilities = capabilities,
 	root_markers = { { "pyproject.toml", "setup.py", "setup.cfg" }, ".git" },
 	-- Default starter command (required to initialize, though immediately overwritten)
-	cmd          = { "ty", "server" }
+	cmd          = { "ruff", "server" },
+	init_options = {
+		settings = {
+			showSyntaxErrors = false,
+			lint = {
+				enable = false,
+			},
+		}
+	}
 }
 
 -- Required: Enable the language server
 define_server("lua_ls", lua_config)
 define_server("basedpyright", basedpyright_config)
+define_server("ruff", ruff_config)
 -- Currently issue with ty and toggleterm
 -- define_server("ty", ty_config)
 
@@ -113,3 +131,4 @@ vim.diagnostic.config({
 	signs = true,       -- keep the gutter sign
 	underline = true,
 })
+
