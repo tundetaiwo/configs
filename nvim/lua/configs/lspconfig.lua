@@ -133,4 +133,3 @@ vim.diagnostic.config({
 	signs = true,       -- keep the gutter sign
 	underline = true,
 })
-

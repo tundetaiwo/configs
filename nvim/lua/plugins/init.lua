@@ -223,7 +223,10 @@ local plugins = {
 	},
 	-- Harpoon
 	{
-		dir = plugin_folder .. "harpoon"
+		dir = plugin_folder .. "harpoon",
+		config = function()
+			require("configs.harpoon")
+		end
 	},
 	-- Vim slime (Sends to REPL)
 	{
@@ -247,6 +250,16 @@ local plugins = {
 		dir = plugin_folder .. "gruvbox.nvim",
 		priority = 1000,
 	},
+	-- {
+	-- 	dir = plugin_folder .. "codecompanion.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 	},
+	-- 	config = function()
+	-- 		require("configs.code-companion")
+	-- 	end,
+	-- },
 	-- Custom Startup
 	{
 		"goolord/alpha-nvim",
@@ -262,6 +275,50 @@ local plugins = {
 			require("configs.alpha")
 		end,
 	},
+	-- {
+	-- 	dir = plugin_folder .. "image.nvim",
+	-- 	opts = {
+	-- 		backend = "kitty", -- Change to "ueberzug" if on Linux/X11 without Kitty/WezTerm
+	-- 		integrations = {
+	-- 			markdown = {
+	-- 				enabled = true,
+	-- 				clear_in_insert_mode = false,
+	-- 				download_remote_matplotlib-backend-sixelimages = true,
+	-- 				only_render_image_at_cursor = false,
+	-- 				filetypes = { "markdown", "vimwiki" },
+	-- 			},
+	-- 			neorg = { enabled = true },
+	-- 		},
+	-- 		max_width = 100,
+	-- 		max_height = 12,
+	-- 		max_height_window_percentage = math.huge,
+	-- 		max_width_window_percentage = math.huge,
+	-- 		window_overlap_clear_enabled = true,
+	-- 	},
+	-- }
 
+	-- -- 2. Molten (Jupyter Client)
+	-- {
+	-- 	"benlubas/molten-nvim",
+	-- 	version = "^1.0.0", -- Pin version for stability
+	-- 	dependencies = { "3rd/image.nvim" },
+	-- 	build = ":UpdateRemotePlugins",
+	-- 	init = function()
+	-- 		-- These variables must be set BEFORE the plugin loads
+	-- 		vim.g.molten_image_provider = "image.nvim"
+	-- 		vim.g.molten_output_win_max_height = 20
+	-- 		vim.g.molten_auto_open_output = false -- Set to true if you want auto-popups
+	-- 		vim.g.molten_wrap_output = true
+	-- 		vim.g.molten_virt_text_output = true
+	-- 		vim.g.molten_virt_lines_off_by_1 = true
+	-- 	end,
+	-- 	keys = {
+	-- 		{ "<leader>mi", ":MoltenInit<cr>",             desc = "[M]olten [I]nit" },
+	-- 		{ "<leader>me", ":MoltenEvaluateOperator<cr>", desc = "Run Operator Selection" },
+	-- 		{ "<leader>rl", ":MoltenEvaluateLine<cr>",     desc = "Run Line" },
+	-- 		{ "<leader>rr", ":MoltenReevaluateCell<cr>",   desc = "Re-run Cell" },
+	-- 		{ "<leader>rd", ":MoltenDelete<cr>",           desc = "Delete Cell Output" },
+	-- 	},
+	-- },
 }
 return plugins

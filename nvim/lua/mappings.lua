@@ -118,6 +118,12 @@ vim.keymap.set('n', '<C-w>b', "<Cmd>split<CR>")
 vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
 vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping" })
 
+-- Use Alt (Meta) key to avoid terminal conflicts with Ctrl
+vim.keymap.set("n", "<M-=>", "<Cmd>resize +2<CR>", { desc = "Increase height" })
+vim.keymap.set("n", "<M-->", "<Cmd>resize -2<CR>", { desc = "Decrease height" })
+vim.keymap.set("n", "<M-+>", "<Cmd>vertical resize +4<CR>", { desc = "Increase width" })
+vim.keymap.set("n", "<M-_>", "<Cmd>vertical resize -4<CR>", { desc = "Decrease width" })
+
 local maximised = false
 local saved_win = nil
 local toggle_maximise = function()
