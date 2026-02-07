@@ -34,6 +34,8 @@ class Extension:
     name: str  
     url: str
     commit_id: str
+    Notes: str | None = ""
+    disable: bool = False
 
 extensions_list = [
     Extension(
@@ -242,6 +244,24 @@ extensions_list = [
         url="https://github.com/theHamsta/nvim-dap-virtual-text",
         commit_id="fbdb48c2ed45f4a8293d0d483f7730d24467ccb6",
     ),
+    Extension(
+        name="codecompanion.nvim",
+        url="https://github.com/olimorris/codecompanion.nvim",
+        commit_id="dfb0ca928c439b65b1ac33758d90a9bc49c72138",
+        disable=True
+    ),
+    Extension(
+        name="moltern-nvim",
+        url="https://github.com/benlubas/molten-nvim",
+        commit_id="4fd7be6a12b5efda5179db642f13bad60893acca",
+        disable=True
+    ),
+    Extension(
+        name="image.nvim",
+        url="https://github.com/benlubas/molten-nvim",
+        commit_id="446a8a5cc7a3eae3185ee0c697732c32a5547a0b",
+        disable=True
+    ),
 ]
 
 # --  easily retrieve object -- #
@@ -288,6 +308,8 @@ def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = 
 
 
     for ext in extensions:
+        if ext.disable:
+            logger.info("%s is disabled, skipping...", ext.name)
         dest_path = f"{dest_folder}/{ext.name}"
 
         if ext.name in overwrite and os.path.exists(dest_path):
