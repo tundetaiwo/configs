@@ -172,7 +172,7 @@ def move_configs(app: str, machine: str, update: bool = False, ignore: list[str]
     if app.lower() in ["bash", "bashrc", "all"]:
         if machine in ["mac", "unix", "wsl"]:
             being_replaced = f"{HOME_PATH}/.bashrc"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.bashrc"
+            replacing_with = f"{PROJECT_PATH}/dotfiles/bashrc"
 
             _replace(
                 being_replaced=being_replaced,
@@ -185,7 +185,7 @@ def move_configs(app: str, machine: str, update: bool = False, ignore: list[str]
     if app.lower() in ["zsh", "zshrc", "all"]:
         if machine in ["mac", "unix", "wsl"]:
             being_replaced = f"{HOME_PATH}/.zshrc"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.zshrc"
+            replacing_with = f"{PROJECT_PATH}/dotfiles/zshrc"
 
             _replace(
                 being_replaced=being_replaced,
@@ -197,7 +197,7 @@ def move_configs(app: str, machine: str, update: bool = False, ignore: list[str]
     if app.lower() in ["vim", "vimrc", "all"]:
         if machine in ["mac", "unix", "wsl"]:
             being_replaced = f"{HOME_PATH}/.vimrc"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.vimrc"
+            replacing_with = f"{PROJECT_PATH}/dotfiles/vimrc"
 
             _replace(
                 being_replaced=being_replaced,
@@ -235,14 +235,14 @@ def move_configs(app: str, machine: str, update: bool = False, ignore: list[str]
             logger.warning("VS Code configs only implemented for mac os.")
 
     if app.lower() in ["all", "gitconfig"]:
+
         if machine.lower() in ["unix", "mac", "wsl"]:
             being_replaced = f"{HOME_PATH}/.gitconfig"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.gitconfig"
         elif machine.lower() in ["windows"]:
             username = getpass.getuser()
             being_replaced = f"C:/Users/{username}/.gitconfig"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.gitconfig"
 
+        replacing_with = f"{PROJECT_PATH}/dotfiles/gitconfig"
         _replace(
             being_replaced=being_replaced,
             replacing_with=replacing_with,
