@@ -228,6 +228,12 @@ local plugins = {
 			require("configs.harpoon")
 		end
 	},
+	{
+		dir = plugin_folder .. "csvview.nvim",
+		config = function()
+			require("configs.csvview")
+		end
+	},
 	-- Vim slime (Sends to REPL)
 	{
 		dir = plugin_folder .. "vim-slime",

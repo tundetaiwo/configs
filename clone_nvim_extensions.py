@@ -262,6 +262,11 @@ extensions_list = [
         commit_id="446a8a5cc7a3eae3185ee0c697732c32a5547a0b",
         disable=True
     ),
+    Extension(
+        name="csvview.nvim",
+        url="https://github.com/hat0uma/csvview.nvim",
+        commit_id="8d068c526ab5ade68226de036d533298cd93a399",
+    ),
 ]
 
 # --  easily retrieve object -- #
@@ -310,6 +315,7 @@ def clone_extensions(extensions: list[Extension], overwrite: bool | list[str] = 
     for ext in extensions:
         if ext.disable:
             logger.info("%s is disabled, skipping...", ext.name)
+            continue
         dest_path = f"{dest_folder}/{ext.name}"
 
         if ext.name in overwrite and os.path.exists(dest_path):
