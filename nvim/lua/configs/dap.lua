@@ -1,3 +1,7 @@
+-- Force nvim to use your custom file whenever anything asks for 'dap.repl'
+package.loaded['dap.repl'] = require('overwrite.dap_repl')
+
+-- Now load dap normally
 local dap = require("dap")
 local dapui = require("dapui")
 local dap_python = require("dap-python")
@@ -69,8 +73,8 @@ dapui.setup {
 			-- 	size = 1
 			-- }
 		},
-		position = "bottom",
-		size = 15
+		position = "right",
+		size = 100
 	} },
 	mappings = {
 		edit = "e",
@@ -86,9 +90,20 @@ dapui.setup {
 	}
 }
 
+local function run_dap_option_1()
+	-- specific to buffer
+	local ft = vim.bo.filetype
+	local configs = dap.configurations[ft]
+
+	if configs and configs[1] then
+		dap.run(configs[1])
+	else
+		print("No debug config found at index 1 for filetype: " .. ft)
+	end
+end
 -- Focus first window whose buffer has the filetype
 local function focus_ft(ft)
-	for _, win in ipairs(vim.api.nvim_last_wins()) do
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
 		local buf = vim.api.nvim_win_get_buf(win)
 		if vim.bo[buf].filetype == ft then
 			vim.api.nvim_set_current_win(win)
@@ -106,19 +121,23 @@ local function ensure_and_focus(ft)
 	return focus_ft(ft)
 end
 
+vim.keymap.set("n", "<leader>df", function()
+	require("dapui").float_element("scopes", { enter = true })
+end, { desc = "Float Variables" })
 
 -- Keymaps
 vim.keymap.set("n", "<leader>ds", function() ensure_and_focus("dapui_scopes") end)
 vim.keymap.set("n", "<leader>dk", function() ensure_and_focus("dapui_stacks") end)
 vim.keymap.set("n", "<leader>dw", function() ensure_and_focus("dapui_watches") end)
 vim.keymap.set("n", "<leader>db", function() ensure_and_focus("dapui_breakpoints") end)
-vim.keymap.set("n", "<leader>dr", function() ensure_and_focus("dapui_repl") end)
+
+vim.keymap.set('n', '<leader>dr', run_dap_option_1, { desc = "Run DAP Config #1" })
 
 vim.keymap.set({ "i", "n" }, "<F5>", function()
 	require("dap").continue()
 end)
 vim.keymap.set({ "i", "n" }, "<S-F5>", function()
-	require("dap").disconnect()
+	require("dap").terminate()
 end)
 vim.keymap.set({ "i", "n" }, "<F10>", function()
 	require("dap").step_over()
@@ -155,7 +174,18 @@ vim.keymap.set("n", "<leader>do", function()
 	})
 end)
 
+vim.keymap.set('n', '<S-F9>', function()
+	vim.ui.input({ prompt = 'Breakpoint Condition: ' }, function(condition)
+		if condition then
+			require('dap').set_breakpoint(condition)
+		end
+	end)
+end, { desc = "Conditional Breakpoint" })
+
 -- Python keymaps
-vim.keymap.set("n", "<leader>dt", function() dap_python.test_method() end)
-vim.keymap.set("n", "<leader>dc", function() dap_python.test_class() end)
-vim.keymap.set("n", "<leader>ds", function() dap_python.debug_selection() end)
+vim.keymap.set("n", "<leader>dt", function() dap_python.test_method() end, { desc = "Test Python Function/Method" })
+vim.keymap.set("n", "<leader>dc", function() dap_python.test_class() end, { desc = "Test Python Class" })
+
+vim.keymap.set({ "n", "v" }, "<F3>", function() dapui.eval() end, { desc = "Inspect variable" })
+
+
