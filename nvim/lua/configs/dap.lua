@@ -188,4 +188,23 @@ vim.keymap.set("n", "<leader>dc", function() dap_python.test_class() end, { desc
 
 vim.keymap.set({ "n", "v" }, "<F3>", function() dapui.eval() end, { desc = "Inspect variable" })
 
+-- Python Configuration
+dap.configurations.python = {
+  {
+    type = 'python',
+    request = 'launch',
+    name = "Launch file",
+    program = "${file}",
+    pythonPath = function()
+      -- Use the python from the active virtualenv, or fallback to system python
+      local venv = os.getenv("VIRTUAL_ENV")
+      if venv then
+        return venv .. "/bin/python"
+      end
+      return "/usr/bin/python3"
+    end,
+    -- [[ THE FIX: Disable JustMyCode ]]
+    justMyCode = false, 
+  },
+}
 
