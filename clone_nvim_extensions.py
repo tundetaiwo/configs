@@ -61,7 +61,7 @@ extensions_list = [
     Extension(
         name="nvim-tree.lua",
         url="https://github.com/nvim-tree/nvim-tree.lua",
-        commit_id="v1.15.0",
+        commit_id="v1.18.0",
     ),
     Extension(
         name="nvim-web-devicons",
@@ -171,7 +171,7 @@ extensions_list = [
     Extension(
         name="catppuccin-nvim",
         url="https://github.com/catppuccin/nvim",
-        commit_id="beaf41a30c26fd7d6c386d383155cbd65dd554cd",
+        commit_id="v2.0.0",
     ),
     Extension(
         name="alpha-nvim",
@@ -266,6 +266,11 @@ extensions_list = [
         name="csvview.nvim",
         url="https://github.com/hat0uma/csvview.nvim",
         commit_id="8d068c526ab5ade68226de036d533298cd93a399",
+    ),
+    Extension(
+        name="render-markdown.nvim",
+        url="https://github.com/meanderingprogrammer/render-markdown.nvim",
+        commit_id="v8.13.0",
     ),
 ]
 
