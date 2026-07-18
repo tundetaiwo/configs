@@ -5,7 +5,6 @@ from pathlib import Path
 import getpass
 import logging
 from argparse import ArgumentParser
-import sys
 
 # --  Logger Config -- #
 logger = logging.getLogger(__name__)
@@ -22,29 +21,31 @@ logger.addHandler(handler)
 PROJECT_PATH = Path(__file__).parent
 HOME_PATH = os.environ["HOME"]
 
-parser = ArgumentParser()
 
+def cli_app():
+    parser = ArgumentParser()
+    parser.add_argument(
+        "-a",
+        "--app",
+        required=True,
+        help="Application we want configuration file for, see notes section for all configs supported",
+    )
+    parser.add_argument(
+        "-m",
+        "--machine",
+        required=True,
+        help="Type of machine i.e. 'Windows', 'Mac', 'Unix'",
+    )
+    parser.add_argument(
+        "-u",
+        "--update",
+        action="store_true",  # default is false but true if specified
+        default=False,
+        help="Flag to update repository config with local config.",
+    )
 
-parser.add_argument(
-    "-a",
-    "--app",
-    required=True,
-    help="application we want configuration file for, see notes section for all configs supported",
-)
-parser.add_argument(
-    "-m",
-    "--machine",
-    required=True,
-    help="type of machine i.e. 'Windows', 'Mac', 'Unix'",
-)
-parser.add_argument(
-    "-u",
-    "--update",
-    action="store_true",  # default is false but true if specified
-    help="flag to update config with system that on the system",
-)
-
-cli_args = parser.parse_args()
+    cli_args = parser.parse_args()
+    return cli_args
 
 
 def _replace(
@@ -52,6 +53,7 @@ def _replace(
     replacing_with: PathLike | str,
     folder: bool,
     update: bool,
+    ignore: list[str] | None = None,
 ) -> None:
     """
     Function that replaces a file/folder with another file/folder
@@ -62,6 +64,7 @@ def _replace(
     `replacing_wtih (PathLike)`: file/folder we are using to replace
     `folder (bool)`: Flag whether replacing a folder or a singular file
     `update (bool)`: whether to update config(s) stored in repository with config(s) on current machine
+    `ignore` (list[str]): list of patterns to be ignored during replacement
 
     Return
     ------
@@ -70,6 +73,10 @@ def _replace(
     """
     _being_replaced: Path = Path(being_replaced).expanduser()
     _replacing_with: Path = Path(replacing_with).expanduser()
+    kwargs = {}
+
+    if ignore is None:
+        ignore = []
 
     if update:
         _being_replaced, _replacing_with = _replacing_with, _being_replaced
@@ -77,6 +84,8 @@ def _replace(
     if folder:
         replace_fn = shutil.copytree
         del_fn = shutil.rmtree
+        kwargs["ignore"] = shutil.ignore_patterns(*ignore)
+
     else:
         replace_fn = shutil.copyfile
         del_fn = os.remove
@@ -87,18 +96,18 @@ def _replace(
         if del_flag.lower() in ["y", "yes"]:
             del_fn(_being_replaced)
         else:
-            print("Exiting Function...")
-            sys.exit()
+            print(f"Skipping {_being_replaced}...")
+            return
 
     # create folders if they don't exist
 
     if not _being_replaced.parent.exists():
         os.makedirs(_being_replaced.parent)
 
-    replace_fn(_replacing_with, _being_replaced)
+    replace_fn(_replacing_with, _being_replaced, **kwargs)
 
 
-def move_configs(app: str, machine: str, update: bool = False):
+def move_configs(app: str, machine: str, update: bool = False, ignore: list[str] | None = None):
     """
     Function to retrieve or place certain configs on a machine
 
@@ -123,28 +132,42 @@ def move_configs(app: str, machine: str, update: bool = False):
     * iterm2
     """
 
+    app = app.lower()
+    machine = machine.lower()
+
+    if ignore is None:
+        ignore = []
     valid_apps = [
         "all",
+        "zsh",
         "zshrc",
+        "bash",
         "bashrc",
+        "vim",
         "vimrc",
         "nvim",
+        "neovim",
         "tmux",
         "code",
+        "vscode",
         "gitconfig",
         "windows_terminal",
         "iterm2",
     ]
     valid_machines = ["unix", "mac", "wsl", "windows"]
 
-    if app.lower() not in valid_apps:
-        valid_machine_strings = '\\n'.join(valid_apps)
-        raise NotImplementedError(f"{app} is not yet implemented. Please choose from one of: \n{valid_machine_strings}")
+    if app not in valid_apps:
+        valid_app_strings = "\n".join(valid_apps)
+        raise NotImplementedError(
+            f"{app} is not yet implemented. Please choose from one of: \n{valid_app_strings}"
+        )
 
-    if machine.lower() not in valid_machines:
-        raise NotImplementedError(f"{machine} is not yet implemented. Please choose from one of: {valid_machines}")
+    if machine not in valid_machines:
+        raise NotImplementedError(
+            f"{machine} is not yet implemented. Please choose from one of: {valid_machines}"
+        )
 
-    if app.lower() in ["nvim", "neovim", "all"]:
+    if app in ["nvim", "neovim", "all"]:
         being_replaced = f"{HOME_PATH}/.config/nvim/"
         replacing_with = f"{PROJECT_PATH}/nvim"
 
@@ -153,12 +176,13 @@ def move_configs(app: str, machine: str, update: bool = False):
             replacing_with=replacing_with,
             folder=True,
             update=update,
+            ignore=ignore,
         )
 
-    if app.lower() in ["bash", "bashrc", "all"]:
+    if app in ["bash", "bashrc", "all"]:
         if machine in ["mac", "unix", "wsl"]:
             being_replaced = f"{HOME_PATH}/.bashrc"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.bashrc"
+            replacing_with = f"{PROJECT_PATH}/dotfiles/bashrc"
 
             _replace(
                 being_replaced=being_replaced,
@@ -167,10 +191,10 @@ def move_configs(app: str, machine: str, update: bool = False):
                 update=update,
             )
 
-    if app.lower() in ["zsh", "zshrc", "all"]:
+    if app in ["zsh", "zshrc", "all"]:
         if machine in ["mac", "unix", "wsl"]:
             being_replaced = f"{HOME_PATH}/.zshrc"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.zshrc"
+            replacing_with = f"{PROJECT_PATH}/dotfiles/zshrc"
 
             _replace(
                 being_replaced=being_replaced,
@@ -179,10 +203,10 @@ def move_configs(app: str, machine: str, update: bool = False):
                 update=update,
             )
 
-    if app.lower() in ["vim", "vimrc", "all"]:
+    if app in ["vim", "vimrc", "all"]:
         if machine in ["mac", "unix", "wsl"]:
             being_replaced = f"{HOME_PATH}/.vimrc"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.vimrc"
+            replacing_with = f"{PROJECT_PATH}/dotfiles/vimrc"
 
             _replace(
                 being_replaced=being_replaced,
@@ -191,8 +215,8 @@ def move_configs(app: str, machine: str, update: bool = False):
                 update=update,
             )
 
-    if app.lower() in ["all", "tmux"]:
-        if machine.lower() in ["wsl", "unix", "mac"]:
+    if app in ["all", "tmux"]:
+        if machine in ["wsl", "unix", "mac"]:
             being_replaced = f"{HOME_PATH}/.config/tmux/tmux.conf"
             replacing_with = f"{PROJECT_PATH}/tmux/tmux.conf"
 
@@ -203,8 +227,8 @@ def move_configs(app: str, machine: str, update: bool = False):
                 update=update,
             )
 
-    if app.lower() in ["vscode", "code", "all"]:
-        if machine.lower() == "mac":
+    if app in ["vscode", "code", "all"]:
+        if machine == "mac":
             being_replaced = (
                 f"{HOME_PATH}/Library/Application Support/Code/User/keybindings.json"
             )
@@ -219,15 +243,15 @@ def move_configs(app: str, machine: str, update: bool = False):
         else:
             logger.warning("VS Code configs only implemented for mac os.")
 
-    if app.lower() in ["all", "gitconfig"]:
-        if machine.lower() in ["unix", "mac", "wsl"]:
+    if app in ["all", "gitconfig"]:
+
+        if machine in ["unix", "mac", "wsl"]:
             being_replaced = f"{HOME_PATH}/.gitconfig"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.gitconfig"
-        elif machine.lower() in ["windows"]:
+        elif machine in ["windows"]:
             username = getpass.getuser()
             being_replaced = f"C:/Users/{username}/.gitconfig"
-            replacing_with = f"{PROJECT_PATH}/dotfiles/.gitconfig"
 
+        replacing_with = f"{PROJECT_PATH}/dotfiles/gitconfig"
         _replace(
             being_replaced=being_replaced,
             replacing_with=replacing_with,
@@ -235,27 +259,40 @@ def move_configs(app: str, machine: str, update: bool = False):
             update=update,
         )
 
-    if app.lower() in ["all", "iterm2"]:
-        if machine.lower() in ["mac"]:
+    if app in ["all", "iterm2"]:
+        if machine in ["mac"]:
             being_replaced = (
                 f"{HOME_PATH}/Library/Preferences/com.googlecode.iterm2.plist"
             )
             replacing_with = f"{PROJECT_PATH}/iterm2.plist"
+
+            _replace(
+                being_replaced=being_replaced,
+                replacing_with=replacing_with,
+                folder=False,
+                update=update,
+            )
         else:
             logger.warning(f"{machine} is not supported for iterm2.")
 
-    if app.lower() in ["app", "windows_terminal"]:
-        if machine.lower() in [
-            "mac",
-        ]:
-            logger.warning(f"{machine} is not supported for windows terminal.")
-        else:
+    if app in ["all", "windows_terminal"]:
+        if machine in ["windows"]:
             user = getpass.getuser()
             being_replaced = f"C:/Users/{user}/AppData/Local/Microsoft/Windows Terminal/settings.json"
-            replacing_with = f"windows_settings.json"
+            replacing_with = f"{PROJECT_PATH}/windows_settings.json"
+
+            _replace(
+                being_replaced=being_replaced,
+                replacing_with=replacing_with,
+                folder=False,
+                update=update,
+            )
+        else:
+            logger.warning(f"{machine} is not supported for windows terminal.")
 
 
 if __name__ == "__main__":
+    cli_args = cli_app()
     move_configs(
         app=cli_args.app,
         machine=cli_args.machine,

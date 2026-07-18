@@ -2,6 +2,7 @@ local filename = {
 	{
 		"filename",
 		path = 3,
+		shorting_target = 0,
 	}
 }
 
@@ -12,10 +13,13 @@ require('lualine').setup {
 		component_separators = { left = '', right = '' },
 		section_separators = { left = '', right = '' },
 		disabled_filetypes = {
-			statusline = {"NvimTree"},
-			winbar = {"NvimTree"},
+			statusline = { "NvimTree", "toggleterm" },
+			winbar = { "NvimTree" },
+			"dapui_watches", "dapui_breakpoints",
+			"dapui_scopes", "dapui_console",
+			"dapui_stacks", "dap-repl"
 		},
-		ignore_focus = {"NvimT"},
+		ignore_focus = { "NvimT" },
 		always_divide_middle = true,
 		always_show_tabline = true,
 		globalstatus = false,
@@ -26,20 +30,20 @@ require('lualine').setup {
 		}
 	},
 	sections = {
-		lualine_a = { 'mode' },
-		-- lualine_b = { 'branch', 'diff', 'diagnostics' },
+		lualine_a = {},
+		lualine_b = {},
 		lualine_c = filename,
-    lualine_x = {'progress'},
-    lualine_y = {'location'},
-		lualine_z = {'encoding', 'fileformat', 'filetype'},
+		lualine_x = { 'progress' },
+		lualine_y = { 'location' },
+		lualine_z = { 'encoding', 'fileformat', 'lsp_status' },
 	},
 	inactive_sections = {
 		-- lualine_a = { 'mode' },
 		-- lualine_b = { 'branch', 'diff', 'diagnostics' },
 		lualine_c = filename,
-    -- lualine_x = {'progress'},
-    -- lualine_y = {'location'},
-		lualine_z = {'encoding', 'fileformat', 'filetype'},
+		lualine_x = { 'progress' },
+		-- lualine_y = {'location'},
+		-- lualine_z = {'encoding', 'fileformat', 'filetype'},
 	},
 
 }

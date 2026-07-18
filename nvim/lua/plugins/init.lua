@@ -71,6 +71,13 @@ local plugins = {
 			require("configs.treesitter_parsers") -- This isn't quite working
 		end,
 	},
+	{
+		dir = plugin_folder .. "nvim-treesitter-context",
+		config =
+				function()
+					require("configs.treesitter-context")
+				end
+	},
 	-- Debugger
 	{
 		dir = plugin_folder .. "nvim-nio",
@@ -102,6 +109,10 @@ local plugins = {
 			require("dap-python").setup(path)
 			require("dap-python").test_runner = "pytest"
 		end,
+	},
+	{
+		dir = plugin_folder .. "nvim-dap-virtual-text",
+		config = function() require("configs.dap-virtual-text") end
 	},
 	-- toggleterm
 	{
@@ -173,13 +184,27 @@ local plugins = {
 			require("configs.tabby")
 		end,
 	},
-	-- Session Manager
 	{
-		dir = plugin_folder .. "persistence.nvim",
-		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		dir = plugin_folder .. "lualine.nvim",
+		config = function()
+			require("configs.lualine")
+		end
+	},
+	{
+		"rmagatti/auto-session",
+		dir = plugin_folder .. "auto-session",
+		lazy = false,
+
+		---enables autocomplete for opts
+		---@module "auto-session"
+		---@type AutoSession.Config
 		opts = {
-			-- add any custom options here
-		}
+			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+			bypass_save_filetypes = { "alpha" }, -- or whatever dashboard you use
+		},
+		config = function()
+			require("configs.auto-session")
+		end,
 	},
 	{
 		dir = plugin_folder .. "tabout.nvim",
@@ -195,6 +220,19 @@ local plugins = {
 		-- opt = true,  -- Set this to true if the plugin is optional
 		event = 'InsertCharPre', -- Set the event to 'InsertCharPre' for better compatibility
 		priority = 1000,
+	},
+	-- Harpoon
+	{
+		dir = plugin_folder .. "harpoon",
+		config = function()
+			require("configs.harpoon")
+		end
+	},
+	{
+		dir = plugin_folder .. "csvview.nvim",
+		config = function()
+			require("configs.csvview")
+		end
 	},
 	-- Vim slime (Sends to REPL)
 	{
@@ -214,6 +252,20 @@ local plugins = {
 		dir = plugin_folder .. "catppuccin-nvim",
 		priority = 1000,
 	},
+	{
+		dir = plugin_folder .. "gruvbox.nvim",
+		priority = 1000,
+	},
+	-- {
+	-- 	dir = plugin_folder .. "codecompanion.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 	},
+	-- 	config = function()
+	-- 		require("configs.code-companion")
+	-- 	end,
+	-- },
 	-- Custom Startup
 	{
 		"goolord/alpha-nvim",
@@ -229,6 +281,50 @@ local plugins = {
 			require("configs.alpha")
 		end,
 	},
+	-- {
+	-- 	dir = plugin_folder .. "image.nvim",
+	-- 	opts = {
+	-- 		backend = "kitty", -- Change to "ueberzug" if on Linux/X11 without Kitty/WezTerm
+	-- 		integrations = {
+	-- 			markdown = {
+	-- 				enabled = true,
+	-- 				clear_in_insert_mode = false,
+	-- 				download_remote_matplotlib-backend-sixelimages = true,
+	-- 				only_render_image_at_cursor = false,
+	-- 				filetypes = { "markdown", "vimwiki" },
+	-- 			},
+	-- 			neorg = { enabled = true },
+	-- 		},
+	-- 		max_width = 100,
+	-- 		max_height = 12,
+	-- 		max_height_window_percentage = math.huge,
+	-- 		max_width_window_percentage = math.huge,
+	-- 		window_overlap_clear_enabled = true,
+	-- 	},
+	-- }
 
+	-- -- 2. Molten (Jupyter Client)
+	-- {
+	-- 	"benlubas/molten-nvim",
+	-- 	version = "^1.0.0", -- Pin version for stability
+	-- 	dependencies = { "3rd/image.nvim" },
+	-- 	build = ":UpdateRemotePlugins",
+	-- 	init = function()
+	-- 		-- These variables must be set BEFORE the plugin loads
+	-- 		vim.g.molten_image_provider = "image.nvim"
+	-- 		vim.g.molten_output_win_max_height = 20
+	-- 		vim.g.molten_auto_open_output = false -- Set to true if you want auto-popups
+	-- 		vim.g.molten_wrap_output = true
+	-- 		vim.g.molten_virt_text_output = true
+	-- 		vim.g.molten_virt_lines_off_by_1 = true
+	-- 	end,
+	-- 	keys = {
+	-- 		{ "<leader>mi", ":MoltenInit<cr>",             desc = "[M]olten [I]nit" },
+	-- 		{ "<leader>me", ":MoltenEvaluateOperator<cr>", desc = "Run Operator Selection" },
+	-- 		{ "<leader>rl", ":MoltenEvaluateLine<cr>",     desc = "Run Line" },
+	-- 		{ "<leader>rr", ":MoltenReevaluateCell<cr>",   desc = "Re-run Cell" },
+	-- 		{ "<leader>rd", ":MoltenDelete<cr>",           desc = "Delete Cell Output" },
+	-- 	},
+	-- },
 }
 return plugins

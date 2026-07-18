@@ -92,10 +92,9 @@ local go_to_pane = function(number)
 	end
 end
 
-vim.keymap.set({ "n", "t" }, "<A-1>", function() go_to_pane(0) end)
-vim.keymap.set({ "n", "t" }, "<A-2>", function() go_to_pane(1) end)
-vim.keymap.set({ "n", "t" }, "<A-3>", function() go_to_pane(2) end)
-vim.keymap.set({ "n", "t" }, "<A-4>", function() go_to_pane(3) end)
+vim.keymap.set({ "n", "t" }, "<A-q>", function() go_to_pane(1) end)
+vim.keymap.set({ "n", "t" }, "<A-w>", function() go_to_pane(2) end)
+vim.keymap.set({ "n", "t" }, "<A-e>", function() go_to_pane(3) end)
 
 -- Window movement key mappings
 vim.api.nvim_create_autocmd('WinEnter', {
@@ -114,8 +113,16 @@ vim.keymap.set({ 'n', 't' }, '<C-h>', "<Cmd>wincmd h<CR>")
 vim.keymap.set({ 'n', 't' }, '<C-j>', "<Cmd>wincmd j<CR>")
 vim.keymap.set({ 'n', 't' }, '<C-k>', "<Cmd>wincmd k<CR>")
 
+vim.keymap.set('n', '<C-w>b', "<Cmd>split<CR>")
+
 vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
 vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping" })
+
+-- Use Alt (Meta) key to avoid terminal conflicts with Ctrl
+vim.keymap.set("n", "<M-=>", "<Cmd>resize +2<CR>", { desc = "Increase height" })
+vim.keymap.set("n", "<M-->", "<Cmd>resize -2<CR>", { desc = "Decrease height" })
+vim.keymap.set("n", "<M-+>", "<Cmd>vertical resize +4<CR>", { desc = "Increase width" })
+vim.keymap.set("n", "<M-_>", "<Cmd>vertical resize -4<CR>", { desc = "Decrease width" })
 
 local maximised = false
 local saved_win = nil
@@ -166,51 +173,12 @@ vim.keymap.set("n", "<A-j>", "<cmd>tabprevious<CR>")
 vim.keymap.set("n", "<C-A-l>", move_tab_right)
 vim.keymap.set("n", "<C-A-h>", move_tab_left)
 
--- DebugPy
-vim.keymap.set({ "i", "n" }, "<F5>", function()
-	require("dap").continue()
-end)
-vim.keymap.set({ "i", "n" }, "<S-F5>", function()
-	require("dap").disconnect()
-end)
-vim.keymap.set({ "i", "n" }, "<F10>", function()
-	require("dap").step_over()
-end)
-vim.keymap.set({ "i", "n" }, "<F11>", function()
-	require("dap").step_into()
-end)
-vim.keymap.set({ "i", "n" }, "<F12>", function()
-	require("dap").step_out()
-end)
-vim.keymap.set("n", "<F9>", function()
-	require("dap").set_breakpoint()
-end)
--- vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
-vim.keymap.set("n", "<Leader>df", function()
-	require("dap").continue()
-end)
-
-vim.keymap.set("n", "<leader>du", function()
-	require("dapui").toggle({})
-end
-)
-
-vim.keymap.set("n", "<F9>", "<cmd> DapToggleBreakpoint <CR>")
-vim.keymap.set("n", "<leader>dlb", function()
-	require("dap").list_breakpoints()
-end)
 
 -- Format file
 vim.keymap.set("n", "<leader>fm", function()
 	require("conform").format { lsp_fallback = true }
 end, { desc = "general format file" })
 
--- Sessions
--- select a session to load
-vim.keymap.set("n", "<leader>sl", function() require("persistence").select() end)
-
--- load the last session
-vim.keymap.set("n", "<leader>ls", function() require("persistence").load() end)
 
 -- Nvim Diff
 vim.keymap.set("n", "<leader>dv", function()
@@ -233,11 +201,10 @@ vim.keymap.set("n", "<leader>fh", function()
 	end,
 	{ desc = "Show git history for file" }
 )
+
 vim.keymap.set("n", "<leader>fd", "<cmd>DiffOrig<CR>",
 	{ desc = "Compare file difference between current buffer and disk" }
 )
-
--- vim.keymap.set("n", "<leader>fh", "<cmd>DiffviewFileHistory<CR>")
 
 -- Copy Current Work Directory
 vim.keymap.set("n", "<leader>ca", function()
@@ -271,3 +238,4 @@ vim.keymap.set("n", "<leader>t$", rename_tab)
 -- Remove Mappings
 vim.keymap.set("n", "dk", "<nop>", { desc = "stop dk from deleting current and above line" })
 vim.keymap.set("n", "dj", "<nop>", { desc = "stop dj from deleting current and below line" })
+
