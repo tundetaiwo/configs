@@ -81,7 +81,7 @@ extensions_list = [
     Extension(
         name="nvim-treesitter",
         url="https://github.com/nvim-treesitter/nvim-treesitter",
-        commit_id="00a513f87ee3c339c2024b08db3eb63ba7736ed6",
+        commit_id="v0.10.0",
     ),
     Extension(
         name="nvim-nio",
