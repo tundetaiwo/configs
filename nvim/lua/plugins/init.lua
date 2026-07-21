@@ -236,9 +236,7 @@ local plugins = {
 	},
 	{
     dir = plugin_folder .. "render-markdown.nvim/",
-    dependencies = {{ dir = plugin_folder .. "nvim-treesitter" }, {dir = plugin_folder .. "mini.nvim" }},            -- if you use the mini.nvim suite
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    dependencies = {{ dir = plugin_folder .. "nvim-treesitter" }, { dir = plugin_folder .. "nvim-web-devicons" }},
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
