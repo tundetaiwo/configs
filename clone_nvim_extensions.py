@@ -51,7 +51,7 @@ extensions_list = [
     Extension(
         name="telescope.nvim",
         url="https://github.com/nvim-telescope/telescope.nvim",
-        commit_id="3333a52ff548ba0a68af6d8da1e54f9cd96e9179",
+        commit_id="v0.2.2",
     ),
     Extension(
         name="telescope-fzf-native.nvim",
