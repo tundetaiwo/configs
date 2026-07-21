@@ -16,6 +16,9 @@ vim.opt.scrolloff = 7
 
 vim.opt.updatetime = 500
 
+-- Never serialize terminal buffers into sessions (they restore broken)
+vim.opt.sessionoptions:remove("terminal")
+
 
 -- Snippets Path
 vim.g.vscode_snippets_path = vim.fn.stdpath("config") .. "/lua/snippets/"
