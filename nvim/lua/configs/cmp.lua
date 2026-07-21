@@ -14,7 +14,7 @@ local options = {
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.close(),
-		["<CR>"] = cmp.mapping.confirm {
+		["<C-;>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = true,
 		},
@@ -55,6 +55,15 @@ cmp.setup.cmdline({ "/", "?" }, {
 				end
 			end
 		},
+		["<C-;>"]   = {
+			c = function(fallback) -- Ctrl+;: accept completion
+				if cmp.visible() then
+					cmp.confirm({select = true})
+				else
+					fallback()
+				end
+			end
+		},
 	}),
 	sources = {
 		{ name = "buffer" }
@@ -85,6 +94,15 @@ cmp.setup.cmdline(":", {
 			end
 		},
 	}),
+		["<C-;>"]   = {
+			c = function(fallback) -- Ctrl+;: accept completion
+				if cmp.visible() then
+					cmp.confirm({select = true})
+				else
+					fallback()
+				end
+			end
+		},
 	sources = cmp.config.sources({
 		{ name = "path" }
 	}, {
