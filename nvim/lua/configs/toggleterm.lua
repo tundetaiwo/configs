@@ -87,7 +87,7 @@ vim.keymap.set("n", "<A-g>", function() _window_toggle(lazygit) end, { noremap =
 vim.keymap.set("t", "<A-g>", function() _window_toggle(lazygit) end, { noremap = true, silent = true })
 
 
-vim.keymap.set("t", "<C-u", "<C-\\><C-n><C-u>",
+vim.keymap.set("t", "<C-u>", "<C-\\><C-n><C-u>",
 	{ noremap = true, silent = true, desc = "scroll up in terminal" })
 
 vim.keymap.set("t", "<A-d>", "<C-\\><C-n>", { noremap = true, desc = "escape terminal mode" })
