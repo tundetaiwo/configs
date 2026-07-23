@@ -87,8 +87,18 @@ local function find_term_win_in_tab()
 	return nil, nil
 end
 
+-- Remember a terminal window's current size so toggling restores it (a manual
+-- resize should survive a close/reopen instead of snapping back to the default).
+local function capture_size(win, term)
+	if term.direction == "vertical" then
+		term.saved_size = vim.api.nvim_win_get_width(win)
+	else
+		term.saved_size = vim.api.nvim_win_get_height(win)
+	end
+end
+
 local function open_win(term)
-	local size = term.size
+	local size = term.saved_size or term.size
 	if type(size) == "function" then
 		size = size()
 	end
@@ -134,6 +144,7 @@ function M.toggle(key)
 
 	local win, open_key = find_term_win_in_tab()
 	if win then
+		capture_size(win, terms[open_key])
 		close_win(win)
 		if open_key == key then
 			return
@@ -150,7 +161,9 @@ function M.close_all_windows()
 	for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
 		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
 			local buf = vim.api.nvim_win_get_buf(win)
-			if vim.b[buf].splitterm_key then
+			local key = vim.b[buf].splitterm_key
+			if key then
+				capture_size(win, terms[key])
 				close_win(win)
 			end
 		end
