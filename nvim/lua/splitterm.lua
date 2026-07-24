@@ -41,6 +41,16 @@ local function ipython_available()
 	return vim.fn.executable("ipython") == 1
 end
 
+-- The ipython toggles (<A-p>/<A-o>) are scoped to where they make sense: Python
+-- buffers (see the FileType autocmd below) and the ipython terminal buffers
+-- themselves (so toggle-to-close still works once you're inside one).
+local function set_ipython_maps(buf)
+	vim.keymap.set({ "n", "t" }, "<A-p>", function() M.toggle("ipython1") end,
+		{ noremap = true, silent = true, buffer = buf })
+	vim.keymap.set({ "n", "t" }, "<A-o>", function() M.toggle("ipython2") end,
+		{ noremap = true, silent = true, buffer = buf })
+end
+
 local function show_error_message()
 	vim.api.nvim_err_writeln("Error: IPython is not available in your environment.\n" ..
 		"Please install IPython or activate your virtual environment.")
@@ -72,6 +82,9 @@ local function ensure_term(key, term)
 	end)
 	vim.b[buf].splitterm_key = key
 	vim.bo[buf].bufhidden = "hide"
+	if term.needs_ipython then
+		set_ipython_maps(buf)
+	end
 	term.bufnr = buf
 end
 
@@ -173,8 +186,15 @@ end
 
 vim.keymap.set({ "n", "t" }, "<A-v>", function() M.toggle("vertical") end, { noremap = true, silent = true })
 vim.keymap.set({ "n", "t" }, "<A-h>", function() M.toggle("horizontal") end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-p>", function() M.toggle("ipython1") end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-o>", function() M.toggle("ipython2") end, { noremap = true, silent = true })
+
+-- <A-p>/<A-o> only exist in Python buffers (and inside the ipython terminals via
+-- ensure_term), so they don't occupy the global Alt namespace elsewhere.
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "python",
+	callback = function(args)
+		set_ipython_maps(args.buf)
+	end,
+})
 
 vim.keymap.set({ "n", "t" }, "<A-m>", function()
 	M.autofocus = not M.autofocus

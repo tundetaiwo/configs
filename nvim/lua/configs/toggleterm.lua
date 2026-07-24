@@ -87,6 +87,51 @@ vim.keymap.set("n", "<A-g>", function() _window_toggle(lazygit) end, { noremap =
 vim.keymap.set("t", "<A-g>", function() _window_toggle(lazygit) end, { noremap = true, silent = true })
 
 
+-- Claude --
+-- Three persistent Claude sessions sharing one floating slot. <A-c> toggles the
+-- current session; <A-n>/<A-p> (buffer-local, so they only act inside a Claude
+-- float) cycle to the next/previous session, swapping the visible float.
+local NUM_CLAUDE = 3
+local claude_current = 1
+local claude_sessions = {}
+
+local function claude_cycle(delta)
+	local from = claude_sessions[claude_current]
+	claude_current = ((claude_current - 1 + delta) % NUM_CLAUDE) + 1
+	local to = claude_sessions[claude_current]
+	if from and from ~= to and from:is_open() then
+		from:close()
+	end
+	to:open()
+	if require("splitterm").autofocus_enabled() then
+		to:set_mode("i")
+	end
+end
+
+for i = 1, NUM_CLAUDE do
+	claude_sessions[i] = Terminal:new({
+		display_name = "Claude " .. i,
+		cmd = "claude",
+		dir = "git_dir",
+		direction = "float",
+		close_on_exit = true,
+		float_opts = {
+			border = "double",
+			title_pos = "center",
+		},
+		on_open = function(term)
+			vim.keymap.set({ "n", "t" }, "<A-n>", function() claude_cycle(1) end,
+				{ noremap = true, silent = true, buffer = term.bufnr })
+			vim.keymap.set({ "n", "t" }, "<A-p>", function() claude_cycle(-1) end,
+				{ noremap = true, silent = true, buffer = term.bufnr })
+		end,
+	})
+end
+
+vim.keymap.set({ "n", "t" }, "<A-c>", function() _window_toggle(claude_sessions[claude_current]) end,
+	{ noremap = true, silent = true })
+
+
 vim.keymap.set("t", "<C-u>", "<C-\\><C-n><C-u>",
 	{ noremap = true, silent = true, desc = "scroll up in terminal" })
 
