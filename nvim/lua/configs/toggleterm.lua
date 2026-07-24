@@ -94,6 +94,8 @@ vim.keymap.set("t", "<A-g>", function() _window_toggle(lazygit) end, { noremap =
 local NUM_CLAUDE = 3
 local claude_current = 1
 local claude_sessions = {}
+-- per-session border colours so each Claude float is distinguishable at a glance
+local claude_border_colors = { "#f38ba8", "#a6e3a1", "#89b4fa" }
 
 local function claude_cycle(delta)
 	local from = claude_sessions[claude_current]
@@ -117,7 +119,10 @@ for i = 1, NUM_CLAUDE do
 		close_on_exit = true,
 		float_opts = {
 			border = "double",
-			title_pos = "center",
+			title_pos = "left",
+		},
+		highlights = {
+			FloatBorder = { guifg = claude_border_colors[i] },
 		},
 		on_open = function(term)
 			vim.keymap.set({ "n", "t" }, "<A-n>", function() claude_cycle(1) end,

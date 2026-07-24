@@ -20,6 +20,7 @@ local terms = {
 			return math.floor(vim.o.columns * 0.5)
 		end,
 		needs_ipython = true,
+		label = "IPython 1",
 	},
 	ipython2 = {
 		cmd = "ipython --autoindent",
@@ -28,6 +29,7 @@ local terms = {
 			return math.floor(vim.o.columns * 0.5)
 		end,
 		needs_ipython = true,
+		label = "IPython 2",
 	},
 }
 
@@ -58,6 +60,20 @@ end
 
 local function job_alive(term)
 	return term.job_id ~= nil and vim.fn.jobwait({ term.job_id }, 0)[1] == -1
+end
+
+-- Point vim-slime at a specific ipython job so cell sends land in the window you
+-- just opened. vim-slime caches its target per-buffer (b:slime_config), so we
+-- update the global default and clear those caches to make "last opened wins".
+local function retarget_slime(jobid)
+	if not jobid then
+		return
+	end
+	vim.g.slime_default_config = { jobid = jobid }
+	vim.g.slime_dont_ask_default = 1
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		pcall(vim.api.nvim_buf_del_var, buf, "slime_config")
+	end
 end
 
 local function ensure_term(key, term)
@@ -132,7 +148,7 @@ local function open_win(term)
 	vim.wo[win].relativenumber = false
 	vim.wo[win].signcolumn = "no"
 	if term.needs_ipython then
-		vim.wo[win].statusline = "Terminal: " .. term.job_id
+		vim.wo[win].statusline = term.label .. " (slime target)"
 	end
 
 	if M.autofocus then
@@ -166,6 +182,11 @@ function M.toggle(key)
 
 	ensure_term(key, term)
 	open_win(term)
+
+	-- Opening an ipython window makes it the slime send target (last opened wins).
+	if term.needs_ipython then
+		retarget_slime(term.job_id)
+	end
 end
 
 -- Close every split-terminal window across all tabs (jobs keep running).
