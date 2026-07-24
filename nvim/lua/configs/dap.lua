@@ -17,6 +17,7 @@ dap.listeners.after.event_exited["dapui_config"] = function()
 end
 
 dapui.setup {
+	wrap = true,
 	controls = {
 		element = "repl",
 		enabled = true,
@@ -65,13 +66,13 @@ dapui.setup {
 	}, {
 		elements = {
 			{
-				id = "repl",
-				size = 1
+				id = "console",
+				size = 0.4
 			},
-			-- {
-			-- 	id = "console",
-			-- 	size = 1
-			-- }
+			{
+				id = "repl",
+				size = 0.6
+			}
 		},
 		position = "right",
 		size = 100
@@ -130,6 +131,7 @@ vim.keymap.set("n", "<leader>ds", function() ensure_and_focus("dapui_scopes") en
 vim.keymap.set("n", "<leader>dk", function() ensure_and_focus("dapui_stacks") end)
 vim.keymap.set("n", "<leader>dw", function() ensure_and_focus("dapui_watches") end)
 vim.keymap.set("n", "<leader>db", function() ensure_and_focus("dapui_breakpoints") end)
+vim.keymap.set("n", "<leader>dp", function() ensure_and_focus("dap-repl") end)
 
 vim.keymap.set('n', '<leader>dr', run_dap_option_1, { desc = "Run DAP Config #1" })
 
@@ -195,6 +197,9 @@ dap.configurations.python = {
     request = 'launch',
     name = "Launch file",
     program = "${file}",
+    -- Program stdout goes to the dap-ui console pane (a real terminal), so
+    -- the REPL stays evaluation-only and output events can't scramble it
+    console = "integratedTerminal",
     pythonPath = function()
       -- Use the python from the active virtualenv, or fallback to system python
       local venv = os.getenv("VIRTUAL_ENV")

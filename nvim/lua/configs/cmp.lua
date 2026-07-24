@@ -93,7 +93,6 @@ cmp.setup.cmdline(":", {
 				end
 			end
 		},
-	}),
 		["<C-;>"]   = {
 			c = function(fallback) -- Ctrl+;: accept completion
 				if cmp.visible() then
@@ -103,6 +102,7 @@ cmp.setup.cmdline(":", {
 				end
 			end
 		},
+	}),
 	sources = cmp.config.sources({
 		{ name = "path" }
 	}, {

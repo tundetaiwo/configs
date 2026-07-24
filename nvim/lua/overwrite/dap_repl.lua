@@ -59,6 +59,9 @@ local function new_buf()
       end
     end
   end, { buffer = buf, desc = "Move to previous prompt" })
+  vim.keymap.set({ 'n', 'i' }, '<C-l>', function()
+    M.clear()
+  end, { buffer = buf, desc = "Clear REPL output" })
   api.nvim_create_autocmd("TextYankPost", {
     buffer = buf,
     callback = function()
@@ -187,24 +190,72 @@ local function print_commands()
 end
 
 
-local function evaluate_handler(err, resp)
+-- Turn debugpy's repr of a string (e.g. '[0,\n 1]' with literal backslash-n)
+-- back into the real string so it can be appended as multiple lines
+local function unescape_repr(s)
+  local first = s:sub(1, 1)
+  if not (#s >= 2 and (first == "'" or first == '"') and s:sub(-1) == first) then
+    return s
+  end
+  s = s:sub(2, -2)
+  local out = {}
+  local i = 1
+  while i <= #s do
+    local c = s:sub(i, i)
+    if c == '\\' then
+      local n = s:sub(i + 1, i + 1)
+      if n == 'n' then
+        out[#out + 1] = '\n'; i = i + 2
+      elseif n == 't' then
+        out[#out + 1] = '\t'; i = i + 2
+      elseif n == 'r' then
+        out[#out + 1] = '\r'; i = i + 2
+      elseif n == 'x' and s:sub(i + 2, i + 3):match('^%x%x$') then
+        out[#out + 1] = string.char(tonumber(s:sub(i + 2, i + 3), 16)); i = i + 4
+      elseif n == '\\' or n == "'" or n == '"' then
+        out[#out + 1] = n; i = i + 2
+      else
+        out[#out + 1] = c; i = i + 1
+      end
+    else
+      out[#out + 1] = c; i = i + 1
+    end
+  end
+  return table.concat(out)
+end
+
+local function evaluate_handler(err, resp, expr)
   if err then
     M.append(tostring(err), nil, { newline = true })
     return
   end
 
-  -- MODIFICATION: Check if this is a Python session
+  -- MODIFICATION: For Python sessions, print flat text instead of the
+  -- expandable tree widget. Structured results (variablesReference > 0) are
+  -- re-evaluated through pprint.pformat for a multi-line pretty repr.
+  -- Caveat: that second evaluation re-runs the expression, so side effects
+  -- execute twice for structured results.
   local session = get_session()
   local is_python = session and (session.config.type == 'python' or session.config.type == 'debugpy')
-
-  -- If it is Python, always just print the string result (the repr)
-  -- This prevents it from rendering the expandable tree widget
   if is_python then
-    M.append(resp.result, nil, { newline = true })
+    if resp.variablesReference > 0 and expr then
+      local params = {
+        expression = string.format('__import__("pprint").pformat(%s)', expr),
+        context = 'repl',
+      }
+      session:evaluate(params, function(perr, presp)
+        if perr or not presp or type(presp.result) ~= 'string' then
+          M.append(resp.result, nil, { newline = true })
+        else
+          M.append(unescape_repr(presp.result), nil, { newline = true })
+        end
+      end)
+    else
+      M.append(resp.result, nil, { newline = true })
+    end
     return
   end
 
-  -- Standard behavior for other languages
   local layer = ui.layer(repl.buf)
   local attributes = (resp.presentationHint or {}).attributes or {}
   if resp.variablesReference > 0 or vim.tbl_contains(attributes, 'rawString') then
@@ -332,12 +383,29 @@ local function coexecute(text, opts)
     local args = string.sub(text, string.len(command)+2)
     M.commands.custom_commands[command](args)
   else
+    -- MODIFICATION: rewrite print(...)/pprint(...)/pp(...) typed at the
+    -- prompt to evaluate the inner expression instead. Stdout produced during
+    -- a REPL evaluation reaches us as duplicated, scrambled partial chunks;
+    -- the evaluate response displays cleanly via the pformat path in
+    -- evaluate_handler.
+    local is_python = session.config and (session.config.type == 'python' or session.config.type == 'debugpy')
+    if is_python then
+      local inner = text:match('^pprint%s*%((.*)%)$')
+        or text:match('^pp%s*%((.*)%)$')
+        or text:match('^print%s*%((.*)%)$')
+        or text:match('^rich%.print%s*%((.*)%)$')
+      if inner and not inner:find('=') then
+        text = inner
+      end
+    end
     ---@type dap.EvaluateArguments
     local params = {
       expression = text,
       context = opts.context or "repl"
     }
-    session:evaluate(params, evaluate_handler)
+    session:evaluate(params, function(everr, evresp)
+      evaluate_handler(everr, evresp, text)
+    end)
   end
 end
 
@@ -349,6 +417,9 @@ end
 ---@param text string
 ---@param opts? dap.repl.execute.Opts
 function execute(text, opts)
+  -- MODIFICATION: trim so commands like `.clear` match despite stray
+  -- whitespace (untrimmed input would be sent to the adapter and fail)
+  text = vim.trim(text)
   if text == '' then
     if history.last then
       text = history.last
@@ -468,6 +539,9 @@ function M.append(line, lnum, opts)
   if vim.bo[buf].fileformat ~= "dos" then
     line = line:gsub('\r\n', '\n')
   end
+  -- MODIFICATION: strip ANSI escape sequences (rich, colorama, etc.); the
+  -- REPL is a plain prompt buffer and would display them as literal text
+  line = line:gsub('\27%[[0-9;:]*%a', '')
   local lines = vim.split(line, '\n')
   if lnum == '$' or not lnum then
     lnum = api.nvim_buf_line_count(buf) - 1
@@ -485,13 +559,22 @@ function M.append(line, lnum, opts)
       end
       api.nvim_buf_set_text(buf, lnum, insert_pos, lnum, insert_pos, lines)
     else
-      api.nvim_buf_set_lines(buf, -1, -1, true, lines)
+      -- MODIFICATION: keep the prompt as the last line. Results arrive async,
+      -- so a plain tail-append can land below the next `dap> ` prompt line
+      local last_line = api.nvim_buf_get_lines(buf, -2, -1, true)[1]
+      if not vim.startswith(last_line, prompt) then
+        lnum = lnum + 1
+      end
+      api.nvim_buf_set_lines(buf, lnum, lnum, true, lines)
     end
   else
     api.nvim_buf_set_lines(buf, lnum, lnum, true, lines)
   end
   if autoscroll and repl.win and api.nvim_win_is_valid(repl.win) then
-    pcall(api.nvim_win_set_cursor, repl.win, { lnum + 2, 0 })
+    -- MODIFICATION: follow the bottom of the buffer (the prompt line) rather
+    -- than lnum, which no longer tracks the last line now that output is
+    -- inserted above the prompt
+    pcall(api.nvim_win_set_cursor, repl.win, { api.nvim_buf_line_count(buf), 0 })
   end
   return lnum
 end
