@@ -76,6 +76,25 @@ local function retarget_slime(jobid)
 	end
 end
 
+-- Neovim only auto-scrolls a terminal window whose cursor is on the last line,
+-- and ipython's prompt-toolkit redraws leave it elsewhere — so unfocused ipython
+-- windows stall mid-scrollback when slime sends code. Re-pin their cursor to the
+-- bottom on every output chunk so the view keeps following without focusing.
+local function follow_output(term)
+	vim.schedule(function()
+		if not (term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr)) then
+			return
+		end
+		local last = vim.api.nvim_buf_line_count(term.bufnr)
+		local cur_win = vim.api.nvim_get_current_win()
+		for _, win in ipairs(vim.fn.win_findbuf(term.bufnr)) do
+			if win ~= cur_win then
+				pcall(vim.api.nvim_win_set_cursor, win, { last, 0 })
+			end
+		end
+	end)
+end
+
 local function ensure_term(key, term)
 	if term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) and job_alive(term) then
 		return
@@ -85,6 +104,9 @@ local function ensure_term(key, term)
 	vim.api.nvim_buf_call(buf, function()
 		term.job_id = vim.fn.jobstart(term.cmd or vim.o.shell, {
 			term = true,
+			on_stdout = term.needs_ipython and function()
+				follow_output(term)
+			end or nil,
 			on_exit = function()
 				vim.schedule(function()
 					if term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) then
