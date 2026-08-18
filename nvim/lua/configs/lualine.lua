@@ -6,10 +6,26 @@ local filename = {
 	}
 }
 
+-- explicit (non-transparent) theme so the statusline stays visible as a
+-- window divider even with catppuccin's transparent_background enabled
+local palette = require("catppuccin.palettes").get_palette("mocha")
+local border_theme = {
+	normal = {
+		a = { fg = palette.base, bg = palette.blue, gui = "bold" },
+		b = { fg = palette.text, bg = palette.surface2 },
+		c = { fg = palette.text, bg = palette.surface2 },
+	},
+	inactive = {
+		a = { fg = palette.overlay1, bg = palette.surface1 },
+		b = { fg = palette.overlay1, bg = palette.surface1 },
+		c = { fg = palette.overlay0, bg = palette.surface1 },
+	},
+}
+
 require('lualine').setup {
 	options = {
 		icons_enabled = true,
-		theme = 'auto',
+		theme = border_theme,
 		component_separators = { left = '', right = '' },
 		section_separators = { left = '', right = '' },
 		disabled_filetypes = {

@@ -11,6 +11,7 @@ require("catppuccin").setup({
 			-- DiffDelete = { bg = "#822322" },
 			-- DiffText = { bg = "#803280" },
 			-- DiffChange = { bg = "" },
+			WinSeparator = { fg = colors.blue, style = { "bold" } },
 		}
 	end,
 	integrations = {
@@ -55,4 +56,7 @@ vim.cmd.colorscheme "catppuccin"
 
 -- Remove '~' from eob
 vim.opt.fillchars:append('eob: ')
+
+-- Thicker horizontal split divider
+vim.opt.fillchars:append({ horiz = "━", horizdown = "┳", horizup = "┻", verthoriz = "╋" })
 
