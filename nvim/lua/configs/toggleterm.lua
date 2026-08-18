@@ -64,14 +64,14 @@ end
 -- <A-x> (mappings.lua) force-kills whichever session is visible, which leaves
 -- term_current pointing at a dead slot. If the current slot is still alive,
 -- this is a normal toggle (close if visible, resume if hidden). If it died
--- (e.g. via <A-x>), step backward through the other slots for one that's still
--- alive in the background; if none are, open a fresh terminal in the slot
--- immediately before the dead one.
+-- (e.g. via <A-x>), go to the lowest-numbered slot that still has a job alive
+-- in the background (1, then 2, then 3); if none are alive, open a fresh
+-- Terminal 1.
 local function term_toggle()
 	local current = term_sessions[term_current]
 
 	-- job_id == nil means this slot has never been spawned yet (first-ever
-	-- toggle, or a slot no one has visited) -- just open it, don't shift back.
+	-- toggle, or a slot no one has visited) -- just open it, don't hunt for others.
 	if current.job_id == nil or term_job_alive(current) then
 		if current:is_open() then
 			current:close()
@@ -84,8 +84,7 @@ local function term_toggle()
 		return
 	end
 
-	for step = 1, NUM_TERM - 1 do
-		local i = ((term_current - 1 - step) % NUM_TERM) + 1
+	for i = 1, NUM_TERM do
 		local term = term_sessions[i]
 		if term_job_alive(term) then
 			term_current = i
@@ -97,10 +96,10 @@ local function term_toggle()
 		end
 	end
 
-	term_current = ((term_current - 2) % NUM_TERM) + 1
-	term_sessions[term_current]:open()
+	term_current = 1
+	term_sessions[1]:open()
 	if require("splitterm").autofocus_enabled() then
-		term_sessions[term_current]:set_mode("i")
+		term_sessions[1]:set_mode("i")
 	end
 end
 
@@ -175,14 +174,14 @@ end
 -- <A-x> (mappings.lua) force-kills whichever session is visible, which leaves
 -- claude_current pointing at a dead slot. If the current slot is still alive,
 -- this is a normal toggle (close if visible, resume if hidden). If it died
--- (e.g. via <A-x>), step backward through the other slots for one that's still
--- alive in the background; if none are, open a fresh Claude in the slot
--- immediately before the dead one.
+-- (e.g. via <A-x>), go to the lowest-numbered slot that still has a job alive
+-- in the background (1, then 2, then 3); if none are alive, open a fresh
+-- Claude 1.
 local function claude_toggle()
 	local current = claude_sessions[claude_current]
 
 	-- job_id == nil means this slot has never been spawned yet (first-ever
-	-- toggle, or a slot no one has visited) -- just open it, don't shift back.
+	-- toggle, or a slot no one has visited) -- just open it, don't hunt for others.
 	if current.job_id == nil or claude_job_alive(current) then
 		if current:is_open() then
 			current:close()
@@ -195,8 +194,7 @@ local function claude_toggle()
 		return
 	end
 
-	for step = 1, NUM_CLAUDE - 1 do
-		local i = ((claude_current - 1 - step) % NUM_CLAUDE) + 1
+	for i = 1, NUM_CLAUDE do
 		local term = claude_sessions[i]
 		if claude_job_alive(term) then
 			claude_current = i
@@ -208,10 +206,10 @@ local function claude_toggle()
 		end
 	end
 
-	claude_current = ((claude_current - 2) % NUM_CLAUDE) + 1
-	claude_sessions[claude_current]:open()
+	claude_current = 1
+	claude_sessions[1]:open()
 	if require("splitterm").autofocus_enabled() then
-		claude_sessions[claude_current]:set_mode("i")
+		claude_sessions[1]:set_mode("i")
 	end
 end
 
