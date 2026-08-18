@@ -57,32 +57,14 @@ vim.keymap.set("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true })
 -- Search
 vim.keymap.set("n", "<ESC>", "<cmd>nohlsearch<CR>", { desc = "remove search highlighting" })
 
--- NvimTree Toggle and state tracking
-local function isTreeActive()
-	local success, treeActive = pcall(vim.api.nvim_tabpage_get_var, 0, "treeActive")
-	treeActive = success and treeActive or false
-	return treeActive
-end
+-- NvimTree Toggle and state tracking (toggle/focus/width logic lives in configs/nvimtree.lua)
+local nvimtree = require("configs.nvimtree")
 
-local function toggleTree()
-	vim.cmd("NvimTreeToggle")
-	vim.cmd("wincmd =")
-	local treeActive = isTreeActive()
-	vim.api.nvim_tabpage_set_var(0, "treeActive", not treeActive)
-end
-
-local function focusTree()
-	local treeActive = isTreeActive()
-	if treeActive then
-		vim.cmd("NvimTreeFocus")
-	end
-end
-
-vim.keymap.set("n", "<C-b>", toggleTree, { desc = "Toggle NvimTree" })
-vim.keymap.set("n", "<leader>e", focusTree, { desc = "Focus NvimTree" })
+vim.keymap.set("n", "<C-b>", nvimtree.toggle, { desc = "Toggle NvimTree" })
+vim.keymap.set("n", "<leader>e", nvimtree.focus, { desc = "Focus NvimTree" })
 
 local go_to_pane = function(number)
-	local treeActive = isTreeActive()
+	local treeActive = nvimtree.is_active()
 	if treeActive then
 		number = number + 1
 	end
@@ -115,7 +97,10 @@ vim.keymap.set({ 'n', 't' }, '<C-k>', "<Cmd>wincmd k<CR>")
 
 vim.keymap.set('n', '<C-w>b', "<Cmd>split<CR>")
 
-vim.keymap.set("n", "<C-w>x", "<cmd>close<CR>", { desc = "Close window", noremap = true })
+vim.keymap.set("n", "<C-w>x", function()
+	nvimtree.reset_on_manual_close()
+	vim.cmd("close")
+end, { desc = "Close window", noremap = true })
 vim.keymap.set("n", "<C-w>c", "<Nop>", { desc = "Disable default close mapping" })
 
 -- Use Alt (Meta) key to avoid terminal conflicts with Ctrl
@@ -130,11 +115,11 @@ local toggle_maximise = function()
 	if maximised then
 		vim.cmd("wincmd =")
 		maximised = false
-		local treeActive = isTreeActive()
+		local treeActive = nvimtree.is_active()
 		if treeActive then
-			-- activate toggleTree twice to restore it
-			toggleTree()
-			toggleTree()
+			-- activate toggle twice to restore it
+			nvimtree.toggle()
+			nvimtree.toggle()
 			vim.cmd("wincmd =")
 		end
 		if saved_win and vim.api.nvim_win_is_valid(saved_win) then

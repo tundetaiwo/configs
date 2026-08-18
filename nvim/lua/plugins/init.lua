@@ -42,7 +42,7 @@ local plugins = {
 		dir = plugin_folder .. "nvim-tree.lua",
 		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
 		config = function()
-			require("configs.nvimtree")
+			require("configs.nvimtree").setup()
 		end,
 		dependencies = { dir = plugin_folder .. "nvim-web-devicons" },
 	},

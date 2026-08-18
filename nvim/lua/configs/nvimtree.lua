@@ -1,3 +1,65 @@
+local M = {}
+
+M.DEFAULT_WIDTH = 30
+local tree_width = M.DEFAULT_WIDTH
+
+local function isTreeActive()
+	local success, treeActive = pcall(vim.api.nvim_tabpage_get_var, 0, "treeActive")
+	treeActive = success and treeActive or false
+	return treeActive
+end
+
+local function getTreeWinid()
+	local ok, api = pcall(require, "nvim-tree.api")
+	if not ok then return nil end
+	local winid = api.tree.winid()
+	if winid and vim.api.nvim_win_is_valid(winid) then
+		return winid
+	end
+	return nil
+end
+
+M.is_active = isTreeActive
+
+-- Toggle the tree, remembering its width across toggles: the current width
+-- is captured just before closing and re-applied just after reopening (the
+-- latter has to happen after `wincmd =`, which would otherwise clobber it).
+function M.toggle()
+	local treeActive = isTreeActive()
+	if treeActive then
+		local winid = getTreeWinid()
+		if winid then
+			tree_width = vim.api.nvim_win_get_width(winid)
+		end
+	end
+	vim.cmd("NvimTreeToggle")
+	vim.cmd("wincmd =")
+	if not treeActive then
+		local winid = getTreeWinid()
+		if winid then
+			vim.api.nvim_win_set_width(winid, tree_width)
+		end
+	end
+	vim.api.nvim_tabpage_set_var(0, "treeActive", not treeActive)
+end
+
+function M.focus()
+	if isTreeActive() then
+		vim.cmd("NvimTreeFocus")
+	end
+end
+
+-- Called from the generic "close window" mapping when the window being
+-- closed is the NvimTree window: forgets the remembered width so the next
+-- toggle-open reverts to the default size instead of the last manual resize.
+function M.reset_on_manual_close()
+	if vim.bo.filetype ~= "NvimTree" then
+		return
+	end
+	tree_width = M.DEFAULT_WIDTH
+	vim.api.nvim_tabpage_set_var(0, "treeActive", false)
+end
+
 local function my_on_attach(bufnr)
 	local api = require "nvim-tree.api"
 
@@ -70,38 +132,42 @@ local function my_on_attach(bufnr)
 	vim.keymap.set("n", "<2-RightMouse>", api.tree.change_root_to_node, opts("CD"))
 end
 
--- pass to setup along with your other options
-require("nvim-tree").setup {
-	on_attach = my_on_attach,
-	filters = { dotfiles = true, git_ignored = false },
-	disable_netrw = true,
-	hijack_cursor = true,
-	sync_root_with_cwd = true,
-	update_focused_file = {
-		enable = true,
-		update_root = false,
-	},
-	view = {
-		width = 30,
-		preserve_window_proportions = true,
-	},
-	renderer = {
-		group_empty = true,
-		root_folder_label = false,
-		highlight_git = true,
-		indent_markers = { enable = true },
-		icons = {
-			glyphs = {
-				default = "󰈚",
-				folder = {
-					default = "",
-					empty = "",
-					empty_open = "",
-					open = "",
-					symlink = "",
+function M.setup()
+	-- pass to setup along with your other options
+	require("nvim-tree").setup {
+		on_attach = my_on_attach,
+		filters = { dotfiles = true, git_ignored = false },
+		disable_netrw = true,
+		hijack_cursor = true,
+		sync_root_with_cwd = true,
+		update_focused_file = {
+			enable = true,
+			update_root = false,
+		},
+		view = {
+			width = M.DEFAULT_WIDTH,
+			preserve_window_proportions = true,
+		},
+		renderer = {
+			group_empty = true,
+			root_folder_label = false,
+			highlight_git = true,
+			indent_markers = { enable = true },
+			icons = {
+				glyphs = {
+					default = "󰈚",
+					folder = {
+						default = "",
+						empty = "",
+						empty_open = "",
+						open = "",
+						symlink = "",
+					},
+					git = { unmerged = "" },
 				},
-				git = { unmerged = "" },
 			},
 		},
-	},
-}
+	}
+end
+
+return M
