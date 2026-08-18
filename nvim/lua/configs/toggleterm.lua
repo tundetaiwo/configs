@@ -57,8 +57,54 @@ for i = 1, NUM_TERM do
 	})
 end
 
-vim.keymap.set({ "n", "t" }, "<A-i>", function() _window_toggle(term_sessions[term_current]) end,
-	{ noremap = true, silent = true })
+local function term_job_alive(term)
+	return term.job_id and vim.fn.jobwait({ term.job_id }, 0)[1] == -1
+end
+
+-- <A-x> (mappings.lua) force-kills whichever session is visible, which leaves
+-- term_current pointing at a dead slot. If the current slot is still alive,
+-- this is a normal toggle (close if visible, resume if hidden). If it died
+-- (e.g. via <A-x>), step backward through the other slots for one that's still
+-- alive in the background; if none are, open a fresh terminal in the slot
+-- immediately before the dead one.
+local function term_toggle()
+	local current = term_sessions[term_current]
+
+	-- job_id == nil means this slot has never been spawned yet (first-ever
+	-- toggle, or a slot no one has visited) -- just open it, don't shift back.
+	if current.job_id == nil or term_job_alive(current) then
+		if current:is_open() then
+			current:close()
+		else
+			current:open()
+			if require("splitterm").autofocus_enabled() then
+				current:set_mode("i")
+			end
+		end
+		return
+	end
+
+	for step = 1, NUM_TERM - 1 do
+		local i = ((term_current - 1 - step) % NUM_TERM) + 1
+		local term = term_sessions[i]
+		if term_job_alive(term) then
+			term_current = i
+			term:open()
+			if require("splitterm").autofocus_enabled() then
+				term:set_mode("i")
+			end
+			return
+		end
+	end
+
+	term_current = ((term_current - 2) % NUM_TERM) + 1
+	term_sessions[term_current]:open()
+	if require("splitterm").autofocus_enabled() then
+		term_sessions[term_current]:set_mode("i")
+	end
+end
+
+vim.keymap.set({ "n", "t" }, "<A-i>", term_toggle, { noremap = true, silent = true })
 
 -- Lazy Git --
 local lazygit = Terminal:new({
@@ -122,8 +168,54 @@ for i = 1, NUM_CLAUDE do
 	})
 end
 
-vim.keymap.set({ "n", "t" }, "<A-c>", function() _window_toggle(claude_sessions[claude_current]) end,
-	{ noremap = true, silent = true })
+local function claude_job_alive(term)
+	return term.job_id and vim.fn.jobwait({ term.job_id }, 0)[1] == -1
+end
+
+-- <A-x> (mappings.lua) force-kills whichever session is visible, which leaves
+-- claude_current pointing at a dead slot. If the current slot is still alive,
+-- this is a normal toggle (close if visible, resume if hidden). If it died
+-- (e.g. via <A-x>), step backward through the other slots for one that's still
+-- alive in the background; if none are, open a fresh Claude in the slot
+-- immediately before the dead one.
+local function claude_toggle()
+	local current = claude_sessions[claude_current]
+
+	-- job_id == nil means this slot has never been spawned yet (first-ever
+	-- toggle, or a slot no one has visited) -- just open it, don't shift back.
+	if current.job_id == nil or claude_job_alive(current) then
+		if current:is_open() then
+			current:close()
+		else
+			current:open()
+			if require("splitterm").autofocus_enabled() then
+				current:set_mode("i")
+			end
+		end
+		return
+	end
+
+	for step = 1, NUM_CLAUDE - 1 do
+		local i = ((claude_current - 1 - step) % NUM_CLAUDE) + 1
+		local term = claude_sessions[i]
+		if claude_job_alive(term) then
+			claude_current = i
+			term:open()
+			if require("splitterm").autofocus_enabled() then
+				term:set_mode("i")
+			end
+			return
+		end
+	end
+
+	claude_current = ((claude_current - 2) % NUM_CLAUDE) + 1
+	claude_sessions[claude_current]:open()
+	if require("splitterm").autofocus_enabled() then
+		claude_sessions[claude_current]:set_mode("i")
+	end
+end
+
+vim.keymap.set({ "n", "t" }, "<A-c>", claude_toggle, { noremap = true, silent = true })
 
 
 vim.keymap.set("t", "<C-u>", "<C-\\><C-n><C-u>",
