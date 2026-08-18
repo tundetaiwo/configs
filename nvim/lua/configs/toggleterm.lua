@@ -18,58 +18,47 @@ end
 
 
 -- Float Window --
-local float_window_1 = Terminal:new({
-	display_name = "Terminal 1",
-	direction = "float",
-	float_opts = {
-		border = "double",
-		size = 40,
-	},
-	close_on_exit = true,
-})
-local float_window_2 = Terminal:new({
-	display_name = "Terminal 2",
-	direction = "float",
-	float_opts = {
-		border = "double",
-		size = 40,
-	},
-	close_on_exit = true,
-})
-local float_window_3 = Terminal:new({
-	display_name = "Terminal 3",
-	direction = "float",
-	float_opts = {
-		border = "double",
-		size = 40,
-	},
-	close_on_exit = true,
-})
-local float_window_4 = Terminal:new({
-	display_name = "Terminal 4",
-	direction = "float",
-	float_opts = {
-		border = "double",
-		size = 40,
-	},
-	close_on_exit = true,
-})
-local float_window_5 = Terminal:new({
-	display_name = "Terminal 5",
-	direction = "float",
-	float_opts = {
-		border = "double",
-		size = 40,
-	},
-	close_on_exit = true,
-})
+-- Three persistent plain terminal sessions sharing one floating slot, mirroring
+-- the Claude sessions below. <A-i> toggles the current session; <A-n>/<A-p>
+-- (buffer-local, so they only act inside a terminal float) cycle to the
+-- next/previous session, swapping the visible float.
+local NUM_TERM = 3
+local term_current = 1
+local term_sessions = {}
 
-vim.keymap.set({ "n", "t" }, "<A-i>", function() _window_toggle(float_window_1) end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-1>", function() _window_toggle(float_window_1) end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-2>", function() _window_toggle(float_window_2) end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-3>", function() _window_toggle(float_window_3) end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-4>", function() _window_toggle(float_window_4) end, { noremap = true, silent = true })
-vim.keymap.set({ "n", "t" }, "<A-5>", function() _window_toggle(float_window_5) end, { noremap = true, silent = true })
+local function term_cycle(delta)
+	local from = term_sessions[term_current]
+	term_current = ((term_current - 1 + delta) % NUM_TERM) + 1
+	local to = term_sessions[term_current]
+	if from and from ~= to and from:is_open() then
+		from:close()
+	end
+	to:open()
+	if require("splitterm").autofocus_enabled() then
+		to:set_mode("i")
+	end
+end
+
+for i = 1, NUM_TERM do
+	term_sessions[i] = Terminal:new({
+		display_name = "Terminal " .. i,
+		direction = "float",
+		float_opts = {
+			border = "double",
+			size = 40,
+		},
+		close_on_exit = true,
+		on_open = function(term)
+			vim.keymap.set({ "n", "t" }, "<A-n>", function() term_cycle(1) end,
+				{ noremap = true, silent = true, buffer = term.bufnr })
+			vim.keymap.set({ "n", "t" }, "<A-p>", function() term_cycle(-1) end,
+				{ noremap = true, silent = true, buffer = term.bufnr })
+		end,
+	})
+end
+
+vim.keymap.set({ "n", "t" }, "<A-i>", function() _window_toggle(term_sessions[term_current]) end,
+	{ noremap = true, silent = true })
 
 -- Lazy Git --
 local lazygit = Terminal:new({
