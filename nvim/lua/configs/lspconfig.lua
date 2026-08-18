@@ -7,7 +7,7 @@ local function make_on_attach()
 		end
 
 		-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+		vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, opts "Go to definition")
 		vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts "Rename variable")
 		vim.keymap.set("n", "<leader>cc", vim.lsp.buf.code_action, opts "Code action")
 	end
