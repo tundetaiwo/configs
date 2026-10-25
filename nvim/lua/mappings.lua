@@ -49,6 +49,8 @@ vim.keymap.set('n', '<leader>x', "<cmd>bp|bd #<CR>", { desc = "close buffer with
 vim.keymap.set('n', '<leader><C-x>', "<cmd>bd!<CR>", { desc = "force close buffer without closing window" })
 vim.keymap.set('n', '<leader><S-x>', '<cmd>e #<CR>', { desc = "re-open last closed buffer" })
 vim.keymap.set("t", "<A-x>", "<cmd>bd!<CR>", { desc = "terminal buffer close" })
+vim.keymap.set("n", "<A-X>", require("buffers").close_all,
+	{ desc = "close all file buffers (keeps terminals) and open alpha" })
 
 -- Comment
 vim.keymap.set({ "i", "n" }, "<C-_>", "gcc", { desc = "Toggle Comment", remap = true })
